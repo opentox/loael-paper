@@ -1,8 +1,9 @@
 require_relative '../lazar/lib/lazar'
 include OpenTox
-$logger.level = Logger::DEBUG
-Mongo::Logger.level = Logger::WARN 
+#$logger.level = Logger::DEBUG
+#Mongo::Logger.level = Logger::WARN 
 $mongo.database.drop
+$gridfs = $mongo.database.fs # recreate GridFS indexes
 
 classification_input = Dir["classification/*csv"]
 
