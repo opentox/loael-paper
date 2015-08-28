@@ -1,4 +1,5 @@
-# lazar-public-data
+# lazar-nestec-data
 
-- Public lazar datasets
+- Nestec lazar datasets
 - Scripts to generate prediction models and crossvalidations
+- Database dumps
