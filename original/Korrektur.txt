@@ -1,0 +1,6 @@
+ROW,ID,SMILES,MOLWT,COMMENT
+1,5,C1=C(C(=CC(=C1NN=C3C2=C(C=C([S]([O-])(=O)=O)C=C2)C=CC3=O)OC)[S]([O-])(=O)=O)C.[Na+].[Na+],496.42,"SMILES could not be read by obabel"
+36,194,C1=C(C(=CC=C1OC2=CC=C(C=C2Cl)C(F)(F)F)[N+](=O)[O-])C(=O)[O-].[Na+],383.64,"SMILES could not be read by obabel"
+65,299,C(C1C2C(C(O)C(O1)OC8C(OC(OC7C(OC(OC6C(OC(OC5C(C(C(OC4C(C(C(OC3C(C(C(O2)OC3CO)O)O)OC4CO)O)O)OC5CO)O)O)C(C6O)O)CO)C(C7O)O)CO)C(C8O)O)CO)O)O,1134.99,"SMILES was truncated"
+138,549,O=[S](NC1CCCCC1)(=O)[O-].[Na+],201.22,"SMILES could not be read by obabel"
+398,997,[C@@]14([C@@H]5OCC1=CC=C[C@@H]([C@H](O[C@H]2C[C@@H]([C@H]([C@@H](O2)C)O[C@H]3C[C@@H]([C@H]([C@@H](O3)C)O)OC)OC)C(=CC[C@@H]6C[C@H](OC([C@@H]4C=C([C@H]5O)C)=O)C[C@]7(O6)O[C@@H]([C@H](C=C7)C)[C@H](CC)C)C)C)O,873.0884,"SMILES was truncated"
