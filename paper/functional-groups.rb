@@ -20,7 +20,7 @@ table = []
       new.compounds.each do |c|
         newcount += Algorithm::Descriptor.smarts_match(c,smarts_feature).first.to_i
       end
-      puts "#{name}, #{oldcount}, #{newcount}"
+      puts "#{name}, #{oldcount}, #{newcount}" if oldcount > 0 and newcount > 0
     else
       p name, smarts
     end

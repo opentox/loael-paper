@@ -32,3 +32,34 @@ with "identical" values
   r^2: 0.6106457754533314
   RMSE: 1.2228212261024438
   MAE: 0.801626064534318
+
+Methods
+-------
+
+Fingerprints
+............
+
++ OB Fingerprints (add MNA)
+- Fingerprint counts
+- Physchem Descriptors (OB only?)
+
+Feature selection
+.................
+
++ none
+* t-test (nonparam?) (qual)
+- correlation (quant)
+
+Similarity calculation
+......................
+
++ tanimoto
+* weighted tanimoto
+- cosine
+- wighted cosine
+
+Regression
+..........
+
++ weighted majority vote
+* local linear regression
