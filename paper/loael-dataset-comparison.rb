@@ -57,17 +57,14 @@ R.eval "img <- img + geom_point()"
 R.eval "ggsave(file='/home/ch/opentox/lazar-nestec-data/loael-dataset-comparison-mmol_kg_day.svg', plot=img,width=12, height=8)"
 =end
 
-R.assign "old", old_median
-R.assign "new", new_median
+R.assign "Mazzatorta", old_median
+R.assign "SwissFederalOffice", new_median
+R.eval "df <- data.frame(Mazzatorta,SwissFederalOffice)"
+R.eval "ggplot(df, aes(Mazzatorta,SwissFederalOffice)) + geom_point() + geom_abline(intercept=0.0) "
+R.eval "ggsave(file='/home/ch/src/lazar-nestec-data/paper/loael-dataset-correlation.pdf')"
 =begin
-R.eval "df <- data.frame(old,new)"
-R.eval "img <- ggplot(df, aes(old,new))"
-R.eval "img <- img + geom_point()"
-#R.eval "img <- img + geom_smooth(method=lm) "
-R.eval "img <- img + geom_abline(intercept=0.0) "
-R.eval "ggsave(file='/home/ch/opentox/lazar-nestec-data/loael-dataset-correlation.svg', plot=img,width=12, height=8)"
 =end
-puts "Correlation old/new:"
-puts "\tr^2: #{R.eval("cor(old,new,use='complete')").to_f**2}"
+puts "Correlation Mazzatorta/SwissFederalOffice:"
+puts "\tr^2: #{R.eval("cor(Mazzatorta,SwissFederalOffice,use='complete')").to_f**2}"
 puts "\tRMSE: #{rmse}"
 puts "\tMAE: #{mae}"

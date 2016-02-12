@@ -1,0 +1,12 @@
+task :default => "loael.pdf"
+
+file "loael.pdf" => ["loael.md","functional-groups.pdf", "loael-dataset-correlation.pdf"]
+  `pandoc --filter pandoc-citeproc loael.md -s -o loael.pdf`
+  pid=`pidof mupdf`.chomp
+  `kill -s SIGHUP #{pid}`
+
+file "functional-groups.pdf" => ["functional-groups-reduced4R.csv","functional-groups.R"]
+  `R CMD BATCH functional-groups.R`
+
+file "loael-dataset-correlation.pdf" => ["loael-dataset-comparison.rb"]
+  `ruby loael-dataset-comparison.rb`

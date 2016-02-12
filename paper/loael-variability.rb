@@ -1,4 +1,4 @@
-require_relative '../lazar/lib/lazar'
+require_relative '../../lazar/lib/lazar'
 include OpenTox
 #$mongo.database.drop
 #$gridfs = $mongo.database.fs # recreate GridFS indexes
@@ -42,7 +42,7 @@ vars = []
     #end
   #end
 end
-#p vars
+p vars
 # TODO statistical test for variances
 R.assign "vars1", vars[0]
 R.assign "vars2", vars[1]
