@@ -1,10 +1,8 @@
 ---
 author: |
-    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin Gütlein^2^, Benoit
-    Schilter^3^, Elena Lo Piparo^3^
+    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin Gütlein^2^, Benoit Schilter^3^, Elena Lo Piparo^3^
 title: |
-    Modeling Chronic Toxicity: A comparison of experimental variability with
-    read across predictions
+    Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
 keywords: (Q)SAR, read-across, LOAEL
 date: \today

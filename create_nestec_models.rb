@@ -8,7 +8,8 @@ include OpenTox
   #"Mouse_TD50.csv",
   #"LOAEL_mg_corrected_smiles_mmol.csv",
   #"swissRat_chron_LOAEL_mmol.csv",
-  "LOAEL-rat-combined.csv"
+  #"LOAEL-rat-combined.csv",
+  "LOAEL-rat-combined_median.csv",
   #"LOAEL_mmol_corrected_smiles.csv",
   #"swissMouse_chron_LOAEL_mmol.csv",
   #"swissMultigen_LOAEL_mmol.csv",
