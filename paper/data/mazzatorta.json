@@ -1,0 +1,6 @@
+{
+  "species": "Rodents",
+  "endpoint": "Lowest observed adverse effect level (LOAEL)",
+  "source": "http://www.epa.gov/ncct/dsstox/sdf_cpdbas.html",
+  "unit": "mmol/kg_bw/day"
+}

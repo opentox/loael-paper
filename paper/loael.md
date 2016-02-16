@@ -1,10 +1,8 @@
 ---
 author: |
-    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin Gütlein^2^, Benoit
-    Schilter^3^, Elena Lo Piparo^3^
+    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin Gütlein^2^, Benoit Schilter^3^, Elena Lo Piparo^3^
 title: |
-    Modeling Chronic Toxicity: A comparison of experimental variability with
-    read across predictions
+    Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions
 include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
 keywords: (Q)SAR, read-across, LOAEL
 date: \today
@@ -13,6 +11,9 @@ documentclass: achemso
 bibliography: references.bib
 bibliographystyle: achemso
 biblio-style: achemso
+output:
+  pdf_document:
+    fig_caption: yes
 ...
 
 Introduction
@@ -107,10 +108,11 @@ similarities.
 
 The chemical similarity between two compounds is expressed as the
 proportion between atom environments common in both structures and the
-total number of atom environments (Jaccard/Tanimoto index (1)).
+total number of atom environments (Jaccard/Tanimoto index, [@eq:jaccard]).
 
-(1) $sim = \frac{|A \cap B|}{|A \cup B|}$, $A$ atom environments of
-    compound A, $B$ atom environments of compound B.
+$$ sim = \frac{|A \cap B|}{|A \cup B|} $$ {#eq:jaccard}
+
+$A$ atom environments of compound A, $B$ atom environments of compound B.
 
 ### Local (Q)SAR models
 
@@ -158,13 +160,15 @@ FP3, OpenBabel FP4 and OpenBabel MACCS).
 
 Christoph
 
-Figure 1 shows the frequency of selected functional groups in both
+[@fig:fg] shows the frequency of selected functional groups in both
 datasets. A complete table for 138 functional groups from OpenBabel FP4
 fingerprints can be found in the appendix.
 
-![Frequency of functional groups.](functional-groups.pdf)
+![Frequency of functional groups.](functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 
+
+
 
 Christoph
 
@@ -175,39 +179,74 @@ substantial overlap of compounds, with LOAEL values in both datasets.
 
 The Mazzatorta dataset has 562 LOAEL values with 439 unique structures,
 the Swiss Federal Office dataset has 493 rat LOAEL values with 381
-unique structures. Figure 2 shows the intra-dataset variability, where
+unique structures. [@fig:intra] shows the intra-dataset variability, where
 each vertical line represents a single compound and each dot represents
 an individual LOAEL value. The experimental variance of LOAEL values is
 similar in both datasets (p-value: 0.48).
 
 [//]: # p-value: 0.4750771581019402
 
-![Intra dataset variability: Each vertical line represents a compound, dots are individual LOAEL values.](loael-dataset-comparison-all-compounds.pdf)
+![Intra dataset variability: Each vertical line represents a compound, dots are individual LOAEL values.](loael-dataset-comparison-all-compounds.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
-Figure 3 shows the same situation for the combination of the Mazzatorta
+[@fig:inter] shows the same situation for the combination of the Mazzatorta
 and Swiss Federal Office datasets. Obviously the experimental
 variability is larger than for individual datasets.
 
-![Inter dataset variability](loael-dataset-comparison-common-compounds.pdf)
-
+![Inter dataset variability](loael-dataset-comparison-common-compounds.pdf){#fig:inter}
 
 ##### LOAEL correlation between datasets
 
-Figure 4 depicts the correlation between LOAEL data from both datasets
-(using means for multiple measurements). Correlation analysis shows a
-significant correlation with r\^2: 0.61, RMSE: 1.22, MAE: 0.80
+[@fig:corr-1] depicts the correlation between LOAEL data from both datasets
+(using means for multiple measurements).
+Identical values were removed from analysis.
 
 [//]: #   MAE: 0.801626064534318
 [//]: # with identical values
 
-![LOAEL correlation](loael-dataset-correlation.pdf)
 
+```
+## Loading required package: methods
+```
+
+![Correlation of dataset medians (-log10(LOAEL [mmol/kg_bw])](figure/unnamed-chunk-2-1.png)
+
+Correlation analysis shows a
+significant correlation (p-value < 2.2e-16) with r\^2: 0.55, RMSE: 1.34
 
 ### Local (Q)SAR models
 
 Christoph
+
+In order to compare the perfomance of in silico models with experimental variability we are using compounds that occur in both datasets as a test set (155 compounds, 434 measurements).
+
+The Mazzatorta, the Swiss Federal Office dataset and a combined dataset were used as training data. Predictions for the test set compounds were made after eliminating all information from the test compound from the corresponding training dataset. [@tbl:common-pred] summarizes the results:
+
+
+Training data | Model prediction | Experimental variability
+--------------|------------------|-------------------------
+Mazzatorta | 0.88  | 0.87
+Swiss Federal Office |0.65  | 0.76
+Commmon | 1.28| 0.8314774
+Combined | | 0.8242536
+
+: Comparison of model predictions with experimental variability. {#tbl:common-pred}
+
+
+Traditional 10-fold cross-validation results are summarised in [@tbl:cv]:
+
+Training dataset | $r^2$ | RMSE | MAE
+-----------------|-------|------|----
+Mazzatorta | 0.37  | 0.84| 0.65
+Swiss Federal Office | 0.25  | 0.75| 0.61
+Combined | 0.12  | 1.45| 1.21
+
+: 10-fold crossvalidation results {#tbl:cv}
+
+[//]: # ```{r fig.cap="Comparison of predictions with measured values (-log10(LOAEL [mmol/kg_bw])", fig.lp="fig:", echo=F}
+
+![Comparison of predictions with measured values (-log10(LOAEL [mmol/kg_bw])](figure/predictions-1.png)
 
 Discussion
 ==========

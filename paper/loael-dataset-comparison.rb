@@ -1,7 +1,6 @@
 require_relative '../../lazar/lib/lazar'
 include OpenTox
-#$mongo.database.drop
-#$gridfs = $mongo.database.fs # recreate GridFS indexes
+
 old = Dataset.from_csv_file File.join(File.dirname(__FILE__),"..","regression","LOAEL_mg_corrected_smiles_mmol.csv")
 new = Dataset.from_csv_file File.join(File.dirname(__FILE__),"..","regression","swissRat_chron_LOAEL_mmol.csv")
 
@@ -56,14 +55,20 @@ R.eval "img <- img + geom_point()"
 
 R.eval "ggsave(file='/home/ch/opentox/lazar-nestec-data/loael-dataset-comparison-mmol_kg_day.svg', plot=img,width=12, height=8)"
 =end
+#img <- ggplot(data, aes(SMILES,LOAEL,ymin = min(LOAEL), ymax=max(LOAEL),color=Dataset))
+
+#img <- img + ylab('-log(LOAEL mg/kg_bw/day)') + xlab('Compound') + theme(axis.text.x = element_blank())
+
+#img <- img + geom_point()
+
+#print(img)
 
 R.assign "Mazzatorta", old_median
 R.assign "SwissFederalOffice", new_median
 R.eval "df <- data.frame(Mazzatorta,SwissFederalOffice)"
 R.eval "ggplot(df, aes(Mazzatorta,SwissFederalOffice)) + geom_point() + geom_abline(intercept=0.0) "
 R.eval "ggsave(file='/home/ch/src/lazar-nestec-data/paper/loael-dataset-correlation.pdf')"
-=begin
-=end
+
 puts "Correlation Mazzatorta/SwissFederalOffice:"
 puts "\tr^2: #{R.eval("cor(Mazzatorta,SwissFederalOffice,use='complete')").to_f**2}"
 puts "\tRMSE: #{rmse}"
