@@ -219,7 +219,7 @@ significant correlation (p-value < 2.2e-16) with r\^2: 0.55, RMSE: 1.34
 
 Christoph
 
-In order to compare the perfomance of in silico models with experimental variability we are using compounds that occur in both datasets as a test set (155 compounds, 434 measurements).
+In order to compare the perfomance of in silico models with experimental variability we are using compounds that occur in both datasets as a test set (155 compounds, -1 measurements).
 
 The Mazzatorta, the Swiss Federal Office dataset and a combined dataset were used as training data. Predictions for the test set compounds were made after eliminating all information from the test compound from the corresponding training dataset. [@tbl:common-pred] summarizes the results:
 
@@ -246,7 +246,23 @@ Combined | 0.12  | 1.45| 1.21
 
 [//]: # ```{r fig.cap="Comparison of predictions with measured values (-log10(LOAEL [mmol/kg_bw])", fig.lp="fig:", echo=F}
 
-![Comparison of predictions with measured values (-log10(LOAEL [mmol/kg_bw])](figure/predictions-1.png)
+
+```
+## Warning in file(file, "rt"): cannot open file 'data/common-test.csv': No
+## such file or directory
+```
+
+```
+## Error in file(file, "rt"): cannot open the connection
+```
+
+```
+## Error in log10(data$LOAEL): non-numeric argument to mathematical function
+```
+
+```
+## Error in ggplot(sorted, aes(SMILES, -log10(LOAEL), ymin = min(-log10(LOAEL)), : object 'sorted' not found
+```
 
 Discussion
 ==========

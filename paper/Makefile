@@ -35,10 +35,8 @@ dataset-correlation.R: data/common-test.csv dataset-correlation.R
 
 # Validations
 
-crossvalidations:
-
-data/mazzatorta-cv.csv: crossvalidation.rb data/mazzatorta.csv 
-	ruby crossvalidation.rb data/mazzatorta.csv 
+crossvalidation.R: data/mazzatorta.csv,data/swiss.csv,data/combined.csv crossvalidation.rb
+	crossvalidation.rb
 
 test-predictions: data/mazzatorta-test-predictions.csv data/swiss-test-predictions.csv data/combined-test-predictions.csv 
 

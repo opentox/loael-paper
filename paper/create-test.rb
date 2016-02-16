@@ -28,7 +28,7 @@ end
 
 data.sort!{|a,b| a[1] <=> b[1]}
 
-CSV.open(File.join(DATA,"common-test.csv"),"w+") do |csv|
+CSV.open(File.join(DATA,"test.csv"),"w+") do |csv|
   csv << ["SMILES","LOAEL","Dataset"]
   data.each{|r| csv << r}
 end
