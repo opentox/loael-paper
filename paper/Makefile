@@ -1,51 +1,55 @@
 # Paper
-loael.pdf: loael.md functional-groups.pdf loael-dataset-correlation.pdf rmse.R test-set-validation.csv crossvalidations.R data/common-median.csv
+loael.pdf: loael.md references.bibtex
+	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
 
-loael.md: loael.Rmd rmse.R
+loael.md: loael.Rmd figures validations
+	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
 
-loael.docx: loael.md functional-groups.pdf loael-dataset-correlation.pdf
+loael.docx: loael.md 
 	pandoc --filter pandoc-crossref --filter pandoc-citeproc loael.md -s -o loael.docx
 
 rmse.R: rmse.rb
 	ruby rmse.rb
 
-crossvalidations.R: crossvalidations.rb
-	ruby crossvalidations.rb
+# Figures
 
-test-set-validation.csv: test-set-validation.rb
-	ruby test-set-validation.rb
+figures: datasets validations figure/functional-groups.pdf  figure/test-prediction.pdf figure/test-correlation.pdf figure/crossvalidation.pdf
 
-%.md: %.Rmd
-	Rscript --vanilla -e "library(knitr); knit('$<');"
+figure/functional-groups.pdf: data/functional-groups-reduced4R.csv functional-groups.R
+	Rscript functional-groups.R
 
-%.pdf: %.md
-	pandoc --filter pandoc-crossref --filter pandoc-citeproc $< -s -o $@
+figure/crossvalidation.pdf: data/mazzatorta-cv.csv data/swiss-cv.csv data/combined-cv.csv 
+	Rscript crossvalidation-plots.R
 
-functional-groups.pdf: functional-groups-reduced4R.csv functional-groups.R
-	R CMD BATCH functional-groups.R
+figure/test-prediction.pdf: data/mazzatorta-test-predictions.csv data/swiss-test-predictions.csv data/combined-test-predictions.csv data/median-correlation.csv  test-prediction-plot.R
+	Rscript test-prediction-plot.R
 
-loael-dataset-correlation.pdf: loael-dataset-comparison.rb
-	ruby loael-dataset-comparison.rb
-
-#data/common-test.csv: create-test-set.rb
-	#ruby create-test-set.rb
-
-dataset-correlation.R: data/common-test.csv dataset-correlation.R
-	Rscript dataset-correlation.R
+figure/test-correlation.pdf: data/mazzatorta-test-predictions.csv data/swiss-test-predictions.csv data/combined-test-predictions.csv data/median-correlation.csv  test-correlation-plot.R
+	Rscript test-correlation-plot.R
 
 # Validations
 
-crossvalidation.R: data/mazzatorta.csv,data/swiss.csv,data/combined.csv crossvalidation.rb
-	crossvalidation.rb
+validations: test-predictions crossvalidations
+
+crossvalidations: data/mazzatorta-cv.csv data/swiss-cv.csv data/combined-cv.csv
+
+data/mazzatorta-cv.csv: crossvalidation.rb data/mazzatorta.csv
+	ruby crossvalidation.rb mazzatorta.csv
+
+data/swiss-cv.csv: crossvalidation.rb data/swiss.csv
+	ruby crossvalidation.rb swiss.csv
+
+data/combined-cv.csv: crossvalidation.rb data/combined.csv
+	ruby crossvalidation.rb combined.csv
 
 test-predictions: data/mazzatorta-test-predictions.csv data/swiss-test-predictions.csv data/combined-test-predictions.csv 
 
-data/mazzatorta-test-predictions.csv: test-set-validation.rb data/test.csv data/mazzatorta.csv 
-	ruby test-set-validation.rb mazzatorta.csv
-data/swiss-test-predictions.csv: test-set-validation.rb data/test.csv data/swiss.csv
-	ruby test-set-validation.rb swiss.csv
-data/combined-test-predictions.csv: test-set-validation.rb data/test.csv data/combined.csv
-	ruby test-set-validation.rb combined.csv
+data/mazzatorta-test-predictions.csv: test-validation.rb data/test.csv data/mazzatorta.csv 
+	ruby test-validation.rb mazzatorta.csv
+data/swiss-test-predictions.csv: test-validation.rb data/test.csv data/swiss.csv
+	ruby test-validation.rb swiss.csv
+data/combined-test-predictions.csv: test-validation.rb data/test.csv data/combined.csv
+	ruby test-validation.rb combined.csv
 
 # Datasets
 

@@ -16,13 +16,13 @@ common_compound_ids.each do |cid|
     new_values -= identical
   end
   unless old_values.empty? or new_values.empty?
-    data << [c.smiles,old_values.mean,new_values.mean]
+    data << [c.smiles,old_values.median,new_values.median]
   end
 end
 
 data.sort!{|a,b| a[1] <=> b[1]}
 
-CSV.open(File.join(DATA,"common-median.csv"),"w+") do |csv|
+CSV.open(File.join(DATA,"median-correlation.csv"),"w+") do |csv|
   csv << ["SMILES","mazzatorta","swiss"]
   data.each{|r| csv << r}
 end

@@ -1,9 +1,0 @@
-cv.mazzatorta.rmse <- 0.8439115008205602
-cv.mazzatorta.r.squared <- 0.3730663179459023
-cv.mazzatorta.mae <- 0.6546182843884356
-cv.swiss.rmse <- 0.7507139457130771
-cv.swiss.r.squared <- 0.2507741939299348
-cv.swiss.mae <- 0.6068918271561476
-cv.combined.rmse <- 1.4536329017938434
-cv.combined.r.squared <- 0.12100621490895397
-cv.combined.mae <- 1.2096846143410287

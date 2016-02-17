@@ -8,9 +8,8 @@ keywords: (Q)SAR, read-across, LOAEL
 date: \today
 abstract: " "
 documentclass: achemso
-bibliography: references.bib
+bibliography: references.bibtex
 bibliographystyle: achemso
-biblio-style: achemso
 output:
   pdf_document:
     fig_caption: yes
@@ -21,14 +20,34 @@ Introduction
 
 Christoph + Elena + Benoit
 
-The main objectives of this study are
+The quality and reproducibility of (Q)SAR and  read-across predictions is a controversial topic in the toxicological risk-assessment community. Although model predictions can be validated with various procedures it is rarely possible to put the results into the context of experimental variability, because replicate experiments are rarely available.
 
--   to investigate the experimental variability of LOAEL data
+With missing information about the variability of experimental toxicity data it is hard to judge the performance of predictive models and it is tempting for model developments to use aggressive model optimisation methods that lead to impressive validation results, but also to overfitted models with little practical relevance.
 
--   develop predictive model for lowest observed effect levels
+In this study we intent to compare model predictions with experimental variability with chronic oral rat lowest adverse effect levels (LOAEL) as toxicity endpoint.
+We are using two datasets, one from [@mazzatorta08] (*Mazzatorta* dataset) and one from the Swiss Federal Office of TODO (*Swiss Federal Office* dataset).
 
--   compare the performance of model predictions with experimental
-    variability
+Elena: do you have a reference and the name of the department?
+
+
+
+155 compounds are common in both datasets and we use them as a test set in our investigation. For this test set we will
+
+- compare the structural diversity of both datasets
+- compare the LOAEL values in both datasets
+- build prediction models based on the Mazzatorta, Swiss Federal Office datasets and a combination of both
+- predict LOAELs of the training set
+- compare predictions with experimental variability
+
+With this investigation we also want to support the idea of reproducible research, by providing all datasets and programs that have been used to generate this manuscript under a TODO license.
+
+A self-contained docker image with all program dependencies required for the reproduction of these results is available from TODO.
+
+Source code and datasets for the reproduction of this manuscript can be downloaded from the GitHub repository TODO. The lazar framework [@Maunz2013] is also available under a GPL License from https://github.com/opentox/lazar.
+
+TODO: github tags
+
+Elena: please check if this is publication strategy is ok for the Swiss Federal Office
 
 Materials and Methods
 =====================
@@ -36,69 +55,82 @@ Materials and Methods
 Datasets
 --------
 
+
+
 ### Mazzatorta dataset
 
-Just referred to the paper 2008.
+The first dataset (*Mazzatorta* dataset for further reference) originates from
+the publication of [@mazzatorta08]. It contains chronic (> 180 days) lowest
+observed effect levels (LOAEL) for rats (*Rattus norvegicus*) after oral
+(gavage, diet, drinking water) administration.  The Mazzatorta dataset consists
+of 567 LOAEL values for 445 unique
+chemical structures.
 
 ### Swiss Federal Office dataset
 
 Elena + Swiss Federal Office contribution (input)
 
-Only rat LOAEL values were used for the current investigation, because
-they correspond directly to the Mazzatorta dataset.
+The Swiss Federal Office dataset consists of 493 LOAEL values
+for 381 unique chemical structures.
 
 ### Preprocessing
 
-Christoph
+Chemical structures in both datasets were initially represented as SMILES strings
+[@doi:10.1021/ci00057a005]. Syntactically incorrect and missing SMILES were
+generated from other identifiers (e.g names, CAS numbers). Unique smiles from the OpenBabel library [@OBoyle2011] were used for the identification of duplicated structures. 
 
-Chemical structures in both datasets are represented as SMILES strings
-(Weininger 1988). Syntactically incorrect and missing SMILES were
-generated from other identifiers (e.g names, CAS numbers) when possible.
-Studies with undefined (“0”) or empty LOAEL entries were removed for
-this study.
+Studies with undefined or empty LOAEL entries were removed from the datasets. LOAEL values were converted to mmol/kg_bw/day units. For prediction, validation and visualisation purposes -log10 transformations are used.
+
+David: please check if we have missed something
+
+### Derived datasets
+
+Two derived datasets were obtained from the original datasets: 
+
+The *test* dataset contains data of compounds that occur in both datasets. Exact duplications of LOAEL values were removed, because it is very likely that they originate from the same study. 
+The test dataset has 391 LOAEL values for 155 unique chemical structures.
+
+The *combined* dataset is the union of the Mazzatorta and the Swiss Federal Office dataset and it is used to build predictive models. Exact LOAEL duplications were removed, as for the test dataset.
+The combined dataset has 1014 LOAEL values for 671 unique chemical structures.
 
 Algorithms
 ----------
 
-Christoph
-
-For this study we are using the modular lazar (*la*zy *s*tructure
-*a*ctivity *r*elationships) framework (Maunz et al. 2013) for model
+In this study we are using the modular lazar (*la*zy *s*tructure
+*a*ctivity *r*elationships) framework [@Maunz2013] for model
 development and validation.
 
 lazar follows the following basic workflow: For a given chemical
-structure it searches in a database for similar structures (neighbors)
-with experimental data, builds a local (Q)SAR model with these neighbors
-and uses this model to predict the unknown activity of the query
-compound. This procedure resembles an automated version of *read across*
+structure lazar 
+
+- searches in a database for similar structures (*neighbors*)
+with experimental data, 
+- builds a local QSAR model with these neighbors
+and 
+- uses this model to predict the unknown activity of the query
+compound.
+
+This procedure resembles an automated version of *read across*
 predictions in toxicology, in machine learning terms it would be
 classified as a *k-nearest-neighbor* algorithm.
 
 Apart from this basic workflow lazar is completely modular and allows
-the researcher to use any algorithm for neighbor identification and
-local (Q)SAR modelling. Within this study we are using the following
+the researcher to use any algorithm for similarity searches and
+local QSAR modelling. Within this study we are using the following
 algorithms:
 
 ### Neighbor identification
 
-Christoph
-
-Similarity calculations are based on MolPrint2D fingerprints (Bender et
-al. 2004) from the OpenBabel chemoinformatics library (OBoyle et al.
-2011).
+Similarity calculations are based on MolPrint2D fingerprints [@doi:10.1021/ci034207y] from the OpenBabel chemoinformatics library [@OBoyle2011].
 
 The MolPrint2D fingerprint uses atom environments as molecular
 representation, which resemble basically the chemical concept of
 functional groups. For each atom in a molecule it represents the
-chemical environment with the atom types of connected atoms.
+chemical environment using the atom types of connected atoms.
 
-The main advantage of MolPrint2D fingerprints over fingerprints with
-predefined substructures (such as OpenBabel FP3, FP4 or MACCs
-fingerprints) is that it may capture substructures of toxicological
-relevance that are not included in predefined substructure lists.
+MolPrint2D fingerprints are generated dynamically from chemical structures and do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or MACCs fingerprints or lists of toxocophores/toxicophobes). This has the advantage the they may capture substructures of toxicological relevance that are not included in other fingerprints.
 Preliminary experiments have shown that predictions with MolPrint2D
-fingerprints are indeed more accurate than fingerprints with predefined
-substructures.
+fingerprints are indeed more accurate than other OpenBabel fingerprints.
 
 From MolPrint2D fingerprints we can construct a feature vector with all
 atom environments of a compound, which can be used to calculate chemical
@@ -106,27 +138,38 @@ similarities.
 
 [//]: # https://openbabel.org/docs/dev/FileFormats/MolPrint2D_format.html#molprint2d-format
 
-The chemical similarity between two compounds is expressed as the
-proportion between atom environments common in both structures and the
-total number of atom environments (Jaccard/Tanimoto index, [@eq:jaccard]).
+The chemical similarity between two compounds A and B is expressed as the
+proportion between atom environments common in both structures $A \cap B$ and the
+total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jaccard]).
 
 $$ sim = \frac{|A \cap B|}{|A \cup B|} $$ {#eq:jaccard}
 
-$A$ atom environments of compound A, $B$ atom environments of compound B.
+A threshold of $sim < 0.1$ is used for the identification of neighbors for local QSAR models.
+Compounds with the same structure as the query structure are eliminated from the neighbors to obtain an unbiased prediction.
 
-### Local (Q)SAR models
+### Local QSAR models and predictions
 
-Christoph
+Only similar compounds (*neighbors*) are used for local QSAR models.
+In this investigation we are using a weighted partial least squares regression (PLS) algorithm for the prediction of quantitative properties.
+First all fingerprint features with identical values across all neighbors are removed.
+The reamining set of features is used as descriptors for creating a local weighted PLS model with atom environments as descriptors and model similarities as weights. The `plsr` function of the `pls` R package [@pls] is used for this purpose.
+Finally the local PLS model is applied to predict the activity of the query compound.
 
-As soon as neighbors for a query compound have been identified, we can
-use their experimental LOAEL values to predict the activity of the
-untested compound. In this case we are using the weighted mean of the
+If PLS modelling or prediction fails, the program resorts to using the weighted mean of the
 neighbors LOAEL values, where the contribution of each neighbor is
 weighted by its similarity to the query compound.
 
 ### Validation
 
-Christoph
+Two types of validations are used within this study:
+
+For the comparison of experimental variability with predictive accuracies we are using a test set of compounds that occur in both datasets. The *Mazzatorta*, *Swiss Federal Office* and *combined* datasets are used as training data for read across predictions. In order to obtain unbiased predictions *all* information from the test compound is removed from the training set prior to predictions. This is hardcoded into the prediction algorithm in order to prevent validation errors.
+
+TODO: treatment of duplicates
+
+In addition traditional 10-fold crossvalidation results are provided. 
+
+Christoph: check if these specifications have changed at submission
 
 Results
 =======
@@ -147,7 +190,7 @@ baseline for evaluating prediction performance.
 Martin
 
 CheS-Mapper (Chemical Space Mapping and Visualization in 3D,
-http://ches-mapper.org/, (Gutlein, Karwath, and Kramer 2012)) can be
+http://ches-mapper.org/, @Gütlein2012) can be
 used to analyze the relationship between the structure of chemical
 compounds, their physico-chemical properties, and biological or toxic
 effects. CheS-Mapper embeds a dataset into 3D space, such that compounds
@@ -164,7 +207,7 @@ Christoph
 datasets. A complete table for 138 functional groups from OpenBabel FP4
 fingerprints can be found in the appendix.
 
-![Frequency of functional groups.](functional-groups.pdf){#fig:fg}
+![Frequency of functional groups.](figure/functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 
 
@@ -177,6 +220,8 @@ substantial overlap of compounds, with LOAEL values in both datasets.
 
 ##### Intra dataset variability
 
+TODO: read data from files
+
 The Mazzatorta dataset has 562 LOAEL values with 439 unique structures,
 the Swiss Federal Office dataset has 493 rat LOAEL values with 381
 unique structures. [@fig:intra] shows the intra-dataset variability, where
@@ -186,7 +231,7 @@ similar in both datasets (p-value: 0.48).
 
 [//]: # p-value: 0.4750771581019402
 
-![Intra dataset variability: Each vertical line represents a compound, dots are individual LOAEL values.](loael-dataset-comparison-all-compounds.pdf){#fig:intra}
+[//]: # ![Intra dataset variability: Each vertical line represents a compound, dots are individual LOAEL values.](loael-dataset-comparison-all-compounds.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
@@ -194,11 +239,11 @@ similar in both datasets (p-value: 0.48).
 and Swiss Federal Office datasets. Obviously the experimental
 variability is larger than for individual datasets.
 
-![Inter dataset variability](loael-dataset-comparison-common-compounds.pdf){#fig:inter}
+[//]: # ![Inter dataset variability](loael-dataset-comparison-common-compounds.pdf){#fig:inter}
 
 ##### LOAEL correlation between datasets
 
-[@fig:corr-1] depicts the correlation between LOAEL data from both datasets
+[@fig:corr] depicts the correlation between LOAEL data from both datasets
 (using means for multiple measurements).
 Identical values were removed from analysis.
 
@@ -206,16 +251,12 @@ Identical values were removed from analysis.
 [//]: # with identical values
 
 
-```
-## Loading required package: methods
-```
 
-![Correlation of dataset medians (-log10(LOAEL [mmol/kg_bw])](figure/unnamed-chunk-2-1.png)
 
 Correlation analysis shows a
-significant correlation (p-value < 2.2e-16) with r\^2: 0.55, RMSE: 1.34
+significant correlation (p-value < 2.2e-16) with r\^2: 0.58, RMSE: 1.3
 
-### Local (Q)SAR models
+### Local QSAR models
 
 Christoph
 
@@ -223,46 +264,34 @@ In order to compare the perfomance of in silico models with experimental variabi
 
 The Mazzatorta, the Swiss Federal Office dataset and a combined dataset were used as training data. Predictions for the test set compounds were made after eliminating all information from the test compound from the corresponding training dataset. [@tbl:common-pred] summarizes the results:
 
+![Comparison of experimental with predicted LOAEL values, each vertical line represents a compound.](figure/test-prediction.pdf){#fig:comp}
 
-Training data | Model prediction | Experimental variability
---------------|------------------|-------------------------
-Mazzatorta | 0.88  | 0.87
-Swiss Federal Office |0.65  | 0.76
-Commmon | 1.28| 0.8314774
-Combined | | 0.8242536
+
+
+Training data | $r^2$                     | RMSE
+--------------|---------------------------|-------------------------
+Experimental | 0.58      | 1.3
+Mazzatorta | 0.38      | 1.49
+Swiss Federal Office |0.38  | 1.47
+Combined             | 0.38 | 1.47
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
 
 Traditional 10-fold cross-validation results are summarised in [@tbl:cv]:
 
-Training dataset | $r^2$ | RMSE | MAE
------------------|-------|------|----
-Mazzatorta | 0.37  | 0.84| 0.65
-Swiss Federal Office | 0.25  | 0.75| 0.61
-Combined | 0.12  | 1.45| 1.21
+Training dataset | $r^2$ | RMSE 
+-----------------|-------|------
+Mazzatorta | 0.38  | 2.01
+Swiss Federal Office | 0.3  | 1.67
+Combined | 0.38  | 1.81
 
 : 10-fold crossvalidation results {#tbl:cv}
 
-[//]: # ```{r fig.cap="Comparison of predictions with measured values (-log10(LOAEL [mmol/kg_bw])", fig.lp="fig:", echo=F}
+![Correlation of experimental with predicted LOAEL values (test set)](figure/test-correlation.pdf){}
 
+![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figure/crossvalidation.pdf){}
 
-```
-## Warning in file(file, "rt"): cannot open file 'data/common-test.csv': No
-## such file or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```
-## Error in log10(data$LOAEL): non-numeric argument to mathematical function
-```
-
-```
-## Error in ggplot(sorted, aes(SMILES, -log10(LOAEL), ymin = min(-log10(LOAEL)), : object 'sorted' not found
-```
 
 Discussion
 ==========
@@ -276,31 +305,3 @@ Summary
 
 References
 ==========
-
-Bender, Andreas, Hamse Y. Mussa, and Robert C. Glen, and Stephan
-Reiling. 2004. “Molecular Similarity Searching Using Atom Environments,
-Information-Based Feature Selection, and a Naïve Bayesian Classifier.”
-*Journal of Chemical Information and Computer Sciences* 44 (1): 170–78.
-doi:[10.1021/ci034207y](https://doi.org/10.1021/ci034207y).
-
-Gütlein, Martin, Andreas Karwath, and Stefan Kramer. 2012. “CheS-Mapper
-- Chemical Space Mapping and Visualization in 3D.” *Journal of
-Cheminformatics* 4 (1): 7.
-doi:[10.1186/1758-2946-4-7](https://doi.org/10.1186/1758-2946-4-7).
-
-Maunz, Andreas, Martin Gütlein, Micha Rautenberg, David Vorgrimmler,
-Denis Gebele, and Christoph Helma. 2013. “Lazar: A Modular Predictive
-Toxicology Framework.” *Frontiers in Pharmacology* 4. Frontiers Media
-SA.
-doi:[10.3389/fphar.2013.00038](https://doi.org/10.3389/fphar.2013.00038).
-
-OBoyle, Noel M, Michael Banck, Craig A James, Chris Morley, Tim
-Vandermeersch, and Geoffrey R Hutchison. 2011. “Open Babel: An Open
-Chemical Toolbox.” *Journal of Cheminformatics* 3 (1). Springer Science;
-Business Media: 33.
-doi:[10.1186/1758-2946-3-33](https://doi.org/10.1186/1758-2946-3-33).
-
-Weininger, David. 1988. “SMILES, a Chemical Language and Information
-System. 1. Introduction to Methodology and Encoding Rules.” *Journal of
-Chemical Information and Computer Sciences* 28 (1): 31–36.
-doi:[10.1021/ci00057a005](https://doi.org/10.1021/ci00057a005).
