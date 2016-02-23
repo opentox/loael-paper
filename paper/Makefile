@@ -2,21 +2,20 @@
 loael.pdf: loael.md references.bibtex
 	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
 
-loael.md: loael.Rmd figures validations
+loael.md: loael.Rmd # TODO: add further dependencies
 	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
 
 loael.docx: loael.md 
 	pandoc --filter pandoc-crossref --filter pandoc-citeproc loael.md -s -o loael.docx
 
-rmse.R: rmse.rb
-	ruby rmse.rb
-
 # Figures
 
-figures: datasets validations figure/functional-groups.pdf  figure/test-prediction.pdf figure/test-correlation.pdf figure/crossvalidation.pdf
+figures: datasets validations figure/functional-groups.pdf  figure/test-prediction.pdf figure/test-correlation.pdf figure/crossvalidation.pdf figure/dataset-variability.pdf
 
 figure/functional-groups.pdf: data/functional-groups-reduced4R.csv functional-groups.R
 	Rscript functional-groups.R
+figure/dataset-variability.pdf: data/mazzatorta.csv data/swiss.csv dataset-variability.R
+	Rscript dataset-variability.R
 
 figure/crossvalidation.pdf: data/mazzatorta-cv.csv data/swiss-cv.csv data/combined-cv.csv 
 	Rscript crossvalidation-plots.R
