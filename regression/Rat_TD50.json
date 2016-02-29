@@ -1,6 +1,0 @@
-{
-  "species": "Rat",
-  "endpoint": "Carcinogenicity (TD50)",
-  "source": "http://www.epa.gov/ncct/dsstox/sdf_cpdbas.html",
-  "unit": "mmol/kg_bw/day"
-}
