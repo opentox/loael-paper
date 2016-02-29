@@ -311,7 +311,7 @@ These results are presented in [@fig:corr] and [@tbl:cv]. Please bear in mind th
 Training data | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Experimental | 0.49      | 1.41           
-Combined             | 0.34 | 1.51 
+Combined             | 0.38 | 1.48 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -325,7 +325,7 @@ All correlations are statistically highly significant with a p-value < 2.2e-16.
 
 Training dataset | $r^2$ | RMSE 
 -----------------|-------|------
-Combined | 0.32  | 1.96 
+Combined | 0.37  | 1.84 
 
 : 10-fold crossvalidation results {#tbl:cv}
 
