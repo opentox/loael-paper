@@ -38,7 +38,10 @@ We are using two datasets, one from [@mazzatorta08] (*Mazzatorta* dataset) and o
 Elena: do you have a reference and the name of the department?
 
 ```{r echo=F}
-t = read.csv("data/test.csv")
+m = read.csv("data/mazzatorta.csv",header=T)
+s = read.csv("data/swiss.csv",header=T)
+t = read.csv("data/test.csv",header=T)
+c = read.csv("data/combined.csv",header=T)
 ```
 
 `r length(unique(t$SMILES))` compounds are common in both datasets and we use them as a test set in our investigation. For this test set we will
@@ -64,13 +67,6 @@ Materials and Methods
 
 Datasets
 --------
-
-```{r echo=F}
-m = read.csv("data/mazzatorta.csv",header=T)
-s = read.csv("data/swiss.csv",header=T)
-t = read.csv("data/test.csv",header=T)
-c = read.csv("data/combined.csv",header=T)
-```
 
 ### Mazzatorta dataset
 
@@ -306,7 +302,7 @@ The Mazzatorta dataset has `r length(m$SMILES)` LOAEL values for `r length(level
 The Swiss Federal Office dataset has `r length(s$SMILES)` rat LOAEL values for `r length(levels(s$SMILES))` unique structures, `r s.dupnr` compounds have multiple measurements with a similar variance (average `r round(mean(s.dup$var),2)` log10 units). Variances of both datasets do not show a statistically significant difference with a
 p-value (t-test) of `r round(p,2)`.
 
-![Variability of LOAEL values in both datasets: Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
+![Distribution and variability of LOAEL values in both datasets: Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
@@ -315,7 +311,7 @@ p-value (t-test) of `r round(p,2)`.
 ##### LOAEL correlation between datasets
 
 ```{r echo=F}
-data <- read.csv("data/common-median.csv",header=T)
+data <- read.csv("data/median-correlation.csv",header=T)
 cor <- cor.test(-log(data$mazzatorta),-log(data$swiss))
 median.p <- cor$p.value
 median.r.square <- round(rsquare(-log(data$mazzatorta),-log(data$swiss)),2)
@@ -335,14 +331,7 @@ The Mazzatorta, the Swiss Federal Office dataset and a combined dataset were use
 ![Comparison of experimental with predicted LOAEL values, each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figure/test-prediction.pdf){#fig:comp}
 
 ```{r echo=F}
-mazzatorta = read.csv("data/mazzatorta-test-predictions.csv",header=T)
-swiss = read.csv("data/swiss-test-predictions.csv",header=T)
 combined = read.csv("data/combined-test-predictions.csv",header=T)
-
-mazzatorta.r_square = round(rsquare(-log(mazzatorta$LOAEL_measured_median),-log(mazzatorta$LOAEL_predicted)),2)
-mazzatorta.rmse = round(rmse(-log(mazzatorta$LOAEL_measured_median),-log(mazzatorta$LOAEL_predicted)),2)
-swiss.r_square = round(rsquare(-log(swiss$LOAEL_measured_median),-log(swiss$LOAEL_predicted)),2)
-swiss.rmse = round(rmse(-log(swiss$LOAEL_measured_median),-log(swiss$LOAEL_predicted)),2)
 combined.r_square = round(rsquare(-log(combined$LOAEL_measured_median),-log(combined$LOAEL_predicted)),2)
 combined.rmse = round(rmse(-log(combined$LOAEL_measured_median),-log(combined$LOAEL_predicted)),2)
 ```
@@ -356,8 +345,6 @@ These results are presented in [@fig:corr] and [@tbl:cv]. Please bear in mind th
 Training data | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Experimental | `r median.r.square`      | `r median.rmse`           
-Mazzatorta | `r mazzatorta.r_square`      | `r mazzatorta.rmse` 
-Swiss Federal Office |`r swiss.r_square`  | `r swiss.rmse` 
 Combined             | `r combined.r_square` | `r combined.rmse` 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
@@ -365,14 +352,7 @@ Combined             | `r combined.r_square` | `r combined.rmse`
 ![Correlation of experimental with predicted LOAEL values (test set)](figure/test-correlation.pdf){#fig:corr}
 
 ```{r echo=F}
-mazzatorta = read.csv("data/mazzatorta-cv.csv",header=T)
-swiss = read.csv("data/swiss-cv.csv",header=T)
 combined = read.csv("data/combined-cv.csv",header=T)
-
-cv.mazzatorta.r_square = round(rsquare(-log(mazzatorta$LOAEL_measured_median),-log(mazzatorta$LOAEL_predicted)),2)
-cv.mazzatorta.rmse = round(rmse(-log(mazzatorta$LOAEL_measured_median),-log(mazzatorta$LOAEL_predicted)),2)
-cv.swiss.r_square = round(rsquare(-log(swiss$LOAEL_measured_median),-log(swiss$LOAEL_predicted)),2)
-cv.swiss.rmse = round(rmse(-log(swiss$LOAEL_measured_median),-log(swiss$LOAEL_predicted)),2)
 cv.combined.r_square = round(rsquare(-log(combined$LOAEL_measured_median),-log(combined$LOAEL_predicted)),2)
 cv.combined.rmse = round(rmse(-log(combined$LOAEL_measured_median),-log(combined$LOAEL_predicted)),2)
 ```
@@ -383,8 +363,6 @@ All correlations are statistically highly significant with a p-value < 2.2e-16.
 
 Training dataset | $r^2$ | RMSE 
 -----------------|-------|------
-Mazzatorta | `r round(cv.mazzatorta.r_square,2)`  | `r round(cv.mazzatorta.rmse,2)` 
-Swiss Federal Office | `r round(cv.swiss.r_square,2)`  | `r round(cv.swiss.rmse,2)` 
 Combined | `r round(cv.combined.r_square,2)`  | `r round(cv.combined.rmse,2)` 
 
 : 10-fold crossvalidation results {#tbl:cv}

@@ -60,8 +60,6 @@ Materials and Methods
 Datasets
 --------
 
-
-
 ### Mazzatorta dataset
 
 The first dataset (*Mazzatorta* dataset for further reference) originates from
@@ -98,13 +96,13 @@ Two derived datasets were obtained from the original datasets:
 
 The *test* dataset contains data of compounds that occur in both datasets.
 Exact duplications of LOAEL values were removed, because it is very likely that
-they originate from the same study.  The test dataset has 391
+they originate from the same study.  The test dataset has 375
 LOAEL values for 155 unique chemical structures.
 
 The *combined* dataset is the union of the Mazzatorta and the Swiss Federal
 Office dataset and it is used to build predictive models. Exact LOAEL
 duplications were removed, as for the test dataset.  The combined dataset has
-1014 LOAEL values for 671 unique
+998 LOAEL values for 671 unique
 chemical structures.
 
 Algorithms
@@ -280,7 +278,7 @@ The Mazzatorta dataset has 567 LOAEL values for 445 unique structures, 93 compou
 The Swiss Federal Office dataset has 493 rat LOAEL values for 381 unique structures, 91 compounds have multiple measurements with a similar variance (average 0.15 log10 units). Variances of both datasets do not show a statistically significant difference with a
 p-value (t-test) of 0.25.
 
-![Variability of LOAEL values in both datasets: Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
+![Distribution and variability of LOAEL values in both datasets: Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
@@ -292,11 +290,11 @@ p-value (t-test) of 0.25.
 
 [@fig:corr] depicts the correlation between LOAEL values from both datasets. As both datasets contain duplicates we are using medians for the correlation plot and statistics. Please note that the aggregation of duplicated measurements into a single value hides a substantial portion of the real experimental variability.
 Correlation analysis shows a
-significant (p-value < 2.2e-16) correlation between the experimental data in both datasets with r\^2: 0.58, RMSE: 1.3
+significant (p-value < 2.2e-16) correlation between the experimental data in both datasets with r\^2: 0.49, RMSE: 1.41
 
 ### Local QSAR models
 
-In order to compare the perfomance of in silico models with experimental variability we are using compounds that occur in both datasets as a test set (391 measurements, 155 compounds).
+In order to compare the perfomance of in silico models with experimental variability we are using compounds that occur in both datasets as a test set (375 measurements, 155 compounds).
 
 The Mazzatorta, the Swiss Federal Office dataset and a combined dataset were used as training data for building `lazar` read across models. Predictions for the test set compounds were made after eliminating all information from the test compound from the corresponding training dataset. [@fig:comp] summarizes the results:
 
@@ -312,10 +310,8 @@ These results are presented in [@fig:corr] and [@tbl:cv]. Please bear in mind th
 
 Training data | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
-Experimental | 0.58      | 1.3           
-Mazzatorta | 0.38      | 1.49 
-Swiss Federal Office |0.38  | 1.47 
-Combined             | 0.38 | 1.47 
+Experimental | 0.49      | 1.41           
+Combined             | 0.34 | 1.51 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -329,9 +325,7 @@ All correlations are statistically highly significant with a p-value < 2.2e-16.
 
 Training dataset | $r^2$ | RMSE 
 -----------------|-------|------
-Mazzatorta | 0.38  | 2.01 
-Swiss Federal Office | 0.3  | 1.67 
-Combined | 0.38  | 1.81 
+Combined | 0.32  | 1.96 
 
 : 10-fold crossvalidation results {#tbl:cv}
 

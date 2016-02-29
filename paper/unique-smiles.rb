@@ -6,7 +6,8 @@ outname = File.join(File.dirname(ARGV[0]),"#{ARGV[1]}.csv")
 data = []
 input.compounds.each_with_index do |cid,i|
   c = Compound.find cid
-  v = input.data_entries[i].first
+  # round to 5 significant digits in order to detect duplicates 
+  v = input.data_entries[i].first.signif(5)
   data << [c.smiles,v,ARGV[1]]
 end
 
