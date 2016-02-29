@@ -29,13 +29,13 @@ figure/test-correlation.pdf: data/combined-test-predictions.csv data/median-corr
 
 # Validations
 
-validations: data/combined-cv.csv data/combined-test-predictions.csv
-
-data/combined-cv.csv: crossvalidation.rb data/combined.csv
-	ruby crossvalidation.rb combined.csv
+validations: data/combined-test-predictions.csv data/combined-cv.csv
 
 data/combined-test-predictions.csv: test-validation.rb data/test.csv data/combined.csv
 	ruby test-validation.rb combined.csv
+
+data/combined-cv.csv: crossvalidation.rb data/combined.csv
+	ruby crossvalidation.rb combined.csv
 
 # Datasets
 
