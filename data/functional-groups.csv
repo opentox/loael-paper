@@ -129,8 +129,8 @@ Charged, 27, 51
 Anion, 26, 45
 Kation, 25, 51
 Salt, 26, 45
-1,3-Tautomerizable, 265, 296
-1,5-Tautomerizable, 124, 148
+1-3-Tautomerizable, 265, 296
+1-5-Tautomerizable, 124, 148
 Rotatable_bond, 488, 462
 Michael_acceptor, 33, 33
 CH-acidic, 60, 73

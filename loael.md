@@ -229,30 +229,6 @@ http://ches-mapper.org, @Gütlein2012) to compare both datasets. CheS-Mapper can
 
 We extended CheS-Mapper with a functionality to mine the same MolPrint2D features that are utilized for model building in this work. Applying a minimum frequency of 3 yields 760 distinguished MolPrint2D fragments for the composed dataset of 671 unique compounds. Again, a visual inspection confirmed that both datasets are structurally very similar. However, CheS-Mapper allows the detection of features that help to distinguish groups of selected compounds from the entire dataset. Hence, we found discriminating features for compounds that occur in only one of both datasets, and for the most active or in-active compounds (see [@tbl:molprint]). As an example, [@fig:ches-mapper-alert] shows 9 compounds that match a specific fragment (all other compounds in the dataset do not match this fragment) and have very low mean LOAEL values.
 
-| Selection  | Num selected compounds | Feature name                           | Human-readable feature name          | Feature values entire dataset | Feature values in selection  | P-Value               |
-|------------|------------------------|----------------------------------------|--------------------------------------|-------------------------------|------------------------------|-----------------------|
-|            |                        |                                        |                                      |                               |                              |                       |
-| Mazzatorta | 290                    | 8;1-1-3;2-2-3;                         | O.3 1:C.ar 2:2xC.ar                  | 643× 'no-match', 28× 'match'  | 265× 'no-match', 25× 'match' | 0.005560996217776615  |
-| Mazzatorta | 290                    | 9;1-1-2;2-1-3;2-1-28;                  | O 1:C.2 2:C.ar,N.am                  | 629× 'no-match', 42× 'match'  | 284× 'no-match', 6× 'match'  | 0.006195320799272208  |
-| Mazzatorta | 290                    | 15;1-1-3;2-2-3;                        | Cl 1:C.ar 2:2xC.ar                   | 504× 'no-match', 167× 'match' | 240× 'no-match', 50× 'match' | 0.009255119323774763  |
-|            |                        |                                        |                                      |                               |                              |                       |
-| Swiss      | 226                    | 16;1-1-3;2-2-3;                        | F 1:C.ar 2:2xC.ar                    | 630× 'no-match', 41× 'match'  | 199× 'no-match', 27× 'match' | 0.004142648833225349  |
-| Swiss      | 226                    | 8;1-1-3;2-2-3;                         | O.3 1:C.ar 2:2xC.ar                  | 643× 'no-match', 28× 'match'  | 225× 'no-match', 1× 'match'  | 0.006101869043914521  |
-|            |                        |                                        |                                      |                               |                              |                       |
-| low10      | 67                     | 1;1-1-8;2-1-12;                        | C 1:O.3 2:P.3                        | 642× 'no-match', 29× 'match'  | 52× 'no-match', 15× 'match'  | 2.599701232064433E-9  |
-| low10      | 67                     | 15;1-1-1;2-2-1;2-1-15;                 | Cl 1:C 2:2xC,Cl                      | 662× 'no-match', 9× 'match'   | 59× 'no-match', 8× 'match'   | 3.499196354894707E-8  |
-| low10      | 67                     | 1;1-1-1;1-1-8;2-1-12;                  | C 1:C,O.3 2:P.3                      | 645× 'no-match', 26× 'match'  | 54× 'no-match', 13× 'match'  | 6.053371437442223E-8  |
-| low10      | 67                     | 2;1-1-1;1-1-2;2-3-1;                   | C.2 1:C,C.2 2:3xC                    | 663× 'no-match', 8× 'match'   | 61× 'no-match', 6× 'match'   | 8.936801443204523E-6  |
-| low10      | 67                     | 2;1-1-1;1-1-2;1-1-15;2-3-1;2-2-15;     | C.2 1:C,C.2,Cl 2:3xC,2xCl            | 665× 'no-match', 6× 'match'   | 62× 'no-match', 5× 'match'   | 2.3279183652191726E-5 |
-|            |                        |                                        |                                      |                               |                              |                       |
-| high10     | 67                     | 8;1-1-3;2-2-3;                         | O.3 1:C.ar 2:2xC.ar                  | 643× 'no-match', 28× 'match'  | 57× 'no-match', 10× 'match'  | 1.4617532950766954E-4 |
-| high10     | 67                     | 3;1-2-3;2-1-1;2-2-3;                   | C.ar 1:2xC.ar 2:C,2xC.ar             | 506× 'no-match', 165× 'match' | 64× 'no-match', 3× 'match'   | 1.8132445228380423E-4 |
-| high10     | 67                     | 1;1-1-1;1-1-2;2-1-1;2-1-8;2-1-9;       | C 1:C,C.2 2:C,O.3,O                  | 668× 'no-match', 3× 'match'   | 64× 'no-match', 3× 'match'   | 4.598209084156757E-4  |
-| high10     | 67                     | 1;1-2-1;1-1-8;2-1-1;2-2-8;             | C 1:2xC,O.3 2:C,2xO.3                | 668× 'no-match', 3× 'match'   | 64× 'no-match', 3× 'match'   | 4.598209084156757E-4  |
-| high10     | 67                     | 3;1-1-2;1-2-3;2-1-2;2-2-3;2-1-8;2-1-9; | C.ar 1:C.2,2xC.ar 2:C.2,2xC.ar,O.3,O | 662× 'no-match', 9× 'match'   | 62× 'no-match', 5× 'match'   | 4.613813663041366E-4  |
-
-: Significant MolPrint2D features. The listed features help to distinguish a selection of compounds from the entire dataset (of 671 compounds). We selected compounds that occur in only one of the two datasets, or the top 10 percent of all compounds with the lowest/highest LOAEL values (the mean LOAEL value was computed when a compound occurs in both dataset or was measured multiple times). For each set of selected compounds, we listed the top five most significant fragments with p-value < 0.01 (if available, otherwise less fragments). The MolPrint2D fragments are circular fragments that consist of a center atom, and to layers of neighboring atoms. {#tbl:molprint}
-
 ![A CheS-Mapper screen-shot showing 9 compounds that match the MolPrint2D fragment 15;1-1-1;2-2-1;2-1-15; (as SMILES syntax: ClC(C)Cl). Apart from the selected compound (blue box), the other 8 compounds belong to the top 10 percent of compounds with the lowest LOAEL values. I.e., this feature can be regarded as a structural alert in our dataset, as it is matched by only 9 compounds in the entire dataset and 8 of these compounds are highly active.](figure/matching-ClC(C)Cl.png){#fig:ches-mapper-alert}
 
 ##### Distribution of functional groups
@@ -260,11 +236,12 @@ We extended CheS-Mapper with a functionality to mine the same MolPrint2D feature
 
 
 In order to confirm the results of CheS-Mapper analysis we have evaluated the
-frequency of 141 functional groups from the OpenBabel FP4
-fingerprint.  [@fig:fg] shows the frequency of selected functional groups in
-both datasets. The complete table for all functional groups can be found in the
+frequency of functional groups from the OpenBabel FP4
+fingerprint. [@fig:fg] shows the frequency of functional groups 
+in
+both datasets. Only 139 functional groups with a frequency > 25 are depicted, the complete table for all functional groups can be found in the
 data directory of the supplemental material (`data/functional-groups.csv`).
-
+ 
 ![Frequency of functional groups.](figure/functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 

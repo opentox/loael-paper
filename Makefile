@@ -15,6 +15,7 @@ figures: datasets validations figure/functional-groups.pdf  figure/test-predicti
 
 figure/functional-groups.pdf: data/functional-groups-reduced4R.csv functional-groups.R
 	Rscript functional-groups.R
+
 figure/dataset-variability.pdf: data/mazzatorta.csv data/swiss.csv dataset-variability.R
 	Rscript dataset-variability.R
 
@@ -40,6 +41,9 @@ data/combined-cv.csv: crossvalidation.rb data/combined.csv
 # Datasets
 
 datasets: data/median-correlation.csv data/test.csv data/combined.csv data/mazzatorta.csv data/swiss.csv data/test.json data/combined.json data/mazzatorta.json data/swiss.json
+
+data/functional-groups-reduced4R.csv: data/functional-groups-reduced.csv functional-groups4R.rb
+	ruby functional-groups4R.rb
 
 # Medians for dataset correlation
 data/median-correlation.csv: create-median-correlation.rb data/mazzatorta.csv data/swiss.csv
