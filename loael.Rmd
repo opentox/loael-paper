@@ -182,7 +182,8 @@ algorithm for the prediction of quantitative properties.  First all fingerprint
 features with identical values across all neighbors are removed.  The reamining
 set of features is used as descriptors for creating a local weighted PLS model
 with atom environments as descriptors and model similarities as weights. The
-`plsr` function of the `pls` R package [@pls] is used for this purpose.
+`pls` method from the `caret` R package [@Kuhn08] is used for this purpose.
+
 Finally the local PLS model is applied to predict the activity of the query
 compound.
 
@@ -190,9 +191,13 @@ If PLS modelling or prediction fails, the program resorts to using the weighted
 mean of the neighbors LOAEL values, where the contribution of each neighbor is
 weighted by its similarity to the query compound.
 
+default settings for tuning
+
 ### Applicability domain
 
 Christoph: TODO
+
+Prediction intervals were obtained from the `predict` function.
 
 ### Validation
 
