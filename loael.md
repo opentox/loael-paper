@@ -183,6 +183,8 @@ If PLS modelling or prediction fails, the program resorts to using the weighted
 mean of the neighbors LOAEL values, where the contribution of each neighbor is
 weighted by its similarity to the query compound.
 
+default settings for tuning
+
 ### Applicability domain
 
 Christoph: TODO
@@ -314,7 +316,7 @@ These results are presented in [@fig:corr] and [@tbl:cv]. Please bear in mind th
 Training data | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Experimental | 0.49      | 1.41           
-Combined             | 0.38 | 1.51 
+Combined             | 0.41 | 1.47 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -328,7 +330,7 @@ All correlations are statistically highly significant with a p-value < 2.2e-16.
 
 Training dataset | $r^2$ | RMSE 
 -----------------|-------|------
-Combined | 0.33  | 1.9 
+Combined | 0.39  | 1.84 
 
 : 10-fold crossvalidation results {#tbl:cv}
 
