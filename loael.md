@@ -73,37 +73,41 @@ chemical structures.
 
 Elena + Swiss Federal Office contribution (input)
 
-The Swiss Federal Office dataset consists of 493 LOAEL values
-for 381 unique chemical structures.
+The original Swiss Federal Office dataset has chronic toxicity data for rats,
+mice and multi generation effects. For the purpose of this study only rat LOAEL
+data was used. This leads to the *Swiss Federal Office*  dataset with 493 rat LOAEL
+values for 381 unique chemical structures.
 
 ### Preprocessing
 
-Chemical structures in both datasets were initially represented as SMILES
-strings [@doi:10.1021/ci00057a005]. Syntactically incorrect and missing SMILES
-were generated from other identifiers (e.g names, CAS numbers). Unique smiles
-from the OpenBabel library [@OBoyle2011] were used for the identification of
-duplicated structures. 
+Chemical structures (represented as SMILES [@doi:10.1021/ci00057a005]) in both
+datasets were checked for correctness, syntactically incorrect and missing
+SMILES were generated from other identifiers (e.g names, CAS numbers). Unique
+smiles from the OpenBabel library [@OBoyle2011] were used for the
+identification of duplicated structures. 
 
 Studies with undefined or empty LOAEL entries were removed from the datasets.
-LOAEL values were converted to mmol/kg_bw/day units. For prediction, validation
-and visualisation purposes -log10 transformations are used.
-
-David: please check if we have missed something
+LOAEL values were converted to mmol/kg_bw/day units and rounded to five
+significant digits. For prediction, validation and visualisation purposes
+-log10 transformations are used.
 
 ### Derived datasets
 
 Two derived datasets were obtained from the original datasets: 
 
 The *test* dataset contains data of compounds that occur in both datasets.
-Exact duplications of LOAEL values were removed, because it is very likely that
-they originate from the same study.  The test dataset has 375
-LOAEL values for 155 unique chemical structures.
-
-The *combined* dataset is the union of the Mazzatorta and the Swiss Federal
-Office dataset and it is used to build predictive models. Exact LOAEL
-duplications were removed, as for the test dataset.  The combined dataset has
-998 LOAEL values for 671 unique
+LOAEL values equal at five significant digits were considered as duplicates
+originating from the same study/publication and only one instance was kept in
+the test dataset.  Exact duplications of LOAEL values were removed, because it
+is very likely that they originate from the same study.  The test dataset has
+375 LOAEL values for 155 unique
 chemical structures.
+
+The *training* dataset is the union of the Mazzatorta and the Swiss Federal
+Office dataset and it is used to build predictive models. LOAEL duplicates were
+removed, as for the test dataset.  The training dataset has `r
+length(c$SMILES)` LOAEL values for 671 unique chemical
+structures.
 
 Algorithms
 ----------
@@ -195,7 +199,7 @@ Prediction intervals were obtained from the `predict` function.
 
 For the comparison of experimental variability with predictive accuracies we
 are using a test set of compounds that occur in both datasets. The
-*Mazzatorta*, *Swiss Federal Office* and *combined* datasets are used as
+*Mazzatorta*, *Swiss Federal Office* and *training* datasets are used as
 training data for read across predictions. In order to obtain unbiased
 predictions *all* information from the test compound is removed from the
 training set prior to predictions. This procedure is hardcoded into the
@@ -223,13 +227,17 @@ baseline for evaluating prediction performance.
 ##### Ches-Mapper analysis
 
 We applied the visualization tool CheS-Mapper (Chemical Space Mapping and Visualization in 3D,
-http://ches-mapper.org, @Gütlein2012) to compare both datasets. CheS-Mapper can be used to analyze the relationship between the structure of chemical compounds, their physico-chemical properties, and biological or toxic effects. It embeds a dataset into 3D space, such that compounds with similar feature values are close to each other. CheS-Mapper is generic and can be employed with different kinds of features. [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC) descriptors: we determined that both datasets have very similar PC feature values.
+http://ches-mapper.org, @Gütlein2012) to compare both datasets. CheS-Mapper can be used to analyze the relationship between the structure of chemical compounds, their physico-chemical properties, and biological or toxic effects. It embeds a dataset into 3D space, such that compounds with similar feature values are close to each other. CheS-Mapper is generic and can be employed with different kinds of features. [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC) descriptors.
 
-![Compounds from the Mazzatorta and the Swiss dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta. In this example, CheS-Mapper applied a principal components analysis to map compounds according to their physico-chemical (PC) feature values into 3D space. Both datasets have in general similar PC feature values. As an exception, the Mazzatorta dataset includes most of the tiny compound structures: we have selected the 78 smallest compounds (with 10 atoms and less, marked with a blue box in the screen-shot) and found that 61 of these compounds occur in the Mazzatorta dataset, whereas only 19 are contained in the Swiss dataset (p-value 3.7E-7).](figure/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
+![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta. ](figure/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
 
-We extended CheS-Mapper with a functionality to mine the same MolPrint2D features that are utilized for model building in this work. Applying a minimum frequency of 3 yields 760 distinguished MolPrint2D fragments for the composed dataset of 671 unique compounds. Again, a visual inspection confirmed that both datasets are structurally very similar. However, CheS-Mapper allows the detection of features that help to distinguish groups of selected compounds from the entire dataset. Hence, we found discriminating features for compounds that occur in only one of both datasets, and for the most active or in-active compounds (see [@tbl:molprint]). As an example, [@fig:ches-mapper-alert] shows 9 compounds that match a specific fragment (all other compounds in the dataset do not match this fragment) and have very low mean LOAEL values.
+Martin: explain  light colors at bottom of histograms
 
-![A CheS-Mapper screen-shot showing 9 compounds that match the MolPrint2D fragment 15;1-1-1;2-2-1;2-1-15; (as SMILES syntax: ClC(C)Cl). Apart from the selected compound (blue box), the other 8 compounds belong to the top 10 percent of compounds with the lowest LOAEL values. I.e., this feature can be regarded as a structural alert in our dataset, as it is matched by only 9 compounds in the entire dataset and 8 of these compounds are highly active.](figure/matching-ClC(C)Cl.png){#fig:ches-mapper-alert}
+In this example, CheS-Mapper applied a principal components analysis to map compounds according to their physico-chemical (PC) feature values into 3D space. Both datasets have in general very similar PC feature values. As an exception, the Mazzatorta dataset includes most of the tiny compound structures: we have selected the 78 smallest compounds (with 10 atoms and less, marked with a blue box in the screen-shot) and found that 61 of these compounds occur in the Mazzatorta dataset, whereas only 19 are contained in the Swiss dataset (p-value 3.7E-7).
+
+This result was confirmed for structural features (fingerprints) including MolPrint2D features that are utilized for model building in this work.
+
+In general we concluded that both datasets are very similar, in terms of chemical structures and physico-chemical properties. 
 
 ##### Distribution of functional groups
 
@@ -239,7 +247,7 @@ In order to confirm the results of CheS-Mapper analysis we have evaluated the
 frequency of functional groups from the OpenBabel FP4
 fingerprint. [@fig:fg] shows the frequency of functional groups 
 in
-both datasets. Only 139 functional groups with a frequency > 25 are depicted, the complete table for all functional groups can be found in the
+both datasets. 139 functional groups with a frequency > 25 are depicted, the complete table for all functional groups can be found in the
 data directory of the supplemental material (`data/functional-groups.csv`).
  
 ![Frequency of functional groups.](figure/functional-groups.pdf){#fig:fg}
@@ -293,7 +301,7 @@ These results are presented in [@fig:corr] and [@tbl:cv]. Please bear in mind th
 Training data | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Experimental | 0.49      | 1.41           
-Combined             | 0.41 | 1.47 
+Combined             | 0.4 | 1.47 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -307,7 +315,9 @@ All correlations are statistically highly significant with a p-value < 2.2e-16.
 
 Training dataset | $r^2$ | RMSE 
 -----------------|-------|------
-Combined | 0.39  | 1.84 
+Combined | 0.4  | 1.8 
+Combined | 0.38  | 1.84 
+Combined | 0.4  | 1.81 
 
 : 10-fold crossvalidation results {#tbl:cv}
 

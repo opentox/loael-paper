@@ -1,13 +1,13 @@
 library(ggplot2)
 
-combined = read.csv("data/combined-test-predictions.csv",header=T)
+training = read.csv("data/training-test-predictions.csv",header=T)
 test <- read.csv("data/test.csv",header=T)
 n = c("SMILES","LOAEL","Source")
 
 data = data.frame(factor(test$SMILES),test$LOAEL,factor(test$Dataset))
 names(data) = n
 data$Type = "experimental"
-comb = data.frame(factor(combined$SMILES),combined$LOAEL_predicted,factor(combined$Dataset))
+comb = data.frame(factor(training$SMILES),training$LOAEL_predicted,factor(training$Dataset))
 names(comb) = n
 comb$Type = "predicted"
 data = rbind(data,comb)

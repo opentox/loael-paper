@@ -17,23 +17,22 @@ warning if query compound contains new functional groups
 predictions fit experimental data
 
 #only combined dataset (training)
-combined -> training dataset
+#combined -> training dataset
 
-functional groups: remove, minfreq
+#functional groups: remove, minfreq
 
 smarts f functional groups
 
 error band (expermental variability) for fig 7
 
 # paper
-datasets:
-  rat chronic column
-  preprocessing remove first sentence
+#datasets:
+  #rat chronic column
+  #preprocessing remove first sentence
 
 results:
-  CheSMapper remove text, figures
-  light colors at bottom of histograms
-  fig 2 smiles -> smarts, leave out?
+  #CheSMapper remove text, figures
+  #fig 2 smiles -> smarts, leave out?
 
   variability from paolos paper
   https://en.wikipedia.org/wiki/Root_mean_square_deviation

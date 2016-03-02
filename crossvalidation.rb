@@ -2,12 +2,12 @@ require_relative 'include.rb'
 
 name = File.basename ARGV[0], ".csv"
 file = File.join DATA,ARGV[0]
-csv_file = File.join(DATA,ARGV[0].sub(/.csv/,'-cv.csv'))
-id_file = File.join(DATA,ARGV[0].sub(/.csv/,'-cv.id'))
 dataset = Dataset.from_csv_file file
 model = Model::LazarRegression.create(dataset, :prediction_algorithm => "OpenTox::Algorithm::Regression.local_fingerprint_regression")
 #model = Model::LazarRegression.create(dataset, :prediction_algorithm => "OpenTox::Algorithm::Regression.local_physchem_regression")
 #model = Model::LazarRegression.create(dataset, :prediction_algorithm => "OpenTox::Algorithm::Regression.local_weighted_average")
+csv_file = File.join(DATA,ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.csv"))
+id_file = File.join(DATA,ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.id"))
 cv = RegressionCrossValidation.create model
 File.open(id_file,"w+"){|f| f.puts cv.id}
 
