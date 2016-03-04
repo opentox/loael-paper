@@ -1,6 +1,7 @@
 # lazar
 
-confidence intervals
+#confidence intervals
+TODO: github tags
 
 #try to increase predictive accuracies
 
@@ -14,7 +15,7 @@ confidence intervals
 warning if query compound contains new functional groups
 
 # analysis
-predictions fit experimental data
+#predictions fit experimental data
 
 #only combined dataset (training)
 #combined -> training dataset
@@ -23,7 +24,7 @@ predictions fit experimental data
 
 smarts f functional groups
 
-error band (expermental variability) for fig 7
+#error band (experimental variability) for fig 7
 
 # paper
 #datasets:
@@ -34,12 +35,12 @@ results:
   #CheSMapper remove text, figures
   #fig 2 smiles -> smarts, leave out?
 
-  variability from paolos paper
-  https://en.wikipedia.org/wiki/Root_mean_square_deviation
-  When the RMSD is normalized by the mean measured value, is usually called coefficient of variation of the RMSD, CV(RMSD). It is analogous to the coefficient of variation with the RMSD taking the place of the standard deviation.
+  #variability from paolos paper
+  #https://en.wikipedia.org/wiki/Root_mean_square_deviation
+  #When the RMSD is normalized by the mean measured value, is usually called coefficient of variation of the RMSD, CV(RMSD). It is analogous to the coefficient of variation with the RMSD taking the place of the standard deviation.
 
 discussion: mispredictions
 
-AD definition
+#AD definition
 
-line nrs in pdf
+#line nrs in pdf

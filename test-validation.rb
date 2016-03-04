@@ -21,6 +21,6 @@ end
 data.sort!{|a,b| a[1] <=> b[1]}
 
 CSV.open(csv_file,"w+") do |csv|
-  csv << ["SMILES","LOAEL_measured_median","LOAEL_predicted","Confidence","Dataset"]
+  csv << ["SMILES","LOAEL_measured_median","LOAEL_predicted","RMSE","Dataset"]
   data.each{|r| csv << r}
 end

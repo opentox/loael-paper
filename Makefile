@@ -2,7 +2,7 @@
 
 datasets = data/median-correlation.csv data/test.csv data/training.csv data/mazzatorta.csv data/swiss.csv data/test.json data/training.json data/mazzatorta.json data/swiss.json
 crossvalidations = data/training-cv-0.csv data/training-cv-1.csv data/training-cv-2.csv
-validations = data/training-test-predictions.csv $(crossvalidations)
+validations = data/training-test-predictions.csv $(crossvalidations) data/misclassifications.csv
 figures = figure/functional-groups.pdf  figure/test-prediction.pdf figure/test-correlation.pdf figure/crossvalidation.pdf figure/dataset-variability.pdf
 
 # Paper
@@ -34,6 +34,9 @@ figure/test-correlation.pdf: data/training-test-predictions.csv data/median-corr
 	Rscript test-correlation-plot.R
 
 # Validations
+
+data/misclassifications.csv: misclassifications.rb data/training-test-predictions.csv
+	ruby misclassifications.rb
 
 data/training-test-predictions.csv: test-validation.rb data/test.csv data/training.csv
 	ruby test-validation.rb training.csv

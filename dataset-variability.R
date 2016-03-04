@@ -18,7 +18,16 @@ s.dup$SMILES <- reorder(s.dup$SMILES,s.dup$LOAEL)
 p1 <- ggplot(m.dup, aes(SMILES,LOAEL),ymin = min(LOAEL), ymax=max(LOAEL)) + ylab('-log(LOAEL mg/kg_bw/day)') + xlab('Compound') + theme(axis.text.x = element_blank()) + geom_point() + ggtitle("Mazzatorta") + ylim(-1,4)
 p2 <- ggplot(s.dup, aes(SMILES,LOAEL),ymin = min(LOAEL), ymax=max(LOAEL)) + ylab('-log(LOAEL mg/kg_bw/day)') + xlab('Compound') + theme(axis.text.x = element_blank()) + geom_point() + ggtitle("Swiss Federal Office") + ylim(-1,4)
 
-pdf('figure/dataset-variability.pdf')
-grid.arrange(p1,p2,ncol=1)
-dev.off()
+#pdf('figure/dataset-variability.pdf')
+#grid.arrange(p1,p2,ncol=1)
+#dev.off()
 
+data <- read.csv("data/test.csv",header=T)
+data$LOAEL = -log(data$LOAEL)
+data$SMILES <- reorder(data$SMILES,data$LOAEL)
+img = ggplot(data,aes(SMILES,LOAEL,ymin = min(LOAEL), ymax=max(LOAEL),color=Dataset)) + geom_point()
+img <- img + ylab('-log(LOAEL mg/kg_bw/day)') + xlab('Compound') + theme(axis.text.x = element_blank())  + theme(legend.title=element_blank())
+img = img + scale_fill_discrete(breaks=c("Mazzatorta", "Both", "Swiss Federal Office"))
+img = img 
+
+ggsave(file='figure/dataset-variability.pdf', plot=img, width=12,height=8)
