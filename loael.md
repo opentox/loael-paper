@@ -163,7 +163,7 @@ of connected atoms.
 
 MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
-MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
+MACCs fingerprints or lists of toxocophores/toxicophobes). That has the
 advantage the they may capture substructures of toxicological relevance that
 are not included in other fingerprints.  Preliminary experiments have shown
 that predictions with MolPrint2D fingerprints are indeed more accurate than

@@ -237,8 +237,8 @@ CCCN(C(=O)n1cncc1)CCOc1c(Cl)cc(cc1Cl)Cl,0.05708,swiss
 CCOCCN(C(=C(C)C)c1ccccc1)C(=O)CCl,0.05747,swiss
 CCOC(=O)CCN(C(C)C)SN(C(=O)Oc1cccc2c1OC(C2)(C)C)C,0.058461,swiss
 CC1COC(O1)(Cn1cncn1)c1ccc(cc1Cl)Oc1ccc(cc1)Cl,0.059321,swiss
-Nc1n[nH]cn1,0.059467,swiss
 NC#N,0.059467,swiss
+Nc1n[nH]cn1,0.059467,swiss
 N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C(c1ccc(cc1)Cl)C(C)C,0.059538,swiss
 N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C(c1ccc(cc1)Cl)C(C)C,0.059538,swiss
 N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C(c1ccc(cc1)Cl)C(C)C,0.059538,swiss
