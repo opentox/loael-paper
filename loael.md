@@ -1,9 +1,9 @@
 ---
 author: |
-    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin Gütlein^2^, Benoit Schilter^3^, Elena Lo Piparo^3^
+    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin G<c3><bc>tlein^2^, Benoit Schilter^3^, Elena Lo Piparo^3^
 title: |
     Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions
-include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
+include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universit<c3><a4>t Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestl<c3><a9> Research Center, Lausanne, Switzerland
 keywords: (Q)SAR, read-across, LOAEL
 date: \today
 abstract: " "
@@ -163,7 +163,7 @@ of connected atoms.
 
 MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
-MACCs fingerprints or lists of toxocophores/toxicophobes). That has the
+MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
 advantage the they may capture substructures of toxicological relevance that
 are not included in other fingerprints.  Preliminary experiments have shown
 that predictions with MolPrint2D fingerprints are indeed more accurate than
@@ -244,7 +244,7 @@ baseline for evaluating prediction performance.
 ##### Ches-Mapper analysis
 
 We applied the visualization tool CheS-Mapper (Chemical Space Mapping and
-Visualization in 3D, http://ches-mapper.org, @Gütlein2012) to compare both
+Visualization in 3D, http://ches-mapper.org, @G<U+FFFD><U+FFFD>tlein2012) to compare both
 datasets. CheS-Mapper can be used to analyze the relationship between the
 structure of chemical compounds, their physico-chemical properties, and
 biological or toxic effects. It embeds a dataset into 3D space, such that
@@ -253,7 +253,7 @@ generic and can be employed with different kinds of features.
 [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
 descriptors.
 
-![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta.](figure/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
+![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta.](figures/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
 
 Martin: please explain light colors at bottom of histograms
 
@@ -283,7 +283,7 @@ functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the data directory of the supplemental
 material (`data/functional-groups.csv`).
  
-![Frequency of functional groups.](figure/functional-groups.pdf){#fig:fg}
+![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 
 
@@ -295,6 +295,9 @@ experimental results within individual datasets and between datasets.
 ##### Intra dataset variability
 
 
+```
+## Error in split.default(x, g): first argument must be a vector
+```
 
 The Mazzatorta dataset has 567 LOAEL values for
 445 unique structures, 93
@@ -308,10 +311,10 @@ multiple measurements with a mean standard deviation of
 
 Standard deviations of both datasets do not show
 a statistically significant difference with a p-value (t-test) of 0.21.
-The combined test set has a mean standard deviation of 0.33 
+The combined test set has a mean standard deviation of NA 
 log10 units.
 
-![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
+![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
@@ -327,7 +330,7 @@ and statistics. Please note that the aggregation of duplicated measurements
 into a single median value hides a substantial portion of the experimental
 variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
 correlation between the experimental data in both datasets with r\^2:
-0.49, RMSE: 1.41
+0.52, RMSE: 0.59
 
 ### Local QSAR models
 
@@ -337,18 +340,18 @@ In order to compare the performance of in silico read across models with experim
 variability we are using compounds that occur in both datasets as a test set
 (375 measurements, 155 compounds).
 `lazar` read across predictions
-were obtained for 155 compounds, 8
+were obtained for 155 compounds, 29
 predictions failed, because no similar compounds were found in the training data (i.e. they were not covered by the applicability domain of the training data).
 
 
-Experimental data and 95\% prediction intervals did not overlap in 13 cases
-(9\%),
-8 predictions were too high and
-5 predictions too low (after -log10 transformation).
+Experimental data and 95\% prediction intervals did not overlap in 0 cases
+(0\%),
+0 predictions were too high and
+0 predictions too low (after -log10 transformation).
 
 [@fig:comp] shows a comparison of predicted with experimental values:
 
-![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figure/test-prediction.pdf){#fig:comp}
+![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figures/test-prediction.pdf){#fig:comp}
 
 Correlation analysis was performed between individual predictions and the
 median of experimental data.  All correlations are statistically highly
@@ -358,12 +361,12 @@ experimental data into a single median value hides experimental variability.
 
 Comparison    | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
-Mazzatorta vs. Swiss | 0.49      | 1.41           
-Prediction vs. Test median             | 0.4 | 1.47 
+Mazzatorta vs. Swiss | 0.52      | 0.59           
+Prediction vs. Test median             | 0.33 | 0.67 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
-![Correlation of experimental with predicted LOAEL values (test set)](figure/test-correlation.pdf){#fig:corr}
+![Correlation of experimental with predicted LOAEL values (test set)](figures/test-correlation.pdf){#fig:corr}
 
 
 
@@ -373,13 +376,13 @@ All correlations of predicted with experimental values are statistically highly 
 
  $r^2$ | RMSE | Nr. predicted
 -------|------|----------------
-0.4  | 1.8 | 630/671
-0.38  | 1.84 | 631/671
-0.4  | 1.81 | 635/671
+0.38  | 0.8 | 609/671
+0.35  | 0.82 | 611/671
+0.37  | 0.81 | 610/671
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
-![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figure/crossvalidation.pdf){#fig:cv}
+![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figures/crossvalidation.pdf){#fig:cv}
 
 Discussion
 ==========
@@ -400,7 +403,7 @@ This will become obvious in the next section, where we compare predictions with 
 
 [@fig:comp], [@fig:corr], [@tbl:common-pred]
 and the fact that experimental data is covered in
-91\% by the `lazar`
+100\% by the `lazar`
 prediction interval shows that `lazar` read across predictions fit well into
 the experimental variability of LOAEL values.
 
@@ -413,13 +416,13 @@ we present a brief analysis of the two most severe mispredictions:
 
 
 
-The compound with the largest deviation of prediction intervals is (amino-methylsulfanyl-phosphoryl)oxymethane (SMILES COP(=O)(SC)N) with an experimental median of 2.69 and a prediction interval of 0.48 +/- 0.59. In this case the prediction is based on two neighbors with very low similarity (0.1 and 0.13). Such cases can be eliminated by raising the similarity threshold for neighbors, but that could come at the cost of a larger number of unpredicted compounds. The graphical user interface shows for each prediction neighbors and similarities for a critical examination which should make the detection of similar cases rather straightforward.
+The compound with the largest deviation of prediction intervals is (amino-methylsulfanyl-phosphoryl)oxymethane (SMILES COP(=O)(SC)N) with an experimental median of 2.67 and a prediction interval of 0.43 +/- 0.35. In this case the prediction is based on two neighbors with very low similarity (0.1 and 0.13). Such cases can be eliminated by raising the similarity threshold for neighbors, but that could come at the cost of a larger number of unpredicted compounds. The graphical user interface shows for each prediction neighbors and similarities for a critical examination which should make the detection of similar cases rather straightforward.
 
 
 
 The compound with second largest deviation of prediction intervals is
 Endosulfan (SMILES O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl)
-with an experimental median of 1.91 and a prediction interval of 3.64 +/- 0.45. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
+with an experimental median of 1.74 and a prediction interval of 3.44 +/- 1.7. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
 
 Summary
 =======

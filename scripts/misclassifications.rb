@@ -1,4 +1,6 @@
-require_relative 'include.rb'
+#!/usr/bin/env ruby
+require_relative '../../lazar/lib/lazar'
+include OpenTox
 
 class Range
   def intersection(other)
@@ -9,21 +11,21 @@ class Range
 end
 
 experimental = {}
-CSV.foreach(File.join(DATA,"test.csv")) do |row|
+CSV.foreach(File.join("data","test_log10.csv")) do |row|
   experimental[row[0]] ||= []
   experimental[row[0]] << row[1].to_f
 end
 
 predictions = {}
-CSV.foreach(File.join(DATA,"training-test-predictions.csv"),:headers => true) do |row|
-  predictions[row[0]] = [-Math.log10(row[2].to_f),Math.log10(row[3].to_f).abs]
+CSV.foreach(File.join("data","training-test-predictions.csv"),:headers => true) do |row|
+  predictions[row[0]] = [row[2].to_f,row[3].to_f.abs]
 end
 
 outside_experimental_values = 0
 within_experimental_values = 0
 out = []
 predictions.each do |smi,pred|
-  exp = experimental[smi].collect{|e| -Math.log10(e)}.uniq
+  exp = experimental[smi].uniq
   # https://en.wikipedia.org/wiki/Prediction_interval
   min = pred[0]-1.96*pred[1]
   max = pred[0]+1.96*pred[1]

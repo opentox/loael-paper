@@ -1,7 +1,7 @@
 # Variables
 
 datasets = data/median-correlation.csv data/test_log10.csv data/training_log10.csv data/mazzatorta_log10.csv data/swiss_log10.csv data/test.json data/training.json data/mazzatorta.json data/swiss.json
-crossvalidations = data/training-cv-0.csv data/training-cv-1.csv data/training-cv-2.csv
+crossvalidations = data/training_log10-cv-0.csv data/training_log10-cv-1.csv data/training_log10-cv-2.csv
 validations = data/training-test-predictions.csv $(crossvalidations) data/misclassifications.csv
 figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/test-correlation.pdf figures/crossvalidation.pdf figures/dataset-variability.pdf
 
@@ -11,7 +11,7 @@ loael.pdf: loael.md references.bibtex
 	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
 
 loael.md: loael.Rmd $(figures) $(datasets) $(validations) 
-	scripts/--vanilla -e "library(knitr); knit('loael.Rmd');"
+	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
 
 loael.docx: loael.md 
 	pandoc --filter pandoc-crossref --filter pandoc-citeproc loael.md -s -o loael.docx
@@ -38,17 +38,20 @@ figures/test-correlation.pdf: data/training-test-predictions.csv data/median-cor
 data/misclassifications.csv: data/training-test-predictions.csv
 	scripts/misclassifications.rb
 
-data/training-test-predictions.csv: data/test_log10.csv data/training_log10.csv
-	scripts/test-validation.rb training.csv
+data/training-test-predictions.csv: data/training-test-predictions.id
+	scripts/test-validation-results.rb > data/training-test-predictions.csv
 
-data/training-cv-0.csv: data/training_log10.csv
-	scripts/crossvalidation.rb training.csv 0
+data/training-test-predictions.id: data/test_log10.csv data/training_log10.csv
+	scripts/test-validation.rb > data/training-test-predictions.id
 
-data/training-cv-1.csv: data/training_log10.csv
-	scripts/crossvalidation.rb training.csv 1
+data/training_log10-cv-0.csv: data/training_log10.csv
+	scripts/crossvalidation.rb training_log10.csv 0
 
-data/training-cv-2.csv: data/training_log10.csv
-	scripts/crossvalidation.rb training.csv 2
+data/training_log10-cv-1.csv: data/training_log10.csv
+	scripts/crossvalidation.rb training_log10.csv 1
+
+data/training_log10-cv-2.csv: data/training_log10.csv
+	scripts/crossvalidation.rb training_log10.csv 2
 
 # Datasets
 
@@ -56,19 +59,19 @@ data/functional-groups-reduced4R.csv: data/functional-groups-reduced.csv
 	scripts/functional-groups4R.rb
 
 # Medians for dataset correlation
-data/median-correlation.csv: data/mazzatorta.csv data/swiss.csv
-	scripts/create-median-correlation.rb
+data/median-correlation.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
+	scripts/create-median-correlation.rb > data/median-correlation.csv
 
 # Test set
 data/test_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
-	scripts/create-test.rb
+	scripts/create-test.rb > data/test_log10.csv
 
 data/test.json: data/mazzatorta.json 
 	cp data/mazzatorta.json data/test.json
 
 # Combined training set
 data/training_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
-	scripts/create-training.rb
+	scripts/create-training.rb > data/training_log10.csv
 
 data/training.json: data/mazzatorta.json 
 	cp data/mazzatorta.json data/training.json

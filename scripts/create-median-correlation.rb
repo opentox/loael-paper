@@ -1,13 +1,15 @@
-require_relative 'include.rb'
+#!/usr/bin/env ruby
+require_relative '../../lazar/lib/lazar'
+include OpenTox
 
-old = Dataset.from_csv_file File.join(DATA,"mazzatorta.csv")
-new = Dataset.from_csv_file File.join(DATA,"swiss.csv")
+old = Dataset.from_csv_file File.join("data","mazzatorta_log10.csv")
+new = Dataset.from_csv_file File.join("data","swiss_log10.csv")
 
-common_compound_ids = (old.compound_ids & new.compound_ids).uniq
+common_compounds = (old.compounds & new.compounds).uniq
 
 data = []
-common_compound_ids.each do |cid|
-  c = Compound.find cid
+puts ["SMILES","mazzatorta","swiss"].join(",")
+common_compounds.each do |c|
   old_values = old.values(c,old.features.first)
   new_values = new.values(c,new.features.first)
   identical = old_values & new_values
@@ -21,8 +23,4 @@ common_compound_ids.each do |cid|
 end
 
 data.sort!{|a,b| a[1] <=> b[1]}
-
-CSV.open(File.join(DATA,"median-correlation.csv"),"w+") do |csv|
-  csv << ["SMILES","mazzatorta","swiss"]
-  data.each{|r| csv << r}
-end
+puts data.collect{|r| r.join ","}.join("\n")

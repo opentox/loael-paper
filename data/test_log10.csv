@@ -1,0 +1,376 @@
+SMILES,LOAEL,Dataset
+OC(=O)CNCP(=O)(O)O,-0.8561425898722091,swiss
+OC(=O)CNCP(=O)(O)O,-0.7719253789441974,mazzatorta
+Oc1ccccc1c1ccccc1,-0.7690226551851297,mazzatorta and swiss
+OC(=O)CNCP(=O)(O)O,-0.745051357794347,swiss
+CC(OC(=O)Nc1cccc(c1)Cl)C,-0.6702736915717395,mazzatorta
+OC(=O)CNCP(=O)(O)O,-0.5201165528332334,swiss
+Oc1ccccc1c1ccccc1,-0.4941128329258674,swiss
+ClCCP(=O)(O)O,-0.48948035185056615,mazzatorta
+CC(OC(=O)Nc1cccc(c1)Cl)C,-0.36925297501043064,mazzatorta
+OC(=O)COc1nc(F)c(c(c1Cl)N)Cl,-0.2923668466362255,mazzatorta and swiss
+CCC(c1noc(c1)NC(=O)c1c(OC)cccc1OC)(CC)C,-0.25650126621131825,swiss
+OC(=O)CNCP(=O)(O)O,-0.24905152880508483,mazzatorta and swiss
+ClC(SN1C(=O)c2c(C1=O)cccc2)(Cl)Cl,-0.2268575702887235,mazzatorta
+CC(C1(C)N=C(NC1=O)c1nc2ccccc2cc1C(=O)O)C,-0.20574554094266215,swiss
+CCC(c1noc(c1)NC(=O)c1c(OC)cccc1OC)(CC)C,-0.20016624636310748,swiss
+CC(Oc1cccc(c1)NC(=O)c1ccccc1C(F)(F)F)C,-0.18934992433919778,mazzatorta
+COC(=O)c1c(Cl)c(Cl)c(c(c1Cl)Cl)C(=O)OC,-0.17788264326532469,mazzatorta
+COC(=O)Nc1nc2c([nH]1)cccc2,-0.11647491190833141,swiss
+OC(=O)C(CCP(=O)(O)C)N,-0.10167835102796928,swiss
+Oc1ccccc1c1ccccc1,-0.07003786660775509,swiss
+[O-][N+](=O)c1cc(Cl)c(c(c1)Cl)N,-0.06419583586464264,mazzatorta
+COc1cccc(c1C)C(=O)NN(C(C)(C)C)C(=O)c1cc(C)cc(c1)C,-0.04743064015554219,mazzatorta and swiss
+CCOC(=O)CC(C(=O)OCC)SP(=S)(OC)OC,-0.03730695089709131,mazzatorta
+ClCCP(=O)(O)O,-0.016239191042638865,mazzatorta
+OC(=O)c1nc(Cl)c(c(c1Cl)N)Cl,-0.015108160645837197,swiss
+O=C(C1(C)CCCCC1)Nc1ccc(c(c1Cl)Cl)O,0.014905998457995392,mazzatorta and swiss
+Nc1nc(NC2CC2)nc(n1)N,0.027463929127743564,swiss
+ClCCP(=O)(O)O,0.042579494938849424,swiss
+OC(=O)c1nc(Cl)c(c(c1Cl)N)Cl,0.08181233864107436,swiss
+COC(=O)NS(=O)(=O)c1ccc(cc1)N,0.10690988899790645,mazzatorta and swiss
+CCCCOCCOCCOCc1cc2OCOc2cc1CCC,0.13153778019143403,mazzatorta
+[O-][N+](=O)c1cc(Cl)c(c(c1)Cl)N,0.1399076639183564,mazzatorta
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1C(=O)OC,0.18340080321223973,mazzatorta
+O=Cc1ccco1,0.2045023300575414,mazzatorta and swiss
+[O-][N+](=O)c1cc(Cl)c(c(c1)Cl)N,0.2478132149114476,swiss
+ClCCOc1ccccc1S(=O)(=O)NC(=O)Nc1nc(C)nc(n1)OC,0.26004020676066664,mazzatorta
+Clc1ccc(cc1)CN(C(=O)Nc1ccccc1)C1CCCC1,0.26170314076675805,swiss
+COCC(N(c1c(C)cccc1CC)C(=O)CCl)C,0.27691392283721084,mazzatorta and swiss
+Clc1c(Cl)c([N+](=O)[O-])c(c(c1Cl)Cl)Cl,0.32109939155527684,swiss
+Clc1c(Cl)c([N+](=O)[O-])c(c(c1Cl)Cl)Cl,0.3241850105488455,mazzatorta
+COCN(c1c(CC)cccc1CC)C(=O)CCl,0.3306180266382941,swiss
+N#Cc1c[nH]cc1c1cccc2c1OC(O2)(F)F,0.34169281115210776,swiss
+CC1N(C(=O)NC2CCCCC2)C(=O)SC1c1ccc(cc1)Cl,0.34350890569841486,mazzatorta
+N#Cc1c[nH]cc1c1cccc2c1OC(O2)(F)F,0.35338065059536966,mazzatorta
+CC(Oc1ccccn1)COc1ccc(cc1)Oc1ccccc1,0.3608722506294798,mazzatorta
+CCOC(=O)CC(C(=O)OCC)SP(=S)(OC)OC,0.363652544891169,swiss
+CC(Oc1ccccn1)COc1ccc(cc1)Oc1ccccc1,0.3649286265357719,swiss
+CC(=CC1C(C1(C)C)C(=O)OCc1cccc(c1)Oc1ccccc1)C,0.36853593732630685,mazzatorta and swiss
+Clc1c(Cl)c([N+](=O)[O-])c(c(c1Cl)Cl)Cl,0.3734030332190271,mazzatorta
+O=C1N(OCC1(C)C)Cc1ccccc1Cl,0.3796661101133605,swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(cc1)Cl,0.3954067884187704,swiss
+CCC(n1c(=O)[nH]c(c(c1=O)Br)C)C,0.40399702961561096,swiss
+COC(=O)Nc1nc2c([nH]1)cccc2,0.40639276248013095,mazzatorta
+O=C(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,0.41106754767681414,mazzatorta and swiss
+CC(=CC1C(C1(C)C)C(=O)OCc1coc(c1)Cc1ccccc1)C,0.43257365514742613,mazzatorta
+CCN(C(=O)C(Oc1cccc2c1cccc2)C)CC,0.4335389375093063,mazzatorta and swiss
+O=CNC(C(Cl)(Cl)Cl)N1CCN(CC1)C(C(Cl)(Cl)Cl)NC=O,0.4343292396214822,swiss
+CCCCC(c1ccc(cc1)Cl)(Cn1cncn1)C#N,0.4352511081869822,swiss
+OC(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,0.44975941346983,mazzatorta
+CCC(=O)Nc1ccc(c(c1)Cl)Cl,0.4577972175659718,mazzatorta
+OC(=O)COc1ccc(cc1Cl)Cl,0.46940334082401963,swiss
+ClC(SN1C(=O)C2C(C1=O)CC=CC2)(Cl)Cl,0.4779733071886505,mazzatorta and swiss
+ClC(SN1C(=O)C2C(C1=O)CC=CC2)(Cl)Cl,0.48674243602099465,swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1cc(Cl)c(c(c1F)Cl)F,0.49291359170948634,swiss
+C#CCC1=C(C)C(CC1=O)OC(=O)C1C(C1(C)C)C=C(C)C,0.49996946581612567,mazzatorta
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1C(=O)OC,0.5057897307706736,swiss
+CCCCCCCCSC(=O)Oc1cc(Cl)nnc1c1ccccc1,0.5178413045887236,swiss
+CNC(=O)Oc1cccc2c1cccc2,0.5240819585605319,swiss
+CNC(=O)Oc1cccc2c1cccc2,0.5255214895917043,mazzatorta
+CCCCOCCOCCOCc1cc2OCOc2cc1CCC,0.5294866078313349,mazzatorta and swiss
+Cc1ccc(cc1)N(S(=O)(=O)N(C)C)SC(Cl)(Cl)F,0.5406527536056628,swiss
+C#CCOS(=O)OC1CCCCC1Oc1ccc(cc1)C(C)(C)C,0.5446525636058117,mazzatorta
+CCCC1COC(O1)(Cn1cncn1)c1ccc(cc1Cl)Cl,0.5520361697732551,mazzatorta and swiss
+OC(=O)COc1ccc(cc1Cl)Cl,0.5520671344078197,swiss
+CC(Oc1cccc(c1)NC(=O)c1ccccc1C(F)(F)F)C,0.5701024413128524,mazzatorta and swiss
+Cc1ccc(cc1)N(S(=O)(=O)N(C)C)SC(Cl)(Cl)F,0.5864152712755908,swiss
+CCOCN(c1c(C)cccc1CC)C(=O)CCl,0.5921334169692242,swiss
+C=CC1(C)OC(=O)N(C1=O)c1cc(Cl)cc(c1)Cl,0.5938005763366871,mazzatorta
+OC(=O)c1nc(Cl)c(c(c1Cl)N)Cl,0.6046910839214119,mazzatorta
+CCOCN(c1c(C)cccc1CC)C(=O)CCl,0.6055658314011255,swiss
+CCC(n1c(=O)[nH]c(c(c1=O)Br)C)C,0.6209484238156326,mazzatorta
+CNC(=O)Oc1ccccc1OC(C)C,0.6216747904039281,mazzatorta
+CC1=C(C)S(=O)(=O)CCS1(=O)=O,0.6238064131157152,swiss
+O=CNC(C(Cl)(Cl)Cl)N1CCN(CC1)C(C(Cl)(Cl)Cl)NC=O,0.6384421385594775,mazzatorta and swiss
+CNC(=O)Oc1ccccc1OC(C)C,0.6394065864347511,swiss
+CC(Nc1nc(NC(C)C)nc(n1)Cl)C,0.653607901682671,swiss
+CC(Nc1nc(NC(C)C)nc(n1)Cl)C,0.66220142273775,mazzatorta
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1CCC(F)(F)F,0.6781324193692118,swiss
+c1scc(n1)c1nc2c([nH]1)cccc2,0.7016710119265048,mazzatorta and swiss
+COP(=O)(NC(=O)C)SC,0.7187847673886838,mazzatorta
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1CCC(F)(F)F,0.7200594271604471,mazzatorta
+CCOCN(c1c(C)cccc1CC)C(=O)CCl,0.7320074096344176,mazzatorta
+CN1CN(C)CSC1=S,0.7331335587788191,mazzatorta
+c1ccc(cc1)Nc1ccccc1,0.7370982373458622,mazzatorta
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,0.7443416268287478,mazzatorta and swiss
+Clc1ccc(cc1)CCC(C(C)(C)C)(Cn1cncn1)O,0.747924056200199,swiss
+CCCCCCCCSC(=O)Oc1cc(Cl)nnc1c1ccccc1,0.7492385520203118,mazzatorta
+CCOCN(c1c(C)cccc1CC)C(=O)CCl,0.7542899704547085,swiss
+CCN(C(=O)C(Oc1cccc2c1cccc2)C)CC,0.7562924133382095,swiss
+Clc1cc(Cl)c(cc1n1nc(n(c1=O)C(F)F)C)NS(=O)(=O)C,0.7618534935689649,mazzatorta and swiss
+CCC(Nc1c(cc(cc1[N+](=O)[O-])C(C)(C)C)[N+](=O)[O-])C,0.7713430418910647,mazzatorta
+O=C1N(c2cc(Cl)cc(c2)Cl)C(=O)C2(C1(C)C2)C,0.7722932179393288,swiss
+ClC(SN1C(=O)c2c(C1=O)cccc2)(Cl)Cl,0.7731424297112764,mazzatorta
+CC(N1C(=O)c2ccccc2NS1(=O)=O)C,0.7786640204661717,mazzatorta
+Cc1cccc2c1n1cnnc1s2,0.7856330784033956,mazzatorta
+Cc1nc(Nc2ccccc2)nc(c1)C1CC1,0.8012879425395989,mazzatorta and swiss
+OC(=O)C(Oc1ccc(cc1Cl)Cl)C,0.8088844776196935,swiss
+COC(=O)NC(=S)Nc1ccccc1NC(=S)NC(=O)OC,0.8102570997584302,swiss
+CCC(c1noc(c1)NC(=O)c1c(OC)cccc1OC)(CC)C,0.8166447297394875,mazzatorta
+CCOC(=O)CC(C(=O)OCC)SP(=S)(OC)OC,0.8200175747074082,mazzatorta
+N#Cc1c(Cl)c(C#N)c(c(c1Cl)Cl)Cl,0.8226655444942998,swiss
+CC(N1C(=O)c2ccccc2NS1(=O)=O)C,0.8244012204816238,swiss
+c1scc(n1)c1nc2c([nH]1)cccc2,0.8266097485348047,mazzatorta
+c1ccc(cc1)Nc1ccccc1,0.8305313021730596,mazzatorta and swiss
+CCOc1cc(ccc1[N+](=O)[O-])Oc1ccc(cc1Cl)C(F)(F)F,0.8340734503909036,swiss
+CC(N1C(=O)c2ccccc2NS1(=O)=O)C,0.8366596943817484,mazzatorta
+CC(OC(=O)Nc1cccc(c1)Cl)C,0.8526019606523453,swiss
+OC(=O)COc1nc(Cl)c(cc1Cl)Cl,0.8527257000881574,mazzatorta
+CC(NC(=O)N1CC(=O)N(C1=O)c1cc(Cl)cc(c1)Cl)C,0.8559865342138013,mazzatorta
+CC(C(c1cncnc1)(c1ccc(cc1)OC(F)(F)F)O)C,0.8600894441243174,swiss
+CCC(Nc1c(cc(cc1[N+](=O)[O-])C(C)(C)C)[N+](=O)[O-])C,0.8617920673318369,swiss
+Cc1cccc2c1n1cnnc1s2,0.8620448764676394,swiss
+CCc1ccc(cc1)C(=O)NN(C(C)(C)C)C(=O)c1cc(C)cc(c1)C,0.8622662052462875,swiss
+CCc1ccc(cc1)C(=O)NN(C(C)(C)C)C(=O)c1cc(C)cc(c1)C,0.8658866701576757,mazzatorta
+ClC(SN1C(=O)c2c(C1=O)cccc2)(Cl)Cl,0.8700524427193329,mazzatorta
+C=CCOC(c1ccc(cc1Cl)Cl)Cn1cncc1,0.870954940112042,mazzatorta
+O=C(N(C)C)Nc1cccc(c1)C(F)(F)F,0.8887374863409347,swiss
+ClC(=CC1C(C1(C)C)C(=O)OCc1cccc(c1)Oc1ccccc1)Cl,0.8935371162038789,swiss
+O=C(C1=C(C)OCCS1)Nc1ccccc1,0.894489815230026,mazzatorta
+CON(C(=O)Nc1ccc(c(c1)Cl)Cl)C,0.9015293343493707,swiss
+CNC(=O)Oc1cc(C)c(c(c1)C)SC,0.9056337016638656,swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,0.9204208330298691,mazzatorta and swiss
+N#CC(c1ccccc1)(Cn1cncn1)CCc1ccc(cc1)Cl,0.925329811075993,mazzatorta
+CCNc1nc(NC(C)C)nc(n1)Cl,0.9358790941703782,mazzatorta
+Clc1cc(ccc1Oc1ccc(c(c1)C(=O)NS(=O)(=O)C)[N+](=O)[O-])C(F)(F)F,0.9432475594325607,mazzatorta
+COC(=O)c1c(nc(c(c1CC(C)C)C1=NCCS1)C(F)(F)F)C(F)F,0.9526861841846117,mazzatorta and swiss
+CCOc1cc(ccc1[N+](=O)[O-])Oc1ccc(cc1Cl)C(F)(F)F,0.9562841419387937,mazzatorta
+CCNc1nc(NC(C)C)nc(n1)Cl,0.9609032895585495,swiss
+OC(=O)COc1ccc(cc1C)Cl,1.0236179201622833,swiss
+COC(=O)NC(=S)Nc1ccccc1NC(=S)NC(=O)OC,1.0293742233117054,mazzatorta and swiss
+N#CC(c1ccccc1)(Cn1cncn1)CCc1ccc(cc1)Cl,1.0360328271872385,swiss
+CCC(=O)Nc1ccc(c(c1)Cl)Cl,1.0375833065542488,mazzatorta
+Nc1nc(NC2CC2)nc(n1)N,1.0444950477343224,mazzatorta
+O=C1N(OCC1(C)C)Cc1ccccc1Cl,1.047226923919808,mazzatorta
+N#CC(c1ccccc1)(Cn1cncn1)CCc1ccc(cc1)Cl,1.0502734235899835,mazzatorta
+CCOC(=O)CC(C(=O)OCC)SP(=S)(OC)OC,1.0565846338083325,swiss
+O=C(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,1.070034717984175,mazzatorta
+OC(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,1.0730045445647032,mazzatorta
+ClC(SN1C(=O)c2c(C1=O)cccc2)(Cl)Cl,1.0741672736326,swiss
+COP(=S)(Oc1ccc(c(c1)C)[N+](=O)[O-])OC,1.0792351019025128,swiss
+ClCCP(=O)(O)O,1.0806708219654175,mazzatorta
+O=C(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,1.0823684740575847,swiss
+CCOC(=O)NCCOc1ccc(cc1)Oc1ccccc1,1.086355661467734,swiss
+COP(=O)(C(C(Cl)(Cl)Cl)O)OC,1.1096404686828705,mazzatorta
+CNC(=O)Oc1cccc2c1cccc2,1.1105470212498103,mazzatorta
+Clc1ccc(cc1)CN(C(=O)Nc1ccccc1)C1CCCC1,1.1190378586994414,mazzatorta
+ClCCOc1ccccc1S(=O)(=O)NC(=O)Nc1nc(C)nc(n1)OC,1.1269178314119968,swiss
+OC(C(C)(C)C)C(n1cncn1)Oc1ccc(cc1)c1ccccc1,1.130222820427892,mazzatorta and swiss
+O=C(N(C)C)Nc1cccc(c1)C(F)(F)F,1.1310207139253916,swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(c(c1)Cl)OC(C(OC(F)(F)F)F)(F)F,1.1362846674663016,mazzatorta
+CCCC1COC(O1)(Cn1cncn1)c1ccc(cc1Cl)Cl,1.13636788955756,mazzatorta
+C#CCOS(=O)OC1CCCCC1Oc1ccc(cc1)C(C)(C)C,1.1432529892239978,swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)(C)C,1.1454085716982032,mazzatorta
+CSc1nnc(c(=O)n1N)C(C)(C)C,1.1549081642369436,mazzatorta
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1Cl,1.155665748672126,mazzatorta
+CCOc1ccc(cc1)C(COCc1cccc(c1)Oc1ccccc1)(C)C,1.1607797146866263,mazzatorta
+C#CCOS(=O)OC1CCCCC1Oc1ccc(cc1)C(C)(C)C,1.16083631708535,swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1cc(Cl)c(c(c1F)Cl)F,1.1660755529404674,mazzatorta
+CCOc1ccc(cc1)C(COCc1cccc(c1)Oc1ccccc1)(C)C,1.1692125122974353,swiss
+CSc1nnc(c(=O)n1N)C(C)(C)C,1.1726371897097654,swiss
+Clc1ccccc1c1nnc(nn1)c1ccccc1Cl,1.1806206011079126,mazzatorta
+CCCCN(SN(C(=O)Oc1cccc2c1OC(C2)(C)C)C)CCCC,1.182467683028378,mazzatorta and swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1cc(Cl)c(c(c1F)Cl)F,1.1831094015116075,mazzatorta
+CC1N(C(=O)NC2CCCCC2)C(=O)SC1c1ccc(cc1)Cl,1.1840107302272953,swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1cc(Cl)c(c(c1F)Cl)F,1.1865991709300072,swiss
+O=C(N(C)C)Nc1cccc(c1)C(F)(F)F,1.189774204881748,mazzatorta
+OC(C(C)(C)C)C(n1ncnc1)Oc1ccc(cc1)Cl,1.1921944677293754,swiss
+CC(C1(C)N=C(NC1=O)c1nc2ccccc2cc1C(=O)O)C,1.192201228281402,mazzatorta
+ClC(=CC1C(C1(C)C)C(=O)OCc1cccc(c1)Oc1ccccc1)Cl,1.1945535170115598,mazzatorta and swiss
+CCOP(=S)(SCn1c(=O)oc2c1ccc(c2)Cl)OCC,1.1964063352286556,swiss
+COP(=S)(SCN1C(=O)c2c(C1=O)cccc2)OC,1.2004664736572608,mazzatorta
+CN(C(=S)SSC(=S)N(C)C)C,1.2049058977607419,mazzatorta
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(c(c1)Cl)OC(C(OC(F)(F)F)F)(F)F,1.2068664410308745,swiss
+CC(OC(=O)C(c1ccc(cc1)Br)(c1ccc(cc1)Br)O)C,1.2165895677016367,mazzatorta
+CSc1nnc(c(=O)n1N)C(C)(C)C,1.2170546392276442,swiss
+CC(OC(=O)C(c1ccc(cc1)Br)(c1ccc(cc1)Br)O)C,1.2182589824272165,swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)(C)C,1.2211327542550814,swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C(c1ccc(cc1)Cl)C(C)C,1.225205758260884,mazzatorta and swiss
+CCCN(C(=O)n1cncc1)CCOc1c(Cl)cc(cc1Cl)Cl,1.2435160355573907,swiss
+Clc1ccccc1c1nnc(nn1)c1ccccc1Cl,1.2436073474297324,mazzatorta and swiss
+COc1nc(nc(n1)C)NC(=O)NS(=O)(=O)c1ccccc1Cl,1.2525804230510118,swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)(C)C,1.2544333907376006,mazzatorta
+O=C(c1ccc(cc1S(=O)(=O)C)C(F)(F)F)c1cnoc1C1CC1,1.2544489954403404,mazzatorta and swiss
+COCN(c1c(CC)cccc1CC)C(=O)CCl,1.2548939653344497,mazzatorta
+CCOc1ccc2c(c1)C(=CC(N2)(C)C)C,1.2578957329638771,mazzatorta and swiss
+C#CCC1=C(C)C(CC1=O)OC(=O)C1C(C1(C)C)C=C(C)C,1.2602062139183252,swiss
+C#CCOS(=O)OC1CCCCC1Oc1ccc(cc1)C(C)(C)C,1.265896559378767,mazzatorta
+OC(C(Cl)(Cl)Cl)(c1ccc(cc1)Cl)c1ccc(cc1)Cl,1.2677429840395533,mazzatorta
+C=CCOC(c1ccc(cc1Cl)Cl)Cn1cncc1,1.2716218656999372,swiss
+Clc1ccc(cc1)C(c1ccccc1Cl)(c1cncnc1)O,1.2770454101830115,swiss
+O=C1N(c2cc(Cl)cc(c2)Cl)C(=O)C2(C1(C)C2)C,1.2774401112445704,mazzatorta
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.2798406965940432,swiss
+CN(C(=O)Oc1nc(nc(c1C)C)N(C)C)C,1.280188271227964,mazzatorta
+COCN(c1c(CC)cccc1CC)C(=O)CCl,1.2848577466043891,mazzatorta and swiss
+Cc1ccc(cc1)N(S(=O)(=O)N(C)C)SC(Cl)(Cl)F,1.285376897128516,mazzatorta
+COP(=O)(C(C(Cl)(Cl)Cl)O)OC,1.286820378541783,swiss
+Clc1ccc(cc1)CCC(C(C)(C)C)(Cn1cncn1)O,1.2868960417984983,mazzatorta
+CN(C(=O)Oc1nc(nc(c1C)C)N(C)C)C,1.287190413172402,mazzatorta and swiss
+C=CCOC(c1ccc(cc1Cl)Cl)Cn1cncc1,1.2969236723843232,mazzatorta and swiss
+ClCC1CN(C(=O)C1Cl)c1cccc(c1)C(F)(F)F,1.2984147471171126,swiss
+CN(C(=S)SSC(=S)N(C)C)C,1.3018124301338776,mazzatorta and swiss
+CON(C(=O)Nc1ccc(cc1)Br)C,1.3165566912097522,mazzatorta
+CN(C(=S)SSC(=S)N(C)C)C,1.3202996191280358,mazzatorta
+CC1=C(C)S(=O)(=O)CCS1(=O)=O,1.322776417451734,mazzatorta
+CCNc1nc(NC(C)C)nc(n1)Cl,1.3338191028424158,swiss
+O=C1OC(C(=O)N1Nc1ccccc1)(C)c1ccc(cc1)Oc1ccccc1,1.3428771906003532,swiss
+CCN(c1nc(cc(n1)C)OP(=S)(OC)OC)CC,1.344900000029291,mazzatorta
+O=C1OC(C(=O)N1Nc1ccccc1)(C)c1ccc(cc1)Oc1ccccc1,1.3480148945878891,mazzatorta
+CC(=CC1C(C1(C)C)C(=O)OCc1coc(c1)Cc1ccccc1)C,1.3533904493269542,swiss
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.354479485094126,swiss
+C#CCOS(=O)OC1CCCCC1Oc1ccc(cc1)C(C)(C)C,1.3685663781727047,swiss
+CC(N(C(=O)SCC(=C(Cl)Cl)Cl)C(C)C)C,1.369877357140688,swiss
+Clc1ccc(c(c1)Cl)C1(OCCO1)Cn1cncn1,1.370111513834565,swiss
+CCOC(=O)C(Oc1ccc(cc1)Oc1cnc2c(n1)ccc(c2)Cl)C,1.3811468505131965,swiss
+CNC(=O)Oc1cc(C)c(c(c1)C)SC,1.3842918746267547,mazzatorta
+CCC(=O)Nc1ccc(c(c1)Cl)Cl,1.384376054498974,swiss
+CC(N(C(=O)SCC(=C(Cl)Cl)Cl)C(C)C)C,1.386909067965439,mazzatorta
+CC(C(c1cncnc1)(c1ccc(cc1)OC(F)(F)F)O)C,1.411773125869789,mazzatorta
+OC(=O)C(Oc1ccc(cc1Cl)Cl)C,1.4169486617141684,mazzatorta
+CCOCn1c(c2ccc(cc2)Cl)c(c(c1C(F)(F)F)Br)C#N,1.4341521813264824,swiss
+CC(NC(=O)N1CC(=O)N(C1=O)c1cc(Cl)cc(c1)Cl)C,1.4395553268068126,swiss
+O=C(C1=C(C)OCCS1)Nc1ccccc1,1.4578096795663429,swiss
+CCCCC(c1ccc(cc1)Cl)(Cn1cncn1)C#N,1.4649211813101468,swiss
+CCCCC(c1ccc(cc1)Cl)(Cn1cncn1)C#N,1.467564135493289,mazzatorta
+CCCCC(c1ccc(cc1)Cl)(Cn1cncn1)C#N,1.4693393488275133,mazzatorta
+N#Cc1sc2=c(sc1C#N)c(=O)c1c(c2=O)cccc1,1.4717648285027363,mazzatorta
+CCOCn1c(c2ccc(cc2)Cl)c(c(c1C(F)(F)F)Br)C#N,1.47670887081321,mazzatorta
+Clc1ccc(c(c1)Cl)C1(OCCO1)Cn1cncn1,1.4773210761437898,mazzatorta
+CCOC(=O)NCCOc1ccc(cc1)Oc1ccccc1,1.4790581780219383,mazzatorta
+CN1CN(C)CSC1=S,1.4859838195993507,swiss
+Fc1ccc(cc1)[Si](c1ccc(cc1)F)(Cn1cncn1)C,1.4988448473794327,swiss
+CC(C(c1cncnc1)(c1ccc(cc1)OC(F)(F)F)O)C,1.5033332211199513,swiss
+CN(C(=S)SSC(=S)N(C)C)C,1.5176696240691985,swiss
+COC(=O)c1c(Cl)c(Cl)c(c(c1Cl)Cl)C(=O)OC,1.521087361070694,mazzatorta and swiss
+CCOC(=O)c1cn2nc(cc2nc1C)OP(=S)(OCC)OCC,1.530737774822598,swiss
+CCOC(=O)C(Cc1cc(c(cc1Cl)F)n1nc(n(c1=O)C(F)F)C)Cl,1.5359130396208096,mazzatorta and swiss
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.5408639423123824,mazzatorta
+CCOP(=S)(Oc1nc(Cl)c(cc1Cl)Cl)OCC,1.5447895722241949,mazzatorta and swiss
+COP(=S)(SCN1C(=O)c2c(C1=O)cccc2)OC,1.5472631473134424,mazzatorta
+CC(N(C(=O)SCC(=C(Cl)Cl)Cl)C(C)C)C,1.5493198912379038,swiss
+C=CC1(C)OC(=O)N(C1=O)c1cc(Cl)cc(c1)Cl,1.5534473004973242,swiss
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.558603397145632,mazzatorta
+ClC1C(Cl)C(Cl)C(C(C1Cl)Cl)Cl,1.5605567725507532,mazzatorta
+O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl,1.56812182123316,swiss
+O=C(N(C)C)Nc1ccc(c(c1)Cl)Cl,1.571654591815115,mazzatorta
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(cc1)Cl,1.5892227666227903,mazzatorta
+O=C(N(C)C)Nc1ccc(c(c1)Cl)Cl,1.5893745854018753,mazzatorta
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(cc1)Cl,1.600222475511201,mazzatorta
+CON(C(=O)Nc1ccc(c(c1)Cl)Cl)C,1.6004820295651263,mazzatorta and swiss
+COC(=O)N(c1ccccc1COc1ccn(n1)c1ccc(cc1)Cl)OC,1.6343809977454966,mazzatorta and swiss
+CNC(=O)ON=C(C(=O)N(C)C)SC,1.6419889676679056,mazzatorta
+CN(C(=S)SSC(=S)N(C)C)C,1.6429995095590777,mazzatorta
+OC(=O)COc1ccc(cc1Cl)Cl,1.6454882002557272,mazzatorta and swiss
+CNC(=O)Oc1cccc2c1OC(C2)(C)C,1.6459107778477526,mazzatorta and swiss
+O=C(NC(=O)c1c(F)cccc1F)Nc1ccc(cc1)Cl,1.6472195324286747,mazzatorta
+CNC(=O)ON=C(C(=O)N(C)C)SC,1.6507613373118732,swiss
+CN1CN(C)CSC1=S,1.6539601434301947,swiss
+CNC(=O)CSP(=S)(OC)OC,1.6613443344212997,mazzatorta
+N#Cc1sc2=c(sc1C#N)c(=O)c1c(c2=O)cccc1,1.6936178678498022,mazzatorta and swiss
+OC(=O)COc1ccc(cc1C)Cl,1.7003184083376452,mazzatorta
+CCCN(C(=O)n1cncc1)CCOc1c(Cl)cc(cc1Cl)Cl,1.7008851163994632,mazzatorta
+CCN(C(=O)SCc1ccc(cc1)Cl)CC,1.7122878245565132,mazzatorta
+OC(=O)C(CCP(=O)(O)C)N,1.7139254461244264,mazzatorta
+CNC(=O)ON=C(C(=O)N(C)C)SC,1.718739312944987,swiss
+CCOP(=S)(Oc1cc(C)nc(n1)C(C)C)OCC,1.7199454660267528,mazzatorta
+N#Cc1c(Cl)cccc1Cl,1.7304170139333868,swiss
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.7627076624325413,mazzatorta
+ClC1C(Cl)C(Cl)C(C(C1Cl)Cl)Cl,1.7646735975166132,mazzatorta
+BrC1COC(C1)(Cn1cncn1)c1ccc(cc1Cl)Cl,1.764850463526756,mazzatorta and swiss
+CCOP(=S)(Oc1nc(Cl)c(cc1Cl)Cl)OCC,1.7666484723467257,swiss
+CCN(C(=O)SCc1ccc(cc1)Cl)CC,1.777777917639287,swiss
+CCOP(=S)(Oc1cc(C)nc(n1)C(C)C)OCC,1.7843888703871507,swiss
+ClC1C(Cl)C(Cl)C(C(C1Cl)Cl)Cl,1.7915317697343827,mazzatorta and swiss
+ClCC1CN(C(=O)C1Cl)c1cccc(c1)C(F)(F)F,1.7953374882517812,mazzatorta
+Fc1ccc(cc1)[Si](c1ccc(cc1)F)(Cn1cncn1)C,1.7998885403761986,swiss
+ClC1C(Cl)C(Cl)C(C(C1Cl)Cl)Cl,1.8008758853766749,mazzatorta
+N#Cc1c(Cl)c(C#N)c(c(c1Cl)Cl)Cl,1.8226655444942998,mazzatorta
+N#Cc1c(Cl)cccc1Cl,1.8376148441427587,mazzatorta
+CC(Oc1cc(c(cc1Cl)Cl)n1nc(oc1=O)C(C)(C)C)C,1.8391414693200085,mazzatorta
+CCNc1nc(NC(C)C)nc(n1)Cl,1.8424525744221922,swiss
+CON(C(=O)Nc1ccc(cc1)Br)C,1.8429362996173768,swiss
+N#CC(c1ccc(c(c1)Oc1ccccc1)F)OC(=O)C1C(C1(C)C)C=C(Cl)Cl,1.8596176754405975,mazzatorta
+ClC1C(Cl)C(Cl)C(C(C1Cl)Cl)Cl,1.8615709799939963,mazzatorta
+COP(=O)(NC(=O)C)SC,1.8648991662342804,mazzatorta and swiss
+CCCN(C(=O)n1cncc1)CCOc1c(Cl)cc(cc1Cl)Cl,1.8683813356508745,mazzatorta
+CSc1ccc(cc1C)OP(=S)(OC)OC,1.8705356902176227,mazzatorta
+COP(=S)(SCN1C(=O)c2c(C1=O)cccc2)OC,1.8994226972104038,swiss
+N#Cc1c(Cl)c(C#N)c(c(c1Cl)Cl)Cl,1.9062282185012702,swiss
+O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl,1.910554141726166,swiss
+Clc1cc(ccc1Oc1ccc(c(c1)C(=O)NS(=O)(=O)C)[N+](=O)[O-])C(F)(F)F,1.9432475594325607,swiss
+CCCSP(=O)(SCCC)OCC,1.953075825769965,mazzatorta
+Clc1ccc(cc1)C(c1ccccc1Cl)(c1cncnc1)O,1.9637704559137055,swiss
+CCOC(=O)c1cn2nc(cc2nc1C)OP(=S)(OCC)OCC,1.9700888950875557,mazzatorta and swiss
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)C=C(Br)Br,1.971062922929322,swiss
+CC(Oc1cc(c(cc1Cl)Cl)n1nc(oc1=O)C(C)(C)C)C,1.9817989775037086,swiss
+COP(=O)(OC=C(Cl)Cl)OC,1.98263271644647,mazzatorta and swiss
+CCCSP(=O)(SCCC)OCC,1.997013659143215,swiss
+CON(C(=O)Nc1ccc(c(c1)Cl)Cl)C,1.9984393473574271,mazzatorta
+c1scc(n1)c1nc2c([nH]1)cccc2,2.002701007590486,mazzatorta
+CCOC(=O)C(Oc1ccc(cc1)Oc1cnc2c(n1)ccc(c2)Cl)C,2.0032782361791086,mazzatorta
+CCCCOC(=O)C(Oc1ccc(cc1)Oc1ccc(cn1)C(F)(F)F)C,2.0049706079134992,swiss
+COP(=O)(OC=C(Cl)Cl)OC,2.011905013931404,mazzatorta
+C=CC1(C)OC(=O)N(C1=O)c1cc(Cl)cc(c1)Cl,2.0251706470154947,swiss
+COP(=S)(Oc1nc(Cl)c(cc1Cl)Cl)OC,2.031451678702528,mazzatorta
+COCN(c1c(CC)cccc1CC)C(=O)CCl,2.033046777818888,swiss
+COP(=S)(SCn1nnc2c(c1=O)cccc2)OC,2.0701418925937802,swiss
+CCN(c1nc(cc(n1)C)OP(=S)(OC)OC)CC,2.086832774211438,mazzatorta
+COP(=S)(SCn1nnc2c(c1=O)cccc2)OC,2.089882745849489,mazzatorta
+CCCCOC(=O)C(Oc1ccc(cc1)Oc1ccc(cn1)C(F)(F)F)C,2.106487904221944,mazzatorta
+Clc1ccc(cc1)C(c1ccccc1Cl)(c1cncnc1)O,2.1221450940410347,swiss
+O=C(N(C)C)Nc1ccc(c(c1)Cl)Cl,2.137081876700897,swiss
+O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl,2.1471176164896835,mazzatorta and swiss
+COP(=S)(SCn1nnc2c(c1=O)cccc2)OC,2.149323138641405,mazzatorta
+Clc1ccc(cc1)C(c1ccccc1Cl)(c1cncnc1)O,2.1583590177532916,mazzatorta
+CCOP(=S)(SCSC(C)(C)C)OCC,2.159009899464302,mazzatorta
+CCN(c1nc(cc(n1)C)OP(=S)(OC)OC)CC,2.1625567716931373,swiss
+COC(=O)N(C(=O)N1COC2(C(=N1)c1ccc(cc1C2)Cl)C(=O)OC)c1ccc(cc1)OC(F)(F)F,2.1661965219008414,mazzatorta and swiss
+OC(C(Cl)(Cl)Cl)(c1ccc(cc1)Cl)c1ccc(cc1)Cl,2.170831362029858,mazzatorta
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.179450456028215,mazzatorta
+COP(=O)(SC)N,2.1953767727402536,mazzatorta
+Fc1ccc(cc1)[Si](c1ccc(cc1)F)(Cn1cncn1)C,2.197821700327843,mazzatorta
+Clc1ccc(cc1)C(c1ccccc1Cl)(c1cncnc1)O,2.2190565454174904,swiss
+OC(C(Cl)(Cl)Cl)(c1ccc(cc1)Cl)c1ccc(cc1)Cl,2.22634517935135,swiss
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.244956432365732,swiss
+COP(=S)(SCN1C(=O)c2c(C1=O)cccc2)OC,2.2462254954430265,swiss
+CCOP(=O)(Oc1ccc(c(c1)C)SC)NC(C)C,2.251501873386263,mazzatorta and swiss
+CC(Cc1ccc(cc1)C(C)(C)C)CN1CC(C)OC(C1)C,2.2516879065790425,mazzatorta and swiss
+CCOP(=S)(SCn1c(=O)oc2c1ccc(c2)Cl)OCC,2.2645927430857946,mazzatorta
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.276363751548955,mazzatorta
+CNC(=O)Oc1cccc2c1OC(C2)(C)C,2.276700340769475,swiss
+CCOP(=S)(OCC)SCSP(=S)(OCC)OCC,2.2838380008263486,mazzatorta
+N#CC(c1cccc(c1)Oc1ccccc1)OC(=O)C1C(C1(C)C)C=C(Br)Br,2.3055264253989747,mazzatorta and swiss
+CCOP(=O)(Oc1ccc(c(c1)C)SC)NC(C)C,2.305860052357369,mazzatorta
+CCOP(=S)(Oc1cc(C)nc(n1)C(C)C)OCC,2.3072764272991098,mazzatorta
+CCOP(=S)(Oc1ccc2c(c1)oc(=O)c(c2C)Cl)OCC,2.3291791803052426,mazzatorta
+CCOP(=S)(OCC)SCSP(=S)(OCC)OCC,2.3295964190287313,swiss
+CCOP(=S)(Oc1ncn(n1)c1ccccc1)OCC,2.3820356307764845,mazzatorta and swiss
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.3835770037343176,mazzatorta
+OC(=O)COc1nc(Cl)c(cc1Cl)Cl,2.4090356263428507,swiss
+CCOP(=S)(Oc1ccc2c(c1)oc(=O)c(c2C)Cl)OCC,2.4732602189766197,swiss
+COP(=S)(Oc1nc(Cl)c(cc1Cl)Cl)OC,2.5085682643170304,swiss
+CCOP(=S)(Oc1nc(Cl)c(cc1Cl)Cl)OCC,2.544789572224195,mazzatorta and swiss
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.5773937472129362,mazzatorta
+CSc1ccc(cc1C)OP(=S)(OC)OC,2.587220359179703,mazzatorta and swiss
+CCOP(=S)(Oc1ccc2c(c1)oc(=O)c(c2C)Cl)OCC,2.656532322530736,mazzatorta
+COc1sc(=O)n(n1)CSP(=S)(OC)OC,2.6742996570840143,swiss
+CCCSP(=O)(SCCC)OCC,2.685458670870119,swiss
+COP(=O)(SC)N,2.687209307853558,mazzatorta and swiss
+COP(=S)(Oc1ccc(c(c1)C)[N+](=O)[O-])OC,2.780101260955034,mazzatorta
+CSc1ccc(cc1C)OP(=S)(OC)OC,2.7913436994927525,mazzatorta
+CCOP(=O)(Oc1ccc(c(c1)C)SC)NC(C)C,2.819186224245603,swiss
+COP(=S)(SCn1nnc2c(c1=O)cccc2)OC,2.9451954997790453,mazzatorta
+CNC(=O)CSP(=S)(OC)OC,2.962374330085281,mazzatorta
+CCOP(=O)(SC(CC)C)SC(CC)C,3.034055505212864,mazzatorta
+CNC(=O)CSP(=S)(OC)OC,3.0592942995229597,swiss
+CCOP(=O)(SC(CC)C)SC(CC)C,3.085640973700997,swiss
+CSc1ccc(cc1C)OP(=S)(OC)OC,3.14352487453815,swiss
+COP(=O)(SC)N,3.1496172391186557,mazzatorta
+CCSCSP(=S)(OCC)OCC,3.211485180279816,mazzatorta and swiss
+CCOP(=S)(SCSC(C)(C)C)OCC,3.4600461583436033,swiss
+OC(=O)C(Oc1ccc(cc1)Oc1ncc(cc1Cl)C(F)(F)F)C,3.558351987474352,mazzatorta and swiss
+CCOP(=S)(SCSC(C)(C)C)OCC,3.68189490795996,mazzatorta
+CCOP(=S)(SCSC(C)(C)C)OCC,3.7610761540075845,mazzatorta
+N#Cc1nn(c(c1S(=O)C(F)(F)F)N)c1c(Cl)cc(cc1Cl)C(F)(F)F,3.8624876468778706,mazzatorta
+N#Cc1nn(c(c1S(=O)C(F)(F)F)N)c1c(Cl)cc(cc1Cl)C(F)(F)F,3.8697627521147706,swiss

@@ -52,10 +52,10 @@ Federal Office* dataset).
 Elena: do you have a reference and the name of the department?
 
 ```{r echo=F}
-m = read.csv("data/mazzatorta.csv",header=T)
-s = read.csv("data/swiss.csv",header=T)
-t = read.csv("data/test.csv",header=T)
-c = read.csv("data/training.csv",header=T)
+m = read.csv("data/mazzatorta_log10.csv",header=T)
+s = read.csv("data/swiss_log10.csv",header=T)
+t = read.csv("data/test_log10.csv",header=T)
+c = read.csv("data/training_log10.csv",header=T)
 ```
 
 `r length(unique(t$SMILES))` compounds are common in both datasets and we use
@@ -261,7 +261,7 @@ generic and can be employed with different kinds of features.
 [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
 descriptors.
 
-![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta.](figure/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
+![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta.](figures/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
 
 Martin: please explain light colors at bottom of histograms
 
@@ -293,7 +293,7 @@ functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the data directory of the supplemental
 material (`data/functional-groups.csv`).
  
-![Frequency of functional groups.](figure/functional-groups.pdf){#fig:fg}
+![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 
 
@@ -317,10 +317,10 @@ m.dupnr <- length(m.dupsmi)
 s.dupnr <- length(s.dupsmi)
 c.dupnr <- length(c.dupsmi)
 
-m.dup$sd <- ave(-log10(m.dup$LOAEL),m.dup$SMILES,FUN=sd)
-s.dup$sd <- ave(-log10(s.dup$LOAEL),s.dup$SMILES,FUN=sd)
-c.dup$sd <- ave(-log10(c.dup$LOAEL),c.dup$SMILES,FUN=sd)
-t$sd <- ave(-log10(t$LOAEL),t$SMILES,FUN=sd)
+m.dup$sd <- ave(m.dup$LOAEL,m.dup$SMILES,FUN=sd)
+s.dup$sd <- ave(s.dup$LOAEL,s.dup$SMILES,FUN=sd)
+c.dup$sd <- ave(c.dup$LOAEL,c.dup$SMILES,FUN=sd)
+t$sd <- ave(t$LOAEL,t$SMILES,FUN=sd)
 
 p = t.test(m.dup$sd,s.dup$sd)$p.value
 ```
@@ -340,7 +340,7 @@ a statistically significant difference with a p-value (t-test) of `r round(p,2)`
 The combined test set has a mean standard deviation of `r round(mean(c.dup$sd),2)` 
 log10 units.
 
-![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figure/dataset-variability.pdf){#fig:intra}
+![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
 ##### Inter dataset variability
 
@@ -350,10 +350,10 @@ log10 units.
 
 ```{r echo=F}
 data <- read.csv("data/median-correlation.csv",header=T)
-cor <- cor.test(-log(data$mazzatorta),-log(data$swiss))
+cor <- cor.test(data$mazzatorta,data$swiss)
 median.p <- cor$p.value
-median.r.square <- round(rsquare(-log(data$mazzatorta),-log(data$swiss)),2)
-median.rmse <- round(rmse(-log(data$mazzatorta),-log(data$swiss)),2)
+median.r.square <- round(rsquare(data$mazzatorta,data$swiss),2)
+median.rmse <- round(rmse(data$mazzatorta,data$swiss),2)
 ``` 
 
 [@fig:corr] depicts the correlation between LOAEL values from both datasets. As
@@ -368,8 +368,8 @@ correlation between the experimental data in both datasets with r\^2:
 
 ```{r echo=F}
 training = read.csv("data/training-test-predictions.csv",header=T)
-training.r_square = round(rsquare(-log(training$LOAEL_measured_median),-log(training$LOAEL_predicted)),2)
-training.rmse = round(rmse(-log(training$LOAEL_measured_median),-log(training$LOAEL_predicted)),2)
+training.r_square = round(rsquare(training$LOAEL_measured_median,training$LOAEL_predicted),2)
+training.rmse = round(rmse(training$LOAEL_measured_median,training$LOAEL_predicted),2)
 misclassifications = read.csv("data/misclassifications.csv",header=T)
 incorrect_predictions = length(misclassifications$SMILES)
 correct_predictions = length(training$SMILES)-incorrect_predictions
@@ -390,7 +390,7 @@ Experimental data and 95\% prediction intervals did not overlap in `r incorrect_
 
 [@fig:comp] shows a comparison of predicted with experimental values:
 
-![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figure/test-prediction.pdf){#fig:comp}
+![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figures/test-prediction.pdf){#fig:comp}
 
 Correlation analysis was performed between individual predictions and the
 median of experimental data.  All correlations are statistically highly
@@ -405,18 +405,18 @@ Prediction vs. Test median             | `r training.r_square` | `r training.rms
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
-![Correlation of experimental with predicted LOAEL values (test set)](figure/test-correlation.pdf){#fig:corr}
+![Correlation of experimental with predicted LOAEL values (test set)](figures/test-correlation.pdf){#fig:corr}
 
 ```{r echo=F}
-t0 = read.csv("data/training-cv-0.csv",header=T)
-cv.t0.r_square = round(rsquare(-log(t0$LOAEL_measured_median),-log(t0$LOAEL_predicted)),2)
-cv.t0.rmse = round(rmse(-log(t0$LOAEL_measured_median),-log(t0$LOAEL_predicted)),2)
-t1 = read.csv("data/training-cv-1.csv",header=T)
-cv.t1.r_square = round(rsquare(-log(t1$LOAEL_measured_median),-log(t1$LOAEL_predicted)),2)
-cv.t1.rmse = round(rmse(-log(t1$LOAEL_measured_median),-log(t1$LOAEL_predicted)),2)
-t2 = read.csv("data/training-cv-2.csv",header=T)
-cv.t2.r_square = round(rsquare(-log(t2$LOAEL_measured_median),-log(t2$LOAEL_predicted)),2)
-cv.t2.rmse = round(rmse(-log(t2$LOAEL_measured_median),-log(t2$LOAEL_predicted)),2)
+t0 = read.csv("data/training_log10-cv-0.csv",header=T)
+cv.t0.r_square = round(rsquare(t0$LOAEL_measured_median,t0$LOAEL_predicted),2)
+cv.t0.rmse = round(rmse(t0$LOAEL_measured_median,t0$LOAEL_predicted),2)
+t1 = read.csv("data/training_log10-cv-1.csv",header=T)
+cv.t1.r_square = round(rsquare(t1$LOAEL_measured_median,t1$LOAEL_predicted),2)
+cv.t1.rmse = round(rmse(t1$LOAEL_measured_median,t1$LOAEL_predicted),2)
+t2 = read.csv("data/training_log10-cv-2.csv",header=T)
+cv.t2.r_square = round(rsquare(t2$LOAEL_measured_median,t2$LOAEL_predicted),2)
+cv.t2.rmse = round(rmse(t2$LOAEL_measured_median,t2$LOAEL_predicted),2)
 ```
 
 For a further assessment of model performance three independent 
@@ -431,7 +431,7 @@ All correlations of predicted with experimental values are statistically highly 
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
-![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figure/crossvalidation.pdf){#fig:cv}
+![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figures/crossvalidation.pdf){#fig:cv}
 
 Discussion
 ==========
@@ -466,8 +466,8 @@ we present a brief analysis of the two most severe mispredictions:
 ```{r echo=F}
 smi = "COP(=O)(SC)N"
 misclass = training[which(training$SMILES==smi),]
-med = round(-log10(misclass[,2]),2)
-pred = round(-log10(misclass[,3]),2)
+med = round(misclass[,2],2)
+pred = round(misclass[,3],2)
 pi = round(log10(misclass[,4]),2)
 ```
 
@@ -476,9 +476,9 @@ The compound with the largest deviation of prediction intervals is (amino-methyl
 ```{r echo=F}
 smi = "O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl"
 misclass = training[which(training$SMILES==smi),]
-med = round(-log10(misclass[,2]),2)
-pred = round(-log10(misclass[,3]),2)
-pi = round(log10(misclass[,4]),2)
+med = round(misclass[,2],2)
+pred = round(misclass[,3],2)
+pi = round(misclass[,4],2)
 ```
 
 The compound with second largest deviation of prediction intervals is
