@@ -29,7 +29,7 @@ end
 
 data.sort!{|a,b| a[1] <=> b[1]}
 
-File.open(File.join("data","training_log10.csv","w+")) do |f|
+File.open(File.join("data","training_log10.csv"),"w+") do |f|
   f.puts ["SMILES","LOAEL","Dataset"].join ","
   f.puts data.collect{|r| r.join ","}.join "\n"
 end

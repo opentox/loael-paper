@@ -27,13 +27,16 @@ figures/dataset-variability.pdf: data/mazzatorta_log10.csv data/swiss_log10.csv
 figures/crossvalidation.pdf: $(crossvalidations)
 	scripts/crossvalidation-plots.R
 
-figures/test-prediction.pdf: data/training-test-predictions.csv data/median-correlation.csv
+figures/test-prediction.pdf: data/predictions-measurements.csv
 	scripts/test-prediction-plot.R
 
 figures/test-correlation.pdf: data/training-test-predictions.csv data/median-correlation.csv
 	scripts/test-correlation-plot.R
 
 # Validations
+
+data/predictions-measurements.csv: data/training-test-predictions.csv data/test_log10.csv
+	scripts/test-prediction.rb
 
 data/misclassifications.csv: data/training-test-predictions.csv
 	scripts/misclassifications.rb
@@ -95,4 +98,4 @@ data/swiss.csv: data/NOAEL-LOAEL_SMILES_rat_chron.csv
 clean:
 	rm figures/*pdf
 	cd data && rm `ls -I "*LOAEL*" -I "*functional*" -I "*SMARTS*"`
-	mongo development --eval "db.dropDatabase()"
+	mongo production --eval "db.dropDatabase()"

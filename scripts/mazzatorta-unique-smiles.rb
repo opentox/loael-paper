@@ -13,7 +13,7 @@ csv_in.each do |line|
   data << [c.smiles,mmol,"mazzatorta"] #if c
 end
 data.sort!{|a,b| a[1] <=> b[1]}
-File.open(File.join("data","mazzatorta.csv","w+")) do |f|
+File.open(File.join("data","mazzatorta.csv"),"w+") do |f|
   f.puts ["SMILES","LOAEL","Dataset"].join ","
   f.puts data.collect{|row| row.join ","}.join "\n"
 end

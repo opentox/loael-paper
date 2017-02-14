@@ -313,7 +313,7 @@ experimental results within individual datasets and between datasets.
 
 ##### Intra dataset variability
 
-```{r echo=T}
+```{r echo=F}
 m.dupsmi <- unique(m$SMILES[duplicated(m$SMILES)])
 s.dupsmi <- unique(s$SMILES[duplicated(s$SMILES)])
 c.dupsmi <- unique(c$SMILES[duplicated(c$SMILES)])
@@ -325,10 +325,6 @@ c.dup <- c[c$SMILES %in% c.dupsmi,]
 m.dupnr <- length(m.dupsmi)
 s.dupnr <- length(s.dupsmi)
 c.dupnr <- length(c.dupsmi)
-
-#m.dup
-#m.dup$LOAEL
-#m.dup$SMILES
 
 m.dup$sd <- ave(m.dup$LOAEL,m.dup$SMILES,FUN=sd)
 s.dup$sd <- ave(s.dup$LOAEL,s.dup$SMILES,FUN=sd)

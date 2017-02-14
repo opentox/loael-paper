@@ -15,7 +15,7 @@ csv_in.each do |line|
   end
 end
 data.sort!{|a,b| a[1] <=> b[1]}
-File.open(File.join("data","swiss.csv","w+")) do |f|
+File.open(File.join("data","swiss.csv"),"w+") do |f|
   f.puts ["SMILES","LOAEL","Dataset"].join ","
   f.puts data.collect{|row| row.join ","}.join "\n"
 end

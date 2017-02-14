@@ -6,7 +6,7 @@ name = File.basename ARGV[0], ".csv"
 file = File.join "data",ARGV[0]
 dataset = Dataset.from_csv_file file
 #model = Model::LazarRegression.create(training_dataset: dataset)#, :prediction_algorithm => "OpenTox::Algorithm::Regression.local_fingerprint_regression")
-model = Model::LazarRegression.create(training_dataset: dataset, algorithms: { :similarity => { :min => 0.3 }})
+model = Model::LazarRegression.create(training_dataset: dataset, algorithms: { :similarity => { :min => 0.5 }})
 csv_file = File.join("data",ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.csv"))
 id_file = File.join("data",ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.id"))
 cv = Validation::RegressionCrossValidation.create model
