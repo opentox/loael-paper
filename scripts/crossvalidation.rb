@@ -5,13 +5,11 @@ require 'yaml'
 name = File.basename ARGV[0], ".csv"
 file = File.join "data",ARGV[0]
 dataset = Dataset.from_csv_file file
-#model = Model::LazarRegression.create(training_dataset: dataset)#, :prediction_algorithm => "OpenTox::Algorithm::Regression.local_fingerprint_regression")
-model = Model::LazarRegression.create(training_dataset: dataset, algorithms: { :similarity => { :min => 0.5 }})
+model = Model::LazarRegression.create(training_dataset: dataset, algorithms: { :prediction => {:method => "Algorithm::Caret.rf"}, :similarity => { :min => 0.5 }})
 csv_file = File.join("data",ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.csv"))
 id_file = File.join("data",ARGV[0].sub(/.csv/,"-cv-#{ARGV[1]}.id"))
 cv = Validation::RegressionCrossValidation.create model
 File.open(id_file,"w+"){|f| f.puts cv.id}
-#cv = Validation::RegressionCrossValidation.first
 p cv.id
 data = []
 cv.predictions.each do |cid,p|
@@ -29,5 +27,3 @@ CSV.open(csv_file,"w+") do |csv|
   csv << ["SMILES","LOAEL_measured_median","LOAEL_predicted","Prediction_interval_low","Prediction_interval_high"]
   data.each{|r| csv << r}
 end
-=begin
-=end

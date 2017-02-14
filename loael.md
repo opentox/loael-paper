@@ -345,7 +345,7 @@ In order to compare the performance of in silico read across models with experim
 variability we are using compounds that occur in both datasets as a test set
 (375 measurements, 155 compounds).
 `lazar` read across predictions
-were obtained for 155 compounds, 129
+were obtained for 155 compounds, 121
 predictions failed, because no similar compounds were found in the training data (i.e. they were not covered by the applicability domain of the training data).
 
 
@@ -367,7 +367,7 @@ experimental data into a single median value hides experimental variability.
 Comparison    | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Mazzatorta vs. Swiss | 0.52      | 0.59           
-Prediction vs. Test median             | 0.48 | 0.53 
+Prediction vs. Test median             | 0.47 | 0.57 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -381,9 +381,9 @@ All correlations of predicted with experimental values are statistically highly 
 
  $r^2$ | RMSE | Nr. predicted
 -------|------|----------------
-0.41  | 0.57 | 51/671
-0.52  | 0.54 | 57/671
-0.51  | 0.52 | 58/671
+0.6  | 0.6 | 99/671
+0.55  | 0.6 | 98/671
+0.63  | 0.55 | 99/671
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
