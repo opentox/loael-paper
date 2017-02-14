@@ -7,7 +7,6 @@ new = Dataset.from_csv_file File.join("data","swiss_log10.csv")
 
 common_compounds = (old.compounds + new.compounds).uniq
 
-puts ["SMILES","-log10(LOAEL)","Dataset"].join ","
 data = []
 common_compounds.each do |c|
   old_values = old.values(c,old.features.first)
@@ -30,4 +29,7 @@ end
 
 data.sort!{|a,b| a[1] <=> b[1]}
 
-puts data.collect{|r| r.join ","}.join "\n"
+File.open(File.join("data","training_log10.csv","w+")) do |f|
+  f.puts ["SMILES","LOAEL","Dataset"].join ","
+  f.puts data.collect{|r| r.join ","}.join "\n"
+end

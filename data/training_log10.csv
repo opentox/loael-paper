@@ -1,4 +1,4 @@
-SMILES,-log10(LOAEL),Dataset
+SMILES,LOAEL,Dataset
 OCC(CO)O,-1.8735472827377653,mazzatorta
 OCCO,-1.5081659713033675,mazzatorta
 OC(=O)c1ccccc1N,-1.3023309286843994,mazzatorta

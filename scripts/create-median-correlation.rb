@@ -8,7 +8,6 @@ new = Dataset.from_csv_file File.join("data","swiss_log10.csv")
 common_compounds = (old.compounds & new.compounds).uniq
 
 data = []
-puts ["SMILES","mazzatorta","swiss"].join(",")
 common_compounds.each do |c|
   old_values = old.values(c,old.features.first)
   new_values = new.values(c,new.features.first)
@@ -23,4 +22,7 @@ common_compounds.each do |c|
 end
 
 data.sort!{|a,b| a[1] <=> b[1]}
-puts data.collect{|r| r.join ","}.join("\n")
+File.open(File.join("data","median-correlation.csv","w+")) do |f|
+  f.puts ["SMILES","mazzatorta","swiss"].join(",")
+  f.puts data.collect{|r| r.join ","}.join("\n")
+end

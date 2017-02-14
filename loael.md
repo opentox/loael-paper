@@ -182,21 +182,28 @@ total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jacca
 $$ sim = \frac{|A \cap B|}{|A \cup B|} $$ {#eq:jaccard}
 
 A threshold of $sim > 0.1$ is used for the identification of neighbors for
-local QSAR models.  Compounds with the same structure as the query structure
-are eliminated from the neighbors to obtain  unbiased predictions in the presence of duplicates.
+local QSAR models. A low similarity threshold has the advantage, that
+predictions can be made even in the absence of closely related structures, and
+that completely unrelated compounds are still not included as neighbors. As
+neighbor contributions are weighted by similarity in local QSAR models,
+neighbors with low similarity have also a low impact on the prediction result.
+
+Compounds with the same structure as the query structure are automatically
+eliminated from neighbors to obtain unbiased predictions in the presence of
+duplicates.
 
 ### Local QSAR models and predictions
 
 Only similar compounds (*neighbors*) above the threshold are used for local
 QSAR models.  In this investigation we are using a weighted partial least
 squares regression (PLS) algorithm for the prediction of quantitative
-properties.  First all fingerprint features with identical values across all
-neighbors are removed.  The reamining set of features is used as descriptors
-for creating a local weighted PLS model with atom environments as descriptors
-and model similarities as weights. The `pls` method from the `caret` R package
-[@Kuhn08] is used for this purpose.  Models are trained with the default
-`caret` settings, optimizing the number of PLS components by bootstrap
-resampling.
+properties.  First all uninformative fingerprints (i.e. features with identical
+values across all neighbors) are removed.  The reamining set of features is
+used as descriptors for creating a local weighted PLS model with atom
+environments as descriptors and model similarities as weights. The `pls` method
+from the `caret` R package [@Kuhn08] is used for this purpose.  Models are
+trained with the default `caret` settings, optimizing the number of PLS
+components by bootstrap resampling.
 
 Finally the local PLS model is applied to predict the activity of the query
 compound. The RMSE of bootstrapped model predictions is used to construct 95\%
@@ -230,6 +237,8 @@ optimisations were performed in order to avoid overfitting a single dataset.
 
 Results from 3 repeated 10-fold crossvalidations with independent training/test
 set splits are provided as additional information to the test set results.
+
+The final model for production purposes was trained with all available LOAEL data (Mazzatorta and Swiss Federal Office datasets combined).
 
 Results
 =======
@@ -295,24 +304,44 @@ experimental results within individual datasets and between datasets.
 ##### Intra dataset variability
 
 
-```
-## Error in split.default(x, g): first argument must be a vector
+```r
+m.dupsmi <- unique(m$SMILES[duplicated(m$SMILES)])
+s.dupsmi <- unique(s$SMILES[duplicated(s$SMILES)])
+c.dupsmi <- unique(c$SMILES[duplicated(c$SMILES)])
+
+m.dup <- m[m$SMILES %in% m.dupsmi,]
+s.dup <- s[s$SMILES %in% s.dupsmi,]
+c.dup <- c[c$SMILES %in% c.dupsmi,]
+
+m.dupnr <- length(m.dupsmi)
+s.dupnr <- length(s.dupsmi)
+c.dupnr <- length(c.dupsmi)
+
+#m.dup
+#m.dup$LOAEL
+#m.dup$SMILES
+
+m.dup$sd <- ave(m.dup$LOAEL,m.dup$SMILES,FUN=sd)
+s.dup$sd <- ave(s.dup$LOAEL,s.dup$SMILES,FUN=sd)
+c.dup$sd <- ave(c.dup$LOAEL,c.dup$SMILES,FUN=sd)
+t$sd <- ave(t$LOAEL,t$SMILES,FUN=sd)
+
+p = t.test(m.dup$sd,s.dup$sd)$p.value
 ```
 
 The Mazzatorta dataset has 567 LOAEL values for
 445 unique structures, 93
 compounds have multiple measurements with a mean standard deviation of
-0.32 log10 units (@mazzatorta08, [@fig:intra]). 
+0.56 mmol/kg_bw/day (0.32 log10 units @mazzatorta08, [@fig:intra]). 
 
 The Swiss Federal Office dataset has 493 rat LOAEL values for
 381 unique structures, 91 compounds have
 multiple measurements with a mean standard deviation of
-0.29 log10 units.
+0.59 mmol/kg_bw/day (0.29 log10 units).
 
 Standard deviations of both datasets do not show
 a statistically significant difference with a p-value (t-test) of 0.21.
-The combined test set has a mean standard deviation of NA 
-log10 units.
+The combined test set has a mean standard deviation of 0.55 mmol/kg_bw/day (0.33 log10 units).
 
 ![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
@@ -340,7 +369,7 @@ In order to compare the performance of in silico read across models with experim
 variability we are using compounds that occur in both datasets as a test set
 (375 measurements, 155 compounds).
 `lazar` read across predictions
-were obtained for 155 compounds, 29
+were obtained for 155 compounds, 5
 predictions failed, because no similar compounds were found in the training data (i.e. they were not covered by the applicability domain of the training data).
 
 
@@ -362,7 +391,7 @@ experimental data into a single median value hides experimental variability.
 Comparison    | $r^2$                     | RMSE                    
 --------------|---------------------------|-------------------------
 Mazzatorta vs. Swiss | 0.52      | 0.59           
-Prediction vs. Test median             | 0.33 | 0.67 
+Prediction vs. Test median             | 0.31 | 0.72 
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
@@ -376,9 +405,9 @@ All correlations of predicted with experimental values are statistically highly 
 
  $r^2$ | RMSE | Nr. predicted
 -------|------|----------------
-0.38  | 0.8 | 609/671
-0.35  | 0.82 | 611/671
-0.37  | 0.81 | 610/671
+0.33  | 0.82 | 631/671
+0.36  | 0.81 | 633/671
+0.35  | 0.81 | 636/671
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
@@ -416,13 +445,13 @@ we present a brief analysis of the two most severe mispredictions:
 
 
 
-The compound with the largest deviation of prediction intervals is (amino-methylsulfanyl-phosphoryl)oxymethane (SMILES COP(=O)(SC)N) with an experimental median of 2.67 and a prediction interval of 0.43 +/- 0.35. In this case the prediction is based on two neighbors with very low similarity (0.1 and 0.13). Such cases can be eliminated by raising the similarity threshold for neighbors, but that could come at the cost of a larger number of unpredicted compounds. The graphical user interface shows for each prediction neighbors and similarities for a critical examination which should make the detection of similar cases rather straightforward.
+The compound with the largest deviation of prediction intervals is (amino-methylsulfanyl-phosphoryl)oxymethane (SMILES COP(=O)(SC)N) with an experimental median of 2.69 and a prediction interval of 0.74 +/- 0.29. In this case the prediction is based on two neighbors with very low similarity (0.1 and 0.13). Such cases can be eliminated by raising the similarity threshold for neighbors, but that could come at the cost of a larger number of unpredicted compounds. The graphical user interface shows for each prediction neighbors and similarities for a critical examination which should make the detection of similar cases rather straightforward.
 
 
 
 The compound with second largest deviation of prediction intervals is
 Endosulfan (SMILES O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl)
-with an experimental median of 1.74 and a prediction interval of 3.44 +/- 1.7. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
+with an experimental median of 1.91 and a prediction interval of 3.43 +/- 1.52. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
 
 Summary
 =======

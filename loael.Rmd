@@ -190,21 +190,28 @@ total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jacca
 $$ sim = \frac{|A \cap B|}{|A \cup B|} $$ {#eq:jaccard}
 
 A threshold of $sim > 0.1$ is used for the identification of neighbors for
-local QSAR models.  Compounds with the same structure as the query structure
-are eliminated from the neighbors to obtain  unbiased predictions in the presence of duplicates.
+local QSAR models. A low similarity threshold has the advantage, that
+predictions can be made even in the absence of closely related structures, and
+that completely unrelated compounds are still not included as neighbors. As
+neighbor contributions are weighted by similarity in local QSAR models,
+neighbors with low similarity have also a low impact on the prediction result.
+
+Compounds with the same structure as the query structure are automatically
+eliminated from neighbors to obtain unbiased predictions in the presence of
+duplicates.
 
 ### Local QSAR models and predictions
 
 Only similar compounds (*neighbors*) above the threshold are used for local
 QSAR models.  In this investigation we are using a weighted partial least
 squares regression (PLS) algorithm for the prediction of quantitative
-properties.  First all fingerprint features with identical values across all
-neighbors are removed.  The reamining set of features is used as descriptors
-for creating a local weighted PLS model with atom environments as descriptors
-and model similarities as weights. The `pls` method from the `caret` R package
-[@Kuhn08] is used for this purpose.  Models are trained with the default
-`caret` settings, optimizing the number of PLS components by bootstrap
-resampling.
+properties.  First all uninformative fingerprints (i.e. features with identical
+values across all neighbors) are removed.  The reamining set of features is
+used as descriptors for creating a local weighted PLS model with atom
+environments as descriptors and model similarities as weights. The `pls` method
+from the `caret` R package [@Kuhn08] is used for this purpose.  Models are
+trained with the default `caret` settings, optimizing the number of PLS
+components by bootstrap resampling.
 
 Finally the local PLS model is applied to predict the activity of the query
 compound. The RMSE of bootstrapped model predictions is used to construct 95\%
@@ -238,6 +245,8 @@ optimisations were performed in order to avoid overfitting a single dataset.
 
 Results from 3 repeated 10-fold crossvalidations with independent training/test
 set splits are provided as additional information to the test set results.
+
+The final model for production purposes was trained with all available LOAEL data (Mazzatorta and Swiss Federal Office datasets combined).
 
 Results
 =======
@@ -304,7 +313,7 @@ experimental results within individual datasets and between datasets.
 
 ##### Intra dataset variability
 
-```{r echo=F}
+```{r echo=T}
 m.dupsmi <- unique(m$SMILES[duplicated(m$SMILES)])
 s.dupsmi <- unique(s$SMILES[duplicated(s$SMILES)])
 c.dupsmi <- unique(c$SMILES[duplicated(c$SMILES)])
@@ -317,6 +326,10 @@ m.dupnr <- length(m.dupsmi)
 s.dupnr <- length(s.dupsmi)
 c.dupnr <- length(c.dupsmi)
 
+#m.dup
+#m.dup$LOAEL
+#m.dup$SMILES
+
 m.dup$sd <- ave(m.dup$LOAEL,m.dup$SMILES,FUN=sd)
 s.dup$sd <- ave(s.dup$LOAEL,s.dup$SMILES,FUN=sd)
 c.dup$sd <- ave(c.dup$LOAEL,c.dup$SMILES,FUN=sd)
@@ -328,17 +341,16 @@ p = t.test(m.dup$sd,s.dup$sd)$p.value
 The Mazzatorta dataset has `r length(m$SMILES)` LOAEL values for
 `r length(levels(m$SMILES))` unique structures, `r m.dupnr`
 compounds have multiple measurements with a mean standard deviation of
-`r round(mean(m.dup$sd),2)` log10 units (@mazzatorta08, [@fig:intra]). 
+`r round(mean(10^(-1*m.dup$sd)),2)` mmol/kg_bw/day (`r round(mean(m.dup$sd),2)` log10 units @mazzatorta08, [@fig:intra]). 
 
 The Swiss Federal Office dataset has `r length(s$SMILES)` rat LOAEL values for
 `r length(levels(s$SMILES))` unique structures, `r s.dupnr` compounds have
 multiple measurements with a mean standard deviation of
-`r round(mean(s.dup$sd),2)` log10 units.
+`r round(mean(10^(-1*s.dup$sd)),2)` mmol/kg_bw/day (`r round(mean(s.dup$sd),2)` log10 units).
 
 Standard deviations of both datasets do not show
 a statistically significant difference with a p-value (t-test) of `r round(p,2)`.
-The combined test set has a mean standard deviation of `r round(mean(c.dup$sd),2)` 
-log10 units.
+The combined test set has a mean standard deviation of `r round(mean(10^(-1*c.dup$sd)),2)` mmol/kg_bw/day (`r round(mean(c.dup$sd),2)` log10 units).
 
 ![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
