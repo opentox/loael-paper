@@ -12,6 +12,7 @@ common_compounds.each do |c|
   old_values = old.values(c,old.features.first)
   new_values = new.values(c,new.features.first)
   identical = old_values & new_values
+  # remove identical values from both datasets
   unless identical.empty?
     old_values -= identical
     new_values -= identical

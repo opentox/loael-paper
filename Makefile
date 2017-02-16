@@ -3,12 +3,12 @@
 datasets = data/median-correlation.csv data/test_log10.csv data/training_log10.csv data/mazzatorta_log10.csv data/swiss_log10.csv 
 crossvalidations = data/training_log10-cv-0.csv data/training_log10-cv-1.csv data/training_log10-cv-2.csv
 validations = data/training-test-predictions.csv $(crossvalidations) data/misclassifications.csv
-figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/test-correlation.pdf figures/crossvalidation.pdf figures/dataset-variability.pdf
+figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/prediction-test-correlation.pdf figures/dataset-variability.pdf figures/median-correlation.pdf figures/crossvalidation0.pdf figures/crossvalidation1.pdf figures/crossvalidation2.pdf
 
 # Paper
 
 loael.pdf: loael.md references.bibtex
-	pandoc -r markdown+simple_tables+table_captions+yaml_metadata_block -s -S --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
+	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
 
 loael.md: loael.Rmd $(figures) $(datasets) $(validations) 
 	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
@@ -24,14 +24,23 @@ figures/functional-groups.pdf: data/functional-groups-reduced4R.csv
 figures/dataset-variability.pdf: data/mazzatorta_log10.csv data/swiss_log10.csv
 	scripts/dataset-variability.R
 
-figures/crossvalidation.pdf: $(crossvalidations)
-	scripts/crossvalidation-plots.R
+figures/crossvalidation0.pdf: data/training_log10-cv-0.csv
+	scripts/crossvalidation-plots.R 0
+
+figures/crossvalidation1.pdf: data/training_log10-cv-1.csv
+	scripts/crossvalidation-plots.R 1
+
+figures/crossvalidation2.pdf: data/training_log10-cv-2.csv
+	scripts/crossvalidation-plots.R 2
 
 figures/test-prediction.pdf: data/predictions-measurements.csv
 	scripts/test-prediction-plot.R
 
-figures/test-correlation.pdf: data/training-test-predictions.csv data/median-correlation.csv
-	scripts/test-correlation-plot.R
+figures/prediction-test-correlation.pdf: data/training-test-predictions.csv
+	scripts/prediction-test-correlation-plot.R
+
+figures/median-correlation.pdf: data/median-correlation.csv
+	scripts/median-correlation-plot.R
 
 # Validations
 
@@ -45,19 +54,29 @@ data/training-test-predictions.csv: data/training-test-predictions.id
 	scripts/test-validation-results.rb 
 
 data/training-test-predictions.id: data/test_log10.csv data/training_log10.csv
-	scripts/test-validation.rb
+	scripts/testset-validation.rb
 
-data/training_log10-cv-0.csv: data/training_log10.csv
+data/training_log10-cv-0.csv: data/training_log10-cv-0.id
+	scripts/crossvalidation-table.rb data/training_log10-cv-0.id
+
+data/training_log10-cv-1.csv: data/training_log10-cv-1.id
+	scripts/crossvalidation-table.rb data/training_log10-cv-1.id
+
+data/training_log10-cv-2.csv: data/training_log10-cv-2.id
+	scripts/crossvalidation-table.rb data/training_log10-cv-2.id
+
+data/training_log10-cv-0.id: data/training_log10.csv
 	scripts/crossvalidation.rb training_log10.csv 0
 
-data/training_log10-cv-1.csv: data/training_log10.csv
+data/training_log10-cv-1.id: data/training_log10.csv
 	scripts/crossvalidation.rb training_log10.csv 1
 
-data/training_log10-cv-2.csv: data/training_log10.csv
+data/training_log10-cv-2.id: data/training_log10.csv
 	scripts/crossvalidation.rb training_log10.csv 2
 
 # Datasets
 
+# Functional groups
 data/functional-groups-reduced4R.csv: data/functional-groups-reduced.csv 
 	scripts/functional-groups4R.rb
 
@@ -67,17 +86,11 @@ data/median-correlation.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
 
 # Test set
 data/test_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
-	scripts/create-test.rb 
+	scripts/create-testset.rb 
 
-#data/test.json: data/mazzatorta.json 
-	#cp data/mazzatorta.json data/test.json
-
-# Combined training set
+# Training set
 data/training_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
-	scripts/create-training.rb
-
-#data/training.json: data/mazzatorta.json 
-	#cp data/mazzatorta.json data/training.json
+	scripts/create-trainingset.rb
 
 # -log10 transformations
 data/mazzatorta_log10.csv: data/mazzatorta.csv

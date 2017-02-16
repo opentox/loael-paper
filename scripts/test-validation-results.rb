@@ -6,11 +6,13 @@ validation = Validation::TrainTest.find File.read("data/training-test-prediction
 
 data = []
 validation.predictions.each do |id,p|
-  data << [Compound.find(id).smiles, p["measurements"].median, p["value"], (p["measurements"].median-p["value"]).abs,"test-prediction"]
+  warnings = "F"
+  warnings = "T" if p["warnings"] and !p["warnings"].empty? 
+  data << [Compound.find(id).smiles, p["measurements"].median, p["value"], (p["measurements"].median-p["value"]).abs,"test-prediction",warnings]
 end
 
 data.sort!{|a,b| a[1] <=> b[1]}
 File.open(File.join("data","training-test-predictions.csv"),"w+") do |f|
-  f.puts ["SMILES","LOAEL_measured_median","LOAEL_predicted","Error","Dataset"].join(",")
+  f.puts ["SMILES","LOAEL_measured_median","LOAEL_predicted","Error","Dataset","Warnings"].join(",")
   f.puts data.collect{|r| r.join ","}.join("\n")
 end

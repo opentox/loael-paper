@@ -13,6 +13,7 @@ bibliographystyle: achemso
 figPrefix: Figure
 eqnPrefix: Equation
 tblPrefix: Table
+colorlinks: true
 output:
   pdf_document:
     fig_caption: yes
@@ -35,11 +36,11 @@ The quality and reproducibility of (Q)SAR and  read-across predictions is a
 controversial topic in the toxicological risk-assessment community. Although
 model predictions can be validated with various procedures it is rarely
 possible to put the results into the context of experimental variability,
-because replicate experiments are rarely available.
+because replicate experiments are usually not available.
 
 With missing information about the variability of experimental toxicity data it
-is hard to judge the performance of predictive models and it is tempting for
-model developments to use aggressive model optimisation methods that lead to
+is hard to judge the performance of predictive models objectively and it is tempting for
+model developers to use aggressive model optimisation methods that lead to
 impressive validation results, but also to overfitted models with little
 practical relevance.
 
@@ -64,25 +65,33 @@ them as a *test* set in our investigation. For the Mazzatorta and Swiss Federal 
 - compare the structural diversity of both datasets
 - compare the LOAEL values in both datasets
 - build prediction models 
-- predict LOAELs of the training set
+- predict LOAELs of the test set
 - compare predictions with experimental variability
 
 With this investigation we also want to support the idea of reproducible
 research, by providing all datasets and programs that have been used to
-generate this manuscript under TODO creative/scientific commons? (datasets) and
-GPL (programs) licenses.
+generate this manuscript under 
+GPL3 licenses.
 
-A self-contained docker image with all program dependencies required for the
-reproduction of these results is available from TODO.
+A self-contained docker image with all programs, libraries and data required for the
+reproduction of these results is available from <https://hub.docker.com/r/insilicotox/loael-paper/>.
 
 Source code and datasets for the reproduction of this manuscript can be
-downloaded from the GitHub repository TODO. The lazar framework [@Maunz2013] is
-also available under a GPL License from https://github.com/opentox/lazar.
+downloaded from the GitHub repository <https://github.com/opentox/loael-paper>. The lazar framework [@Maunz2013] is
+also available under a GPL3 License from <https://github.com/opentox/lazar>.
+
+A graphical webinterface for `lazar` model predictions and validation results
+is publicly accessible at <https://lazar.in-silico.ch>, models presented in
+this manuscript will be included in future versions. Source code for the GUI
+can be obtained from <https://github.com/opentox/lazar-gui>.
 
 Elena: please check if this is publication strategy is ok for the Swiss Federal Office
 
 Materials and Methods
 =====================
+
+The following sections give a high level overview about 
+algorithms and datasets used for this study. In order to provide unambiguous references to algorithms and datasets, links to source code and data sources are included in the text.
 
 Datasets
 --------
@@ -95,6 +104,9 @@ observed effect levels (LOAEL) for rats (*Rattus norvegicus*) after oral
 (gavage, diet, drinking water) administration.  The Mazzatorta dataset consists
 of `r length(m$SMILES)` LOAEL values for `r length(unique(m$SMILES))` unique
 chemical structures.
+The Mazzatorta dataset can be obtained from the following GitHub links: [original data](https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv),
+[unique smiles](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv),
+[-log10 transfomed LOAEL](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv).
 
 ### Swiss Federal Office dataset
 
@@ -103,8 +115,11 @@ Elena + Swiss Federal Office contribution (input)
 The original Swiss Federal Office dataset has chronic toxicity data for rats,
 mice and multi generation effects. For the purpose of this study only rat LOAEL
 data with oral administration was used. This leads to the *Swiss Federal
-Office*  dataset with `r length(s$SMILES)` rat LOAEL values for `r
-length(unique(s$SMILES))` unique chemical structures.
+Office*  dataset with `r length(s$SMILES)` rat LOAEL values for
+`r length(unique(s$SMILES))` unique chemical structures.
+The Swiss dataset can be obtained from the following GitHub links: [original data](https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv), 
+[unique smiles and mmol/kg_bw/day units](https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv),
+[-log10 transfomed LOAEL](https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv).
 
 ### Preprocessing
 
@@ -123,16 +138,22 @@ significant digits. For prediction, validation and visualisation purposes
 
 Two derived datasets were obtained from the original datasets: 
 
-The *test* dataset contains data of compounds that occur in both datasets.
+The [*test* dataset](https://github.com/opentox/loael-paper/blob/submission/data/test_log10.csv)
+contains data from compounds that occur in both datasets.
 LOAEL values equal at five significant digits were considered as duplicates
 originating from the same study/publication and only one instance was kept in
 the test dataset.  The test dataset has
 `r length(t$SMILES)` LOAEL values for `r length(unique(t$SMILES))` unique
-chemical structures.
+chemical structures and was used for
 
-The *training* dataset is the union of the Mazzatorta and the Swiss Federal
+- evaluating experimental variability
+- comparing model predictions with experimental variaility.
+
+The [*training* dataset](https://github.com/opentox/loael-paper/blob/submission/data/training_log10.csv)
+is the union of the Mazzatorta and the Swiss Federal
 Office dataset and it is used to build predictive models. LOAEL duplicates were
-removed using the same criteria as for the test dataset.  The training dataset
+removed using the same criteria as for the test dataset.  The
+training dataset 
 has `r length(c$SMILES)` LOAEL values for `r length(unique(c$SMILES))` unique
 chemical structures.
 
@@ -141,9 +162,11 @@ Algorithms
 
 In this study we are using the modular lazar (*la*zy *s*tructure *a*ctivity
 *r*elationships) framework [@Maunz2013] for model development and validation.
+The complete `lazar` source code can be found on [GitHub](https://github.com/opentox/lazar).
 
-lazar follows the following basic workflow: For a given chemical structure
-lazar 
+lazar follows the following basic [workflow](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257):
+
+For a given chemical structure lazar 
 
 - searches in a database for similar structures (*neighbors*) with experimental
   data, 
@@ -151,8 +174,8 @@ lazar
 - uses this model to predict the unknown activity of the query compound.
 
 This procedure resembles an automated version of *read across* predictions in
-toxicology, in machine learning terms it would be classified as a
-*k-nearest-neighbor* algorithm.
+toxicology, in machine learning terms it would be classified as
+a *k-nearest-neighbor* algorithm.
 
 Apart from this basic workflow lazar is completely modular and allows the
 researcher to use any algorithm for similarity searches and local QSAR
@@ -160,7 +183,7 @@ modelling. Within this study we are using the following algorithms:
 
 ### Neighbor identification
 
-Similarity calculations are based on MolPrint2D fingerprints
+Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/nanoparticle.rb#L17-L21)
 [@doi:10.1021/ci034207y] from the OpenBabel chemoinformatics library
 [@OBoyle2011].
 
@@ -173,7 +196,7 @@ MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
 MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
 advantage the they may capture substructures of toxicological relevance that
-are not included in other fingerprints.  Preliminary experiments have shown
+are not included in other fingerprints.  Unpublished experiments have shown
 that predictions with MolPrint2D fingerprints are indeed more accurate than
 other OpenBabel fingerprints.
 
@@ -183,70 +206,95 @@ similarities.
 
 [//]: # https://openbabel.org/docs/dev/FileFormats/MolPrint2D_format.html#molprint2d-format
 
-The chemical similarity between two compounds A and B is expressed as the
+The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/similarity.rb#L18-L20) between two compounds A and B is expressed as the
 proportion between atom environments common in both structures $A \cap B$ and the
 total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jaccard]).
 
 $$ sim = \frac{|A \cap B|}{|A \cup B|} $$ {#eq:jaccard}
 
-A threshold of $sim > 0.1$ is used for the identification of neighbors for
-local QSAR models. A low similarity threshold has the advantage, that
-predictions can be made even in the absence of closely related structures, and
-that completely unrelated compounds are still not included as neighbors. As
-neighbor contributions are weighted by similarity in local QSAR models,
-neighbors with low similarity have also a low impact on the prediction result.
+The threshold selection is a trade-off between prediction accuracy (high
+threshold) and the number of predictable compounds (low threshold). As it is in
+many practical cases desirable to make predictions even in the absence of
+closely related neighbors, we follow a tiered approach: 
+
+First a similarity threshold of 0.5 is used to collect neighbors, to create a local QSAR model and to make a prediction for the query compound. If any of this steps fail, the procedure is repeated with a similarity threshold of 0.2 and the prediction is flagged with a warning that it might be out of the applicability domain of the training data.
 
 Compounds with the same structure as the query structure are automatically
-eliminated from neighbors to obtain unbiased predictions in the presence of
+[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257)
+to obtain unbiased predictions in the presence of
 duplicates.
 
 ### Local QSAR models and predictions
 
 Only similar compounds (*neighbors*) above the threshold are used for local
-QSAR models.  In this investigation we are using a weighted partial least
-squares regression (PLS) algorithm for the prediction of quantitative
+QSAR models.  In this investigation we are using
+[weighted random forests regression (RF)](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/caret.rb#L7-L78)
+for the prediction of quantitative
 properties.  First all uninformative fingerprints (i.e. features with identical
-values across all neighbors) are removed.  The reamining set of features is
-used as descriptors for creating a local weighted PLS model with atom
-environments as descriptors and model similarities as weights. The `pls` method
+values across all neighbors) are removed.  The remaining set of features is
+used as descriptors for creating a local weighted RF model with atom
+environments as descriptors and model similarities as weights. The `rf` method
 from the `caret` R package [@Kuhn08] is used for this purpose.  Models are
-trained with the default `caret` settings, optimizing the number of PLS
+trained with the default `caret` settings, optimizing the number of RF
 components by bootstrap resampling.
 
-Finally the local PLS model is applied to predict the activity of the query
-compound. The RMSE of bootstrapped model predictions is used to construct 95\%
+Finally the local RF model is applied to
+[predict the activity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L194-L272)
+of the query
+compound. The RMSE of bootstrapped local model predictions is used to construct 95\%
 prediction intervals at 1.96*RMSE.
 
-If PLS modelling or prediction fails, the program resorts to using the weighted
-mean of the neighbors LOAEL values, where the contribution of each neighbor is
-weighted by its similarity to the query compound.
+If RF modelling or prediction fails, the program resorts to using the
+[weighted mean](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/regression.rb#L6-L16)
+of the neighbors LOAEL values, where the contribution of each neighbor is
+weighted by its similarity to the query compound. In this case the prediction is also flagged with a warning.
 
 ### Applicability domain
 
 The applicability domain of lazar models is determined by the structural
 diversity of the training data. If no similar compounds are found in the
-training data no predictions will be generated. If the query compounds contains
-substructures that are not covered by training examples a warning is issued.
+training data no predictions will be generated. Warnings are issued if the similarity threshold has to be lowered from 0.5 to 0.2 in order to enable predictions and if lazar has to resort to weighted average predictions, because local random forests fail.
 
 Local regression models consider neighbor similarities to the query compound,
-by weighting the contribution of each neighbor is weighted by its similarity
-index. The variability of local model predictions is reflected in the
-prediction interval.
+by weighting the contribution of each neighbor is by its similarity.
+The variability of local model predictions is reflected in the
+95\% prediction interval associated with each prediction.
 
 ### Validation
 
 For the comparison of experimental variability with predictive accuracies we
 are using a test set of compounds that occur in both datasets. Unbiased read
-across predictions are obtained from the *training* dataset, by removing *all*
-information from the test compound from the training set prior to predictions.
+across predictions are obtained from the *training* dataset, by
+[removing *all* information](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L234-L238) 
+from the test compound from the training set prior to predictions.
 This procedure is hardcoded into the prediction algorithm in order to prevent
 validation errors. As we have only a single test set no model or parameter
 optimisations were performed in order to avoid overfitting a single dataset.
 
-Results from 3 repeated 10-fold crossvalidations with independent training/test
+Results from 3 repeated
+[10-fold crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/crossvalidation.rb#L85-L93)
+with independent training/test
 set splits are provided as additional information to the test set results.
 
 The final model for production purposes was trained with all available LOAEL data (Mazzatorta and Swiss Federal Office datasets combined).
+
+## Availability
+
+Public webinterface
+  ~ <https://lazar.in-silico.ch>
+
+`lazar` framework
+  ~ <https://github.com/opentox/lazar> (source code)
+
+`lazar` GUI
+  ~ <https://github.com/opentox/lazar-gui> (source code)
+
+Manuscript
+  ~ <https://github.com/opentox/loael-paper> (source code for the manuscript and validation experiments)
+
+Docker image
+  ~ <https://hub.docker.com/r/insilicotox/loael-paper/> (container with manuscript, validation experiments, `lazar` libraries and third party dependencies)
+
 
 Results
 =======
@@ -258,15 +306,35 @@ databases in terms of structural composition and LOAEL values, to
 estimate the experimental variability of LOAEL values and to establish a
 baseline for evaluating prediction performance.
 
-##### Ches-Mapper analysis
+##### Structural diversity
 
-We applied the visualization tool CheS-Mapper (Chemical Space Mapping and
-Visualization in 3D, http://ches-mapper.org, @Gütlein2012) to compare both
-datasets. CheS-Mapper can be used to analyze the relationship between the
+```{r echo=F}
+fg = read.csv('data/functional-groups.csv',head=F)
+```
+
+In order to compare the structural diversity of both datasets we have evaluated the
+frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
+shows the frequency of functional groups in both datasets. `r length(fg$V1)`
+functional groups with a frequency > 25 are depicted, the complete table for
+all functional groups can be found in the supplemental
+material at [GitHub](https://github.com/opentox/loael-paper/blob/submission/data/functional-groups.csv).
+ 
+![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
+
+This result was confirmed with a visual inspection using the 
+[CheS-Mapper](http://ches-mapper.org)  (Chemical Space Mapping and
+Visualization in 3D, @Guetlein2012)
+tool. 
+CheS-Mapper can be used to analyze the relationship between the
 structure of chemical compounds, their physico-chemical properties, and
-biological or toxic effects. It embeds a dataset into 3D space, such that
-compounds with similar feature values are close to each other. CheS-Mapper is
-generic and can be employed with different kinds of features.
+biological or toxic effects. It depicts closely related (similar) compounds in 3D space and can be used with different kinds of features.
+We have investigated structural as well as physico-chemical properties and 
+concluded that both datasets are very similar, both in terms of
+chemical structures and physico-chemical properties. 
+
+The only statistically significant difference between both datasets, is that the Mazzatorta dataset contains more small compounds (61 structures with less than 11 atoms) than the Swiss dataset (19 small structures, p-value 3.7E-7).
+
+<!--
 [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
 descriptors.
 
@@ -285,24 +353,8 @@ dataset (p-value 3.7E-7).
 
 This result was confirmed for structural features (fingerprints) including
 MolPrint2D features that are utilized for model building in this work.
+-->
 
-In general we concluded that both datasets are very similar, in terms of
-chemical structures and physico-chemical properties. 
-
-##### Distribution of functional groups
-
-```{r echo=F}
-fg = read.csv('data/functional-groups.csv',head=F)
-```
-
-In order to confirm the results of CheS-Mapper analysis we have evaluated the
-frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
-shows the frequency of functional groups in both datasets. `r length(fg$V1)`
-functional groups with a frequency > 25 are depicted, the complete table for
-all functional groups can be found in the data directory of the supplemental
-material (`data/functional-groups.csv`).
- 
-![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
 
 ### Experimental variability versus prediction uncertainty 
 
@@ -310,6 +362,7 @@ Duplicated LOAEL values can be found in both datasets and there is a
 substantial number of `r length(unique(t$SMILES))` compounds occurring in both
 datasets.  These duplicates allow us to estimate the variability of
 experimental results within individual datasets and between datasets.
+Data with *identical* values (at five significant digits) in both datasets were excluded from variability analysis, because it it likely that they originate from the same experiments.
 
 ##### Intra dataset variability
 
@@ -364,7 +417,7 @@ median.r.square <- round(rsquare(data$mazzatorta,data$swiss),2)
 median.rmse <- round(rmse(data$mazzatorta,data$swiss),2)
 ``` 
 
-[@fig:corr] depicts the correlation between LOAEL values from both datasets. As
+[@fig:datacorr] depicts the correlation between LOAEL values from both datasets. As
 both datasets contain duplicates we are using medians for the correlation plot
 and statistics. Please note that the aggregation of duplicated measurements
 into a single median value hides a substantial portion of the experimental
@@ -372,12 +425,20 @@ variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
 correlation between the experimental data in both datasets with r\^2:
 `r round(median.r.square,2)`, RMSE: `r round(median.rmse,2)`
 
+![Correlation of median LOAEL values from Mazzatorta and Swiss datasets. Data with identical values in both datasets was removed from analysis.](figures/median-correlation.pdf){#fig:datacorr}
+
 ### Local QSAR models
 
 ```{r echo=F}
 training = read.csv("data/training-test-predictions.csv",header=T)
+warnings = subset(training,Warnings)
+nowarnings = subset(training,!Warnings)
 training.r_square = round(rsquare(training$LOAEL_measured_median,training$LOAEL_predicted),2)
 training.rmse = round(rmse(training$LOAEL_measured_median,training$LOAEL_predicted),2)
+warnings.r_square = round(rsquare(warnings$LOAEL_measured_median,warnings$LOAEL_predicted),2)
+warnings.rmse = round(rmse(warnings$LOAEL_measured_median,warnings$LOAEL_predicted),2)
+nowarnings.r_square = round(rsquare(nowarnings$LOAEL_measured_median,nowarnings$LOAEL_predicted),2)
+nowarnings.rmse = round(rmse(nowarnings$LOAEL_measured_median,nowarnings$LOAEL_predicted),2)
 misclassifications = read.csv("data/misclassifications.csv",header=T)
 incorrect_predictions = length(misclassifications$SMILES)
 correct_predictions = length(training$SMILES)-incorrect_predictions
@@ -390,56 +451,102 @@ variability we are using compounds that occur in both datasets as a test set
 were obtained for `r length(unique(t$SMILES))` compounds, `r  length(unique(t$SMILES)) - length(training$SMILES)`
 predictions failed, because no similar compounds were found in the training data (i.e. they were not covered by the applicability domain of the training data).
 
+Experimental data and 95\% prediction intervals overlapped in
+`r round(100*correct_predictions/length(training$SMILES))`\% of the test examples.
 
+<!--
 Experimental data and 95\% prediction intervals did not overlap in `r incorrect_predictions` cases
 (`r round(100*incorrect_predictions/length(training$SMILES))`\%),
 `r length(which(sign(misclassifications$Distance) == 1))` predictions were too high and
 `r length(which(sign(misclassifications$Distance) == -1))` predictions too low (after -log10 transformation).
+-->
 
 [@fig:comp] shows a comparison of predicted with experimental values:
 
-![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red) or predictions (green).](figures/test-prediction.pdf){#fig:comp}
+![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red), predictions (green) or prdictions with warnings (blue).](figures/test-prediction.pdf){#fig:comp}
 
 Correlation analysis was performed between individual predictions and the
 median of experimental data.  All correlations are statistically highly
 significant with a p-value < 2.2e-16.  These results are presented in
 [@fig:corr] and [@tbl:cv]. Please bear in mind that the aggregation of
-experimental data into a single median value hides experimental variability.
+multiple measurements into a single median value hides experimental variability.
 
-Comparison    | $r^2$                     | RMSE                    
---------------|---------------------------|-------------------------
-Mazzatorta vs. Swiss | `r median.r.square`      | `r median.rmse`           
-Prediction vs. Test median             | `r training.r_square` | `r training.rmse` 
+Comparison    | $r^2$                     | RMSE    |  Nr. predicted
+--------------|---------------------------|---------|---------------
+Mazzatorta vs. Swiss dataset | `r median.r.square`      | `r median.rmse`           
+Predictions without warnings vs. test median             | `r nowarnings.r_square` | `r nowarnings.rmse` | `r length(nowarnings$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
+Predictions with warnings vs. test median             | `r warnings.r_square` | `r warnings.rmse`  | `r length(warnings$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
+All predictions vs. test median             | `r training.r_square` | `r training.rmse`  | `r length(training$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
-![Correlation of experimental with predicted LOAEL values (test set)](figures/test-correlation.pdf){#fig:corr}
+![Correlation of experimental with predicted LOAEL values (test set)](figures/prediction-test-correlation.pdf){#fig:corr}
 
 ```{r echo=F}
-t0 = read.csv("data/training_log10-cv-0.csv",header=T)
-cv.t0.r_square = round(rsquare(t0$LOAEL_measured_median,t0$LOAEL_predicted),2)
-cv.t0.rmse = round(rmse(t0$LOAEL_measured_median,t0$LOAEL_predicted),2)
-t1 = read.csv("data/training_log10-cv-1.csv",header=T)
-cv.t1.r_square = round(rsquare(t1$LOAEL_measured_median,t1$LOAEL_predicted),2)
-cv.t1.rmse = round(rmse(t1$LOAEL_measured_median,t1$LOAEL_predicted),2)
-t2 = read.csv("data/training_log10-cv-2.csv",header=T)
-cv.t2.r_square = round(rsquare(t2$LOAEL_measured_median,t2$LOAEL_predicted),2)
-cv.t2.rmse = round(rmse(t2$LOAEL_measured_median,t2$LOAEL_predicted),2)
+t0all = read.csv("data/training_log10-cv-0.csv",header=T)
+t0warnings = subset(t0all,Warnings)
+t0nowarnings = subset(t0all,!Warnings)
+cv.t0all.r_square = round(rsquare(t0all$LOAEL_measured_median,t0all$LOAEL_predicted),2)
+cv.t0all.rmse = round(rmse(t0all$LOAEL_measured_median,t0all$LOAEL_predicted),2)
+cv.t0warnings.r_square = round(rsquare(t0warnings$LOAEL_measured_median,t0warnings$LOAEL_predicted),2)
+cv.t0warnings.rmse = round(rmse(t0warnings$LOAEL_measured_median,t0warnings$LOAEL_predicted),2)
+cv.t0nowarnings.r_square = round(rsquare(t0nowarnings$LOAEL_measured_median,t0nowarnings$LOAEL_predicted),2)
+cv.t0nowarnings.rmse = round(rmse(t0nowarnings$LOAEL_measured_median,t0nowarnings$LOAEL_predicted),2)
+
+t1all = read.csv("data/training_log10-cv-1.csv",header=T)
+t1warnings = subset(t1all,Warnings)
+t1nowarnings = subset(t1all,!Warnings)
+cv.t1all.r_square = round(rsquare(t1all$LOAEL_measured_median,t1all$LOAEL_predicted),2)
+cv.t1all.rmse = round(rmse(t1all$LOAEL_measured_median,t1all$LOAEL_predicted),2)
+cv.t1warnings.r_square = round(rsquare(t1warnings$LOAEL_measured_median,t1warnings$LOAEL_predicted),2)
+cv.t1warnings.rmse = round(rmse(t1warnings$LOAEL_measured_median,t1warnings$LOAEL_predicted),2)
+cv.t1nowarnings.r_square = round(rsquare(t1nowarnings$LOAEL_measured_median,t1nowarnings$LOAEL_predicted),2)
+cv.t1nowarnings.rmse = round(rmse(t1nowarnings$LOAEL_measured_median,t1nowarnings$LOAEL_predicted),2)
+
+t2all = read.csv("data/training_log10-cv-2.csv",header=T)
+t2warnings = subset(t2all,Warnings)
+t2nowarnings = subset(t2all,!Warnings)
+cv.t2all.r_square = round(rsquare(t2all$LOAEL_measured_median,t2all$LOAEL_predicted),2)
+cv.t2all.rmse = round(rmse(t2all$LOAEL_measured_median,t2all$LOAEL_predicted),2)
+cv.t2warnings.r_square = round(rsquare(t2warnings$LOAEL_measured_median,t2warnings$LOAEL_predicted),2)
+cv.t2warnings.rmse = round(rmse(t2warnings$LOAEL_measured_median,t2warnings$LOAEL_predicted),2)
+cv.t2nowarnings.r_square = round(rsquare(t2nowarnings$LOAEL_measured_median,t2nowarnings$LOAEL_predicted),2)
+cv.t2nowarnings.rmse = round(rmse(t2nowarnings$LOAEL_measured_median,t2nowarnings$LOAEL_predicted),2)
 ```
 
 For a further assessment of model performance three independent 
 10-fold cross-validations were performed. Results are summarised in [@tbl:cv] and [@fig:cv].
 All correlations of predicted with experimental values are statistically highly significant with a p-value < 2.2e-16.
 
- $r^2$ | RMSE | Nr. predicted
--------|------|----------------
-`r round(cv.t0.r_square,2)`  | `r round(cv.t0.rmse,2)` | `r length(unique(t0$SMILES))`/`r length(unique(c$SMILES))`
-`r round(cv.t1.r_square,2)`  | `r round(cv.t1.rmse,2)` | `r length(unique(t1$SMILES))`/`r length(unique(c$SMILES))`
-`r round(cv.t2.r_square,2)`  | `r round(cv.t2.rmse,2)` | `r length(unique(t2$SMILES))`/`r length(unique(c$SMILES))`
+Predictions  | $r^2$ | RMSE | Nr. predicted
+--|-------|------|----------------
+No warnings | `r round(cv.t0nowarnings.r_square,2)`  | `r round(cv.t0nowarnings.rmse,2)` | `r length(unique(t0nowarnings$SMILES))`/`r length(unique(c$SMILES))`
+Warnings | `r round(cv.t0warnings.r_square,2)`  | `r round(cv.t0warnings.rmse,2)` | `r length(unique(t0warnings$SMILES))`/`r length(unique(c$SMILES))`
+All | `r round(cv.t0all.r_square,2)`  | `r round(cv.t0all.rmse,2)` | `r length(unique(t0all$SMILES))`/`r length(unique(c$SMILES))`
+  |  |  |
+No warnings | `r round(cv.t1nowarnings.r_square,2)`  | `r round(cv.t1nowarnings.rmse,2)` | `r length(unique(t1nowarnings$SMILES))`/`r length(unique(c$SMILES))`
+Warnings | `r round(cv.t1warnings.r_square,2)`  | `r round(cv.t1warnings.rmse,2)` | `r length(unique(t1warnings$SMILES))`/`r length(unique(c$SMILES))`
+All | `r round(cv.t1all.r_square,2)`  | `r round(cv.t1all.rmse,2)` | `r length(unique(t1all$SMILES))`/`r length(unique(c$SMILES))`
+  |  |  |
+No warnings | `r round(cv.t2nowarnings.r_square,2)`  | `r round(cv.t2nowarnings.rmse,2)` | `r length(unique(t2nowarnings$SMILES))`/`r length(unique(c$SMILES))`
+Warnings | `r round(cv.t2warnings.r_square,2)`  | `r round(cv.t2warnings.rmse,2)` | `r length(unique(t2warnings$SMILES))`/`r length(unique(c$SMILES))`
+All | `r round(cv.t2all.r_square,2)`  | `r round(cv.t2all.rmse,2)` | `r length(unique(t2all$SMILES))`/`r length(unique(c$SMILES))`
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
+<!--
 ![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figures/crossvalidation.pdf){#fig:cv}
+-->
+
+<div id="fig:cv">
+![](figures/crossvalidation0.pdf){#fig:cv0 height=30%}
+
+![](figures/crossvalidation1.pdf){#fig:cv1 height=30%}
+
+![](figures/crossvalidation2.pdf){#fig:cv2 height=30%}
+
+Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
+</div>
 
 Discussion
 ==========
@@ -448,27 +555,58 @@ Elena + Benoit
 
 ### Dataset comparison
 
-Our investigations clearly indicate that the Mazzatorta and Swiss Federal Office datasets are very similar in terms of chemical structures and properties and the distribution of experimental LOAEL values. The only minor difference that we have observed is that the Mazzatorta dataset has a larger number of highly toxic compounds [@fig:intra] and a larger amount of small molecules, than the Swiss Federal Office dataset. For this reason we have pooled both dataset into a single training dataset for read across predictions.
+Our investigations clearly indicate that the Mazzatorta and Swiss Federal Office datasets are very similar in terms of chemical structures and properties and the distribution of experimental LOAEL values. The only significant difference that we have observed was that the Mazzatorta dataset has larger amount of small molecules, than the Swiss Federal Office dataset. For this reason we have pooled both dataset into a single training dataset for read across predictions.
 
-[@fig:intra] and [@fig:corr] and [@tbl:common-pred] show however considerable variability in the experimental data. 
-High experimental variability 
-has an impact on model building and on model validation.
-First it influences model quality by introducing noise into the training data, secondly it influences accuracy estimates because predictions have to be compared against noisy data where "true" experimental values are unknown.
-This will become obvious in the next section, where we compare predictions with experimental data.
+[@fig:intra] and [@fig:corr] and [@tbl:common-pred] show however considerable
+variability in the experimental data. High experimental variability has an
+impact on model building and on model validation. First it influences model
+quality by introducing noise into the training data, secondly it influences
+accuracy estimates because predictions have to be compared against noisy data
+where "true" experimental values are unknown. This will become obvious in the
+next section, where we compare predictions with experimental data.
 
-### Local QSAR models
+### `lazar` predictions
 
-[@fig:comp], [@fig:corr], [@tbl:common-pred]
-and the fact that experimental data is covered in
-`r round(100*correct_predictions/length(training$SMILES))`\% by the `lazar`
+[@tbl:common-pred], [@tbl:cv], [@fig:comp], [@fig:corr] and [@fig:cv] clearly
+indicate that `lazar` generates reliable predictions for compounds within the
+applicability domain of the training data (i.e. predictions without warnings,
+which indicates a sufficient number of neighbors with similarity > 0.5 to
+create local random forest models). Correlation analysis ([@tbl:common-pred],
+[@tbl:cv]) shows, that errors ($RMSE$) and explained variance ($r^2$) are
+comparable to experimental variability of the training data.
+
+Predictions with a warning (neighbor similarity < 0.5 and > 0.2 or weighted
+average predictions) are a grey zone. They still show a strong correlation with
+experimental data, but the errors are larger than for compounds within the
+applicability domain ([@tbl:common-pred], [@tbl:cv]). Expected errors are
+displayed as 95\% prediction intervals, which covers
+`r round(100*correct_predictions/length(training$SMILES))`\% of the experimental
+data. The main advantage of lowering the similarity threshold is that it allows
+to predict a much larger number of substances than with more rigorous
+applicability domain criteria. As each of this prediction could be problematic,
+they are flagged with a warning to alert risk assessors that further inspection
+is required. This can be done in the graphical interface
+(<https://lazar.in-silico.ch>) which provides intuitive means of inspecting the
+rationales and data used for read across predictions.
+
+Finally there is a substantial number of compounds
+(`r length(unique(t$SMILES))-length(training$LOAEL_predicted)`),
+where no predictions can be made, because there are no similar compounds in the training data. These compounds clearly fall beyond the applicability domain of the training dataset 
+ and in such cases it is preferable to avoid predictions instead of random guessing.
+
+<!--
+is covered in
 prediction interval shows that `lazar` read across predictions fit well into
 the experimental variability of LOAEL values.
 
-It is tempting to increase the "quality" of predictions by performing parameter or algorithm optimisations, but this may lead to overfitted models, because the training set is known beforehand.
-As prediction accuracies correspond well to experimental accuracies, and the visual inspection of predictions does not show obvious anomalies, we consider our model as a robust method for LOAEL estimations.
-Prediction accuracies that are lower than experimental variability would be a clear sign for a model that is overfitted for a particular test set.
+It is tempting to increase the "quality" of predictions by performing parameter
+or algorithm optimisations, but this may lead to overfitted models, because the
+training set is known beforehand. As prediction accuracies correspond well to
+experimental accuracies, and the visual inspection of predictions does not show
+obvious anomalies, we consider our model as a robust method for LOAEL
+estimations. Prediction accuracies that are lower than experimental variability
+would be a clear sign for a model that is overfitted for a particular test set.
 
-The graphical interface provides intuitive means of inspecting the rationales and data used for read across predictions. In order to show how such an inspection can help to identify problematic predictions
 we present a brief analysis of the two most severe mispredictions:
 
 ```{r echo=F}
@@ -492,12 +630,18 @@ pi = round(misclass[,4],2)
 The compound with second largest deviation of prediction intervals is
 Endosulfan (SMILES `r smi`)
 with an experimental median of `r med` and a prediction interval of `r pred` +/- `r pi`. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
+-->
 
 Summary
 =======
 
+We could demonstrate that `lazar` predictions within the applicability domain of the training data have the same variability as the experimental training data. In such cases experimental investigations can be substituted with in silico predictions.
+Predictions with a lower similarity threshold can still give usable results, but the errors to be expected are higher and a manual inspection of prediction results is highly recommended.
+
+<!--
 - beware of over-optimisations and the race for "better" validation results
 - reproducible research
+-->
 
 References
 ==========
