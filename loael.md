@@ -225,7 +225,7 @@ for the prediction of quantitative
 properties.  First all uninformative fingerprints (i.e. features with identical
 values across all neighbors) are removed.  The remaining set of features is
 used as descriptors for creating a local weighted RF model with atom
-environments as descriptors and model similarities as weights. The `rf` method
+environments as descriptors and model similarities as weights. The RF method
 from the `caret` R package [@Kuhn08] is used for this purpose.  Models are
 trained with the default `caret` settings, optimizing the number of RF
 components by bootstrap resampling.
@@ -243,9 +243,9 @@ weighted by its similarity to the query compound. In this case the prediction is
 
 ### Applicability domain
 
-The applicability domain of lazar models is determined by the structural
+The applicability domain (AD) of lazar models is determined by the structural
 diversity of the training data. If no similar compounds are found in the
-training data no predictions will be generated. Warnings are issued if the similarity threshold has to be lowered from 0.5 to 0.2 in order to enable predictions and if lazar has to resort to weighted average predictions, because local random forests fail.
+training data no predictions will be generated. Warnings are issued if the similarity threshold has to be lowered from 0.5 to 0.2 in order to enable predictions and if lazar has to resort to weighted average predictions, because local random forests fail. Thus predictions without warnings can be considered as close to the applicability domain and predictions with warnings as more distant from the applicability domain. Quantitative applicability domain information can be obtained from the similarities of individual neighbors.
 
 Local regression models consider neighbor similarities to the query compound,
 by weighting the contribution of each neighbor is by its similarity.
@@ -378,8 +378,6 @@ The combined test set has a mean standard deviation of 0.55 mmol/kg_bw/day (0.33
 
 [@fig:comp] shows the experimental LOAEL variability of compounds occurring in both datasets (i.e. the *test* dataset) colored in red (experimental). This is the baseline reference for the comparison with predicted values.
 
-##### LOAEL correlation between datasets
-
 
 
 [@fig:datacorr] depicts the correlation between LOAEL values from both datasets. As
@@ -415,7 +413,7 @@ Experimental data and 95\% prediction intervals did not overlap in 0 cases
 
 [@fig:comp] shows a comparison of predicted with experimental values:
 
-![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (red), predictions (green) or prdictions with warnings (blue).](figures/test-prediction.pdf){#fig:comp}
+![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (blue), predictions (green) or predictions far from the applicability domain, i.e. with warnings (red).](figures/test-prediction.pdf){#fig:comp}
 
 Correlation analysis was performed between individual predictions and the
 median of experimental data.  All correlations are statistically highly
@@ -426,13 +424,13 @@ multiple measurements into a single median value hides experimental variability.
 Comparison    | $r^2$                     | RMSE    |  Nr. predicted
 --------------|---------------------------|---------|---------------
 Mazzatorta vs. Swiss dataset | 0.52      | 0.59           
-Predictions without warnings vs. test median             | 0.48 | 0.56 | 34/155
-Predictions with warnings vs. test median             | 0.38 | 0.68  | 84/155
+AD close predictions vs. test median             | 0.48 | 0.56 | 34/155
+AD distant predictions vs. test median             | 0.38 | 0.68  | 84/155
 All predictions vs. test median             | 0.4 | 0.65  | 118/155
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
-![Correlation of experimental with predicted LOAEL values (test set)](figures/prediction-test-correlation.pdf){#fig:corr}
+![Correlation of experimental with predicted LOAEL values (test set). Green dots indicate predictions close to the applicability domain (i.e. without warnings), red dots indicate predictions far from the applicability domain (i.e. with warnings).](figures/prediction-test-correlation.pdf){#fig:corr}
 
 
 
@@ -442,16 +440,16 @@ All correlations of predicted with experimental values are statistically highly 
 
 Predictions  | $r^2$ | RMSE | Nr. predicted
 --|-------|------|----------------
-No warnings | 0.61  | 0.58 | 102/671
-Warnings | 0.45  | 0.78 | 374/671
+AD close | 0.61  | 0.58 | 102/671
+AD distant | 0.45  | 0.78 | 374/671
 All | 0.47  | 0.74 | 476/671
   |  |  |
-No warnings | 0.59  | 0.6 | 101/671
-Warnings | 0.45  | 0.77 | 376/671
+AD close | 0.59  | 0.6 | 101/671
+AD distant | 0.45  | 0.77 | 376/671
 All | 0.47  | 0.74 | 477/671
   |  |  |
-No warnings | 0.59  | 0.57 | 93/671
-Warnings | 0.43  | 0.81 | 384/671
+AD close | 0.59  | 0.57 | 93/671
+AD distant | 0.43  | 0.81 | 384/671
 All | 0.45  | 0.77 | 477/671
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
@@ -467,7 +465,7 @@ All | 0.45  | 0.77 | 477/671
 
 ![](figures/crossvalidation2.pdf){#fig:cv2 height=30%}
 
-Correlation of predicted vs. measured values for five independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
+Correlation of predicted vs. measured values for three independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
 </div>
 
 Discussion
@@ -515,6 +513,8 @@ Finally there is a substantial number of compounds
 (37),
 where no predictions can be made, because there are no similar compounds in the training data. These compounds clearly fall beyond the applicability domain of the training dataset 
  and in such cases it is preferable to avoid predictions instead of random guessing.
+
+Elena: Should we add a GUI screenshot?
 
 <!--
 is covered in
