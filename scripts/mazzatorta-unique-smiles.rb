@@ -5,7 +5,6 @@ include OpenTox
 csv_in =  CSV.read(ARGV[0], :encoding => 'windows-1251:utf-8')
 head = csv_in.shift
 data = []
-data = []
 csv_in.each do |line|
   c = Compound.from_smiles line[0]
   # round to 5 significant digits in order to detect duplicates 

@@ -1,6 +1,6 @@
 # Variables
 
-datasets = data/median-correlation.csv data/test_log10.csv data/training_log10.csv data/mazzatorta_log10.csv data/swiss_log10.csv 
+datasets = data/median-correlation.csv data/test_log10.csv data/training_log10.csv data/mazzatorta_log10.csv data/swiss_log10.csv data/swiss_mg_dup.csv data/mazzatorta_mg_dup.csv data/all_mg_dup.csv
 crossvalidations = data/training_log10-cv-0.csv data/training_log10-cv-1.csv data/training_log10-cv-2.csv
 validations = data/training-test-predictions.csv $(crossvalidations) data/misclassifications.csv
 figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/prediction-test-correlation.pdf figures/dataset-variability.pdf figures/median-correlation.pdf figures/crossvalidation0.pdf figures/crossvalidation1.pdf figures/crossvalidation2.pdf
@@ -105,8 +105,17 @@ data/swiss_log10.csv: data/swiss.csv
 data/mazzatorta.csv: data/LOAEL_mg_corrected_smiles_mmol.csv 
 	scripts/mazzatorta-unique-smiles.rb data/LOAEL_mg_corrected_smiles_mmol.csv
 
+data/mazzatorta_mg_dup.csv: data/LOAEL_mg_corrected_smiles_mmol.csv 
+	scripts/mazzatorta_mg_dup.rb data/LOAEL_mg_corrected_smiles_mmol.csv
+
 data/swiss.csv: data/NOAEL-LOAEL_SMILES_rat_chron.csv
 	scripts/noael_loael2mmol.rb data/NOAEL-LOAEL_SMILES_rat_chron.csv
+
+data/swiss_mg_dup.csv: data/NOAEL-LOAEL_SMILES_rat_chron.csv
+	scripts/noael_loael2swiss_mg_dup.rb data/NOAEL-LOAEL_SMILES_rat_chron.csv
+
+data/all_mg_dup.csv: data/NOAEL-LOAEL_SMILES_rat_chron.csv data/LOAEL_mg_corrected_smiles_mmol.csv 
+	scripts/all_mg_dup.rb
 
 clean:
 	rm figures/*pdf

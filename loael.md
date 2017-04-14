@@ -82,8 +82,9 @@ Elena: please check if this is publication strategy is ok for the Swiss Federal 
 Materials and Methods
 =====================
 
-The following sections give a high level overview about 
-algorithms and datasets used for this study. In order to provide unambiguous references to algorithms and datasets, links to source code and data sources are included in the text.
+The following sections give a high level overview about algorithms and datasets
+used for this study. In order to provide unambiguous references to algorithms
+and datasets, links to source code and data sources are included in the text.
 
 Datasets
 --------
@@ -245,12 +246,18 @@ weighted by its similarity to the query compound. In this case the prediction is
 
 The applicability domain (AD) of lazar models is determined by the structural
 diversity of the training data. If no similar compounds are found in the
-training data no predictions will be generated. Warnings are issued if the similarity threshold has to be lowered from 0.5 to 0.2 in order to enable predictions and if lazar has to resort to weighted average predictions, because local random forests fail. Thus predictions without warnings can be considered as close to the applicability domain and predictions with warnings as more distant from the applicability domain. Quantitative applicability domain information can be obtained from the similarities of individual neighbors.
+training data no predictions will be generated. Warnings are issued if the
+similarity threshold has to be lowered from 0.5 to 0.2 in order to enable
+predictions and if lazar has to resort to weighted average predictions, because
+local random forests fail. Thus predictions without warnings can be considered
+as close to the applicability domain and predictions with warnings as more
+distant from the applicability domain. Quantitative applicability domain
+information can be obtained from the similarities of individual neighbors.
 
 Local regression models consider neighbor similarities to the query compound,
-by weighting the contribution of each neighbor is by its similarity.
-The variability of local model predictions is reflected in the
-95\% prediction interval associated with each prediction.
+by weighting the contribution of each neighbor is by its similarity. The
+variability of local model predictions is reflected in the 95\% prediction
+interval associated with each prediction.
 
 ### Validation
 
@@ -315,12 +322,12 @@ This result was confirmed with a visual inspection using the
 [CheS-Mapper](http://ches-mapper.org)  (Chemical Space Mapping and
 Visualization in 3D, @Guetlein2012)
 tool. 
-CheS-Mapper can be used to analyze the relationship between the
-structure of chemical compounds, their physico-chemical properties, and
-biological or toxic effects. It depicts closely related (similar) compounds in 3D space and can be used with different kinds of features.
-We have investigated structural as well as physico-chemical properties and 
-concluded that both datasets are very similar, both in terms of
-chemical structures and physico-chemical properties. 
+CheS-Mapper can be used to analyze the relationship between the structure of
+chemical compounds, their physico-chemical properties, and biological or toxic
+effects. It depicts closely related (similar) compounds in 3D space and can be
+used with different kinds of features. We have investigated structural as well
+as physico-chemical properties and concluded that both datasets are very
+similar, both in terms of chemical structures and physico-chemical properties. 
 
 The only statistically significant difference between both datasets, is that the Mazzatorta dataset contains more small compounds (61 structures with less than 11 atoms) than the Swiss dataset (19 small structures, p-value 3.7E-7).
 
@@ -348,11 +355,13 @@ MolPrint2D features that are utilized for model building in this work.
 
 ### Experimental variability versus prediction uncertainty 
 
-Duplicated LOAEL values can be found in both datasets and there is a
-substantial number of 155 compounds occurring in both
-datasets.  These duplicates allow us to estimate the variability of
-experimental results within individual datasets and between datasets.
-Data with *identical* values (at five significant digits) in both datasets were excluded from variability analysis, because it it likely that they originate from the same experiments.
+Duplicated LOAEL values can be found in both datasets and there is
+a substantial number of 155 compounds occurring in
+both datasets.  These duplicates allow us to estimate the variability of
+experimental results within individual datasets and between datasets. Data with
+*identical* values (at five significant digits) in both datasets were excluded
+from variability analysis, because it it likely that they originate from the
+same experiments.
 
 ##### Intra dataset variability
 
@@ -360,17 +369,27 @@ Data with *identical* values (at five significant digits) in both datasets were 
 
 The Mazzatorta dataset has 567 LOAEL values for
 445 unique structures, 93
-compounds have multiple measurements with a mean standard deviation of
-0.56 mmol/kg_bw/day (0.32 log10 units @mazzatorta08, [@fig:intra]). 
+compounds have multiple measurements with a mean standard deviation (-log10 transformed values) of
+0.32
+(0.56 mg/kg_bw/day,
+0.56 mmol/kg_bw/day)
+(@mazzatorta08, [@fig:intra]). 
 
 The Swiss Federal Office dataset has 493 rat LOAEL values for
 381 unique structures, 91 compounds have
-multiple measurements with a mean standard deviation of
-0.59 mmol/kg_bw/day (0.29 log10 units).
+multiple measurements with a mean standard deviation (-log10 transformed values) of
+0.29
+(0.57 mg/kg_bw/day,
+0.59 mmol/kg_bw/day)
+([@fig:intra]). 
 
 Standard deviations of both datasets do not show
 a statistically significant difference with a p-value (t-test) of 0.21.
-The combined test set has a mean standard deviation of 0.55 mmol/kg_bw/day (0.33 log10 units).
+The combined test set has a mean standard deviation (-log10 transformed values) of
+0.33
+(0.56 mg/kg_bw/day,
+0.55 mmol/kg_bw/day)
+([@fig:intra]). 
 
 ![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
