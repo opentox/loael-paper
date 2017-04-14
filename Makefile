@@ -14,7 +14,7 @@ loael.md: loael.Rmd $(figures) $(datasets) $(validations)
 	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
 
 loael.docx: loael.md 
-	pandoc --filter pandoc-crossref --filter pandoc-citeproc loael.md -s -o loael.docx
+	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.docx loael.md
 
 # Figures
 
