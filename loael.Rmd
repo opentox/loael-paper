@@ -25,6 +25,11 @@ header-includes:
 ```{r echo=F}
 rsquare <- function(x,y) { cor(x,y,use='complete')^2 }
 rmse <-  function(x,y) { sqrt(mean((x-y)^2,na.rm=TRUE)) }
+
+m = read.csv("data/mazzatorta_log10.csv",header=T)
+s = read.csv("data/swiss_log10.csv",header=T)
+t = read.csv("data/test_log10.csv",header=T)
+c = read.csv("data/training_log10.csv",header=T)
 ```
 
 Introduction
@@ -346,7 +351,7 @@ baseline for evaluating prediction performance.
 fg = read.csv('data/functional-groups.csv',head=F)
 ```
 
-In order to compare the structural diversity of both datasets we have evaluated the
+In order to compare the structural diversity of both datasets we evaluated the
 frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
 shows the frequency of functional groups in both datasets. `r length(fg$V1)`
 functional groups with a frequency > 25 are depicted, the complete table for
@@ -366,7 +371,9 @@ used with different kinds of features. We have investigated structural as well
 as physico-chemical properties and concluded that both datasets are very
 similar, both in terms of chemical structures and physico-chemical properties. 
 
-The only statistically significant difference between both datasets, is that the Nestlé database contains more small compounds (61 structures with less than 11 atoms) than the Swiss dataset (19 small structures, p-value 3.7E-7).
+The only statistically significant difference between both datasets, is that
+the Nestlé database contains more small compounds (61 structures with less than
+11 atoms) than the FSVO-database (19 small structures, p-value 3.7E-7).
 
 <!--
 [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
@@ -393,14 +400,14 @@ MolPrint2D features that are utilized for model building in this work.
 ### Experimental variability versus prediction uncertainty 
 
 Duplicated LOAEL values can be found in both datasets and there is
-a substantial number of `r length(unique(t$SMILES))` compounds occurring in
-both datasets.  These duplicates allow us to estimate the variability of
+a substantial number of `r length(unique(t$SMILES))` compounds with more than
+one LOAEL. These chemicals allow us to estimate the variability of
 experimental results within individual datasets and between datasets. Data with
 *identical* values (at five significant digits) in both datasets were excluded
 from variability analysis, because it it likely that they originate from the
 same experiments.
 
-##### Intra dataset variability
+##### Intra database variability
 
 ```{r echo=F}
 m.dupsmi <- unique(m$SMILES[duplicated(m$SMILES)])
@@ -432,15 +439,14 @@ c.mg = read.csv("data/all_mg_dup.csv",header=T)
 c.mg$sd <- ave(c.mg$LOAEL,c.mg$SMILES,FUN=sd)
 ```
 
-The Nestlé database has `r length(m$SMILES)` LOAEL values for
-`r length(levels(m$SMILES))` unique structures, `r m.dupnr`
-compounds have multiple measurements with a mean standard deviation (-log10 transformed values) of
-`r round(mean(m.dup$sd),2)`
-(`r round(mean(10^(-1*m.mg$sd)),2)` mg/kg_bw/day,
-`r round(mean(10^(-1*m.dup$sd)),2)` mmol/kg_bw/day)
+The Nestlé database has `r length(m$SMILES)` LOAEL values for `r
+length(levels(m$SMILES))` unique structures, `r m.dupnr` compounds have
+multiple measurements with a mean standard deviation (-log10 transformed
+values) of `r round(mean(m.dup$sd),2)` (`r round(mean(10^(-1*m.mg$sd)),2)`
+mg/kg_bw/day, `r round(mean(10^(-1*m.dup$sd)),2)` mmol/kg_bw/day)
 (@mazzatorta08, [@fig:intra]). 
 
-The Swiss Federal Office dataset has `r length(s$SMILES)` rat LOAEL values for
+The FSVO database has `r length(s$SMILES)` rat LOAEL values for
 `r length(levels(s$SMILES))` unique structures, `r s.dupnr` compounds have
 multiple measurements with a mean standard deviation (-log10 transformed values) of
 `r round(mean(s.dup$sd),2)`
@@ -458,9 +464,11 @@ The combined test set has a mean standard deviation (-log10 transformed values) 
 
 ![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
-##### Inter dataset variability
+##### Inter database variability
 
-[@fig:comp] shows the experimental LOAEL variability of compounds occurring in both datasets (i.e. the *test* dataset) colored in red (experimental). This is the baseline reference for the comparison with predicted values.
+[@fig:comp] shows the experimental LOAEL variability of compounds occurring in
+both datasets (i.e. the *test* dataset) colored in red (experimental). This is
+the baseline reference for the comparison with predicted values.
 
 ```{r echo=F}
 data <- read.csv("data/median-correlation.csv",header=T)
@@ -470,15 +478,17 @@ median.r.square <- round(rsquare(data$mazzatorta,data$swiss),2)
 median.rmse <- round(rmse(data$mazzatorta,data$swiss),2)
 ``` 
 
-[@fig:datacorr] depicts the correlation between LOAEL values from both datasets. As
-both datasets contain duplicates we are using medians for the correlation plot
-and statistics. Please note that the aggregation of duplicated measurements
-into a single median value hides a substantial portion of the experimental
-variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
-correlation between the experimental data in both datasets with r\^2:
-`r round(median.r.square,2)`, RMSE: `r round(median.rmse,2)`
+[@fig:datacorr] depicts the correlation between LOAEL values from both
+datasets. As both datasets contain duplicates medians were used for the
+correlation plot and statistics. It should be kept in mind that the aggregation of duplicated
+measurements into a single median value hides a substantial portion of the
+experimental variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
+correlation between the experimental data in both datasets with r\^2: `r
+round(median.r.square,2)`, RMSE: `r round(median.rmse,2)`
 
-![Correlation of median LOAEL values from Mazzatorta and Swiss datasets. Data with identical values in both datasets was removed from analysis.](figures/median-correlation.pdf){#fig:datacorr}
+![Correlation of median LOAEL values from Nestlé and FSVO databases. Data with
+  identical values in both databases was removed from
+  analysis.](figures/median-correlation.pdf){#fig:datacorr}
 
 ### Local QSAR models
 
@@ -497,12 +507,14 @@ incorrect_predictions = length(misclassifications$SMILES)
 correct_predictions = length(training$SMILES)-incorrect_predictions
 ```
 
-In order to compare the performance of in silico read across models with experimental
-variability we are using compounds that occur in both datasets as a test set
-(`r  length(t$SMILES)` measurements, `r  length(unique(t$SMILES))` compounds).
-`lazar` read across predictions
-were obtained for `r length(unique(t$SMILES))` compounds, `r  length(unique(t$SMILES)) - length(training$SMILES)`
-predictions failed, because no similar compounds were found in the training data (i.e. they were not covered by the applicability domain of the training data).
+In order to compare the performance of *in silico* read across models with
+experimental variability we are using compounds that occur in both datasets as
+a test set (`r  length(t$SMILES)` measurements, `r  length(unique(t$SMILES))`
+compounds). `lazar` read across predictions were obtained for `r
+length(unique(t$SMILES))` compounds, `r  length(unique(t$SMILES)) - length(training$SMILES)`
+predictions failed, because no similar compounds were found in the training
+data (i.e. they were not covered by the applicability domain of the training
+data).
 
 Experimental data and 95\% prediction intervals overlapped in
 `r round(100*correct_predictions/length(training$SMILES))`\% of the test examples.
@@ -514,9 +526,14 @@ Experimental data and 95\% prediction intervals did not overlap in `r incorrect_
 `r length(which(sign(misclassifications$Distance) == -1))` predictions too low (after -log10 transformation).
 -->
 
-[@fig:comp] shows a comparison of predicted with experimental values:
+[@fig:comp] shows a comparison of predicted with experimental values. Most
+predicted values were located within the experimental variability.
 
-![Comparison of experimental with predicted LOAEL values. Each vertical line represents a compound, dots are individual measurements (blue), predictions (green) or predictions far from the applicability domain, i.e. with warnings (red).](figures/test-prediction.pdf){#fig:comp}
+
+![Comparison of experimental with predicted LOAEL values. Each vertical line
+represents a compound, dots are individual measurements (blue), predictions
+(green) or predictions far from the applicability domain, i.e. with warnings
+(red).](figures/test-prediction.pdf){#fig:comp}
 
 Correlation analysis was performed between individual predictions and the
 median of experimental data.  All correlations are statistically highly
@@ -526,14 +543,17 @@ multiple measurements into a single median value hides experimental variability.
 
 Comparison    | $r^2$                     | RMSE    |  Nr. predicted
 --------------|---------------------------|---------|---------------
-Mazzatorta vs. Swiss dataset | `r median.r.square`      | `r median.rmse`           
+Nestlé vs. FSVO database | `r median.r.square`      | `r median.rmse`           
 AD close predictions vs. test median             | `r nowarnings.r_square` | `r nowarnings.rmse` | `r length(nowarnings$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
 AD distant predictions vs. test median             | `r warnings.r_square` | `r warnings.rmse`  | `r length(warnings$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
 All predictions vs. test median             | `r training.r_square` | `r training.rmse`  | `r length(training$LOAEL_predicted)`/`r  length(unique(t$SMILES))`
 
 : Comparison of model predictions with experimental variability. {#tbl:common-pred}
 
-![Correlation of experimental with predicted LOAEL values (test set). Green dots indicate predictions close to the applicability domain (i.e. without warnings), red dots indicate predictions far from the applicability domain (i.e. with warnings).](figures/prediction-test-correlation.pdf){#fig:corr}
+![Correlation of experimental with predicted LOAEL values (test set). Green
+dots indicate predictions close to the applicability domain (i.e. without
+warnings), red dots indicate predictions far from the applicability domain
+(i.e. with warnings).](figures/prediction-test-correlation.pdf){#fig:corr}
 
 ```{r echo=F}
 t0all = read.csv("data/training_log10-cv-0.csv",header=T)
@@ -567,9 +587,11 @@ cv.t2nowarnings.r_square = round(rsquare(t2nowarnings$LOAEL_measured_median,t2no
 cv.t2nowarnings.rmse = round(rmse(t2nowarnings$LOAEL_measured_median,t2nowarnings$LOAEL_predicted),2)
 ```
 
-For a further assessment of model performance three independent 
-10-fold cross-validations were performed. Results are summarised in [@tbl:cv] and [@fig:cv].
-All correlations of predicted with experimental values are statistically highly significant with a p-value < 2.2e-16.
+For a further assessment of model performance three independent 10-fold
+cross-validations were performed. Results are summarised in [@tbl:cv] and
+[@fig:cv]. All correlations of predicted with experimental values are
+statistically highly significant with a p-value < 2.2e-16. This is observed for
+compounds close and more distant to the applicability domain.
 
 Predictions  | $r^2$ | RMSE | Nr. predicted
 --|-------|------|----------------
@@ -598,12 +620,115 @@ All | `r round(cv.t2all.r_square,2)`  | `r round(cv.t2all.rmse,2)` | `r length(u
 
 ![](figures/crossvalidation2.pdf){#fig:cv2 height=30%}
 
-Correlation of predicted vs. measured values for three independent crossvalidations with *MP2D* fingerprint descriptors and local *random forest* models
+Correlation of predicted vs. measured values for three independent
+crossvalidations with MP2D fingerprint descriptors and local random forest
+models.
 </div>
 
 Discussion
 ==========
 
+It is currently acknowledged that there is a strong need for
+toxicological information on the multiple thousands of chemicals to
+which human may be exposed through food. These include for examples many
+chemicals in commerce, which could potentially find their way into food
+(Stanton and Kruszewski, 2016; Fowler et al., 2011), but also substances
+migrating from food contact materials (Grob et al., 2006), chemicals
+generated over food processing (Cottererill et al., 2008), environmental
+contaminants as well as inherent plant toxicants (Schilter et al.,
+2014b). For the vast majority of these chemicals, no toxicological data
+is available and consequently insight on their potential health risks is
+very difficult to obtain. It is recognized that testing all of them in
+standard animal studies is neither feasible from a resource perspective
+nor desirable because of ethical issues associated with animal
+experimentation. In addition, for many of these chemicals, risk may be
+very low and therefore testing may actually be irrelevant. In this
+context, the identification of chemicals of most concern on which
+limited resource available should focused is essential and computational
+toxicology is thought to play an important role for that.
+
+In order to establish the level of safety concern of food chemicals
+toxicologically not characterized, a methodology mimicking the process
+of chemical risk assessment, and supported by computational toxicology,
+was proposed (Schilter et al., 2014a). It is based on the calculation of
+margins of exposure (MoE) between predicted values of toxicity and
+exposure estimates. The level of safety concern of a chemical is then
+determined by the size of the MoE and its suitability to cover the
+uncertainties of the assessment. To be applicable, such an approach
+requires quantitative predictions of toxicological endpoints relevant
+for risk assessment. The present work focuses on prediction of chronic
+toxicity, a major and often pivotal endpoints of toxicological databases
+used for hazard identification and characterization of food chemicals.
+
+In a previous study, automated read-across like models for predicting
+carcinogenic potency were developed. In these models, substances in the
+training dataset similar to the query compounds are automatically
+identified and used to derive a quantitative TD50 value. The errors
+observed in these models were within the published estimation of
+experimental variability (Lo Piparo, et al., 2014). In the present
+study, a similar approach was applied to build models generating
+quantitative predictions of long-term toxicity. Two databases compiling
+chronic oral rat lowest adverse effect levels (LOAEL) as endpoint were
+available from different sources. <span id="dataset-comparison-1"
+class="anchor"></span>Our investigations clearly indicated that the
+Nestlé and FSVO databases are very similar in terms of chemical
+structures and properties as well as distribution of experimental LOAEL
+values. The only significant difference that we observed was that the
+Nestlé one has larger amount of small molecules, than the FSVO database.
+For this reason we pooled both dataset into a single training dataset
+for read across predictions.
+
+An early review of the databases revealed that 155 out of the 671
+chemicals available in the training datasets had at least two
+independent studies/LOAELs. These studies were exploited to generate
+information on the reproducibility of chronic animal studies and were
+used to evaluate prediction performance of the models in the context of
+experimental variability.Considerable variability in the experimental
+data was observed. Study design differences, including dose selection,
+dose spacing and route of administration are likely explanation of
+experimental variability. High experimental variability has an impact on
+model building and on model validation. First it influences model
+quality by introducing noise into the training data, secondly it
+influences accuracy estimates because predictions have to be compared
+against noisy data where "true" experimental values are unknown. This
+will become obvious in the next section, where comparison of predictions
+with experimental data is discussed.<span id="lazar-predictions"
+class="anchor"></span>The data obtained in the present study indicate
+that `lazar` generates reliable predictions for compounds within the
+applicability domain of the training data (i.e. predictions without
+warnings, which indicates a sufficient number of neighbors with
+similarity &gt; 0.5 to create local random forest models). Correlation
+analysis shows that errors ($\text{RMSE}$) and explained variance
+($r^{2}$) are comparable to experimental variability of the training
+data.
+
+Predictions with a warning (neighbor similarity &lt; 0.5 and &gt; 0.2 or
+weighted average predictions) are more uncertain. However, they still
+show a strong correlation with experimental data, but the errors are
+larger than for compounds within the applicability domain. Expected
+errors are displayed as 95% prediction intervals, which covers 100% of
+the experimental data. The main advantage of lowering the similarity
+threshold is that it allows to predict a much larger number of
+substances than with more rigorous applicability domain criteria. As
+each of this prediction could be problematic, they are flagged with a
+warning to alert risk assessors that further inspection is required.
+This can be done in the graphical interface
+(<https://lazar.in-silico.ch>) which provides intuitive means of
+inspecting the rationales and data used for read across predictions.
+
+Finally there is a substantial number of chemicals (37), where no
+predictions can be made, because no similar compounds in the training
+data are available. These compounds clearly fall beyond the
+applicability domain of the training dataset and in such cases
+predictions should not be used. In order to expand the domain of
+applicability, the possibility to design models based on shorter, less
+than chonic studies should be studied. It is likely that more substances
+reflecting a wider chemical domain may be available. To predict such
+shorter duration endpoints would also be valuable for chronic toxicy
+since evidence suggest that exposure duration has little impact on the
+levels of NOAELs/LOAELs (Zarn et al., 2011, 2013).
+
+<!--
 Elena + Benoit
 
 ### Dataset comparison
@@ -646,6 +771,7 @@ Finally there is a substantial number of compounds
 (`r length(unique(t$SMILES))-length(training$LOAEL_predicted)`),
 where no predictions can be made, because there are no similar compounds in the training data. These compounds clearly fall beyond the applicability domain of the training dataset 
  and in such cases it is preferable to avoid predictions instead of random guessing.
+-->
 
 Elena: Should we add a GUI screenshot?
 
@@ -690,10 +816,18 @@ with an experimental median of `r med` and a prediction interval of `r pred` +/-
 Summary
 =======
 
+In conclusion, we could
+demonstrate that `lazar` predictions within the applicability domain of
+the training data have the same variability as the experimental training
+data. In such cases experimental investigations can be substituted with
+*in silico* predictions. Predictions with a lower similarity threshold can
+still give usable results, but the errors to be expected are higher and
+a manual inspection of prediction results is highly recommended.
+
+<!--
 We could demonstrate that `lazar` predictions within the applicability domain of the training data have the same variability as the experimental training data. In such cases experimental investigations can be substituted with in silico predictions.
 Predictions with a lower similarity threshold can still give usable results, but the errors to be expected are higher and a manual inspection of prediction results is highly recommended.
 
-<!--
 - beware of over-optimisations and the race for "better" validation results
 - reproducible research
 -->
