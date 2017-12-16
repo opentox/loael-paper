@@ -29,32 +29,31 @@ Introduction
 
 Relying on standard animal toxicological testing for chemical hazard
 identification and characterization is increasingly questioned on both
-scientific and ethical grounds. In addition, it appears obvious that
-from a resource perspective, the capacity of standard toxicology to
-address the safety of thousands of untested chemicals (Fowler et al.,
-2011) to which human may be exposed is very limited. It has also been
-recognized that getting rapid insight on toxicity of chemicals in case
-of emergency safety incidents or for early prioritization in research
-and development (safety by design) is a big challenge mainly because of
-the time and cost constraints associated with the generation of relevant
-animal data. In this context, alternative approaches to obtain timely
-and fit-for-purpose toxicological information are being developed.
-Amongst others, non-testing, structure-activity based *in silico*
-toxicology methods (also called computational toxicology) are considered
-highly promising. Importantly, they are raising more and more interests
-and getting increased acceptance in various regulatory (e.g. ECHA, 2008;
-EFSA, 2016, 2014; Health Canada, 2016; OECD, 2015) and industrial (e.g.
-Stanton and Kruszewski, 2016; Lo Piparo et al., 2011) frameworks.
+scientific and ethical grounds. In addition, it appears obvious that from
+a resource perspective, the capacity of standard toxicology to address the
+safety of thousands of untested chemicals [@Fowler2011] to which human may be
+exposed is very limited. It has also been recognized that getting rapid insight
+on toxicity of chemicals in case of emergency safety incidents or for early
+prioritization in research and development (safety by design) is a big
+challenge mainly because of the time and cost constraints associated with the
+generation of relevant animal data. In this context, alternative approaches to
+obtain timely and fit-for-purpose toxicological information are being
+developed. Amongst others, non-testing, structure-activity based *in silico*
+toxicology methods (also called computational toxicology) are considered highly
+promising. Importantly, they are raising more and more interests
+and getting increased acceptance in various regulatory (e.g.
+[@ECHA2008, @EFSA2016, @EFSA2014, @HealthCanada2016, @OECD2015]) and industrial (e.g.
+[@Stanton2016, @LoPiparo2011]) frameworks.
 
 For a long time already, computational methods have been an integral
 part of pharmaceutical discovery pipelines, while in chemical food
-safety their actual potentials emerged only recently (Lo Piparo et al.,
-2011). In this later field, an application considered critical is in the
+safety their actual potentials emerged only recently [@LoPiparo2011].
+In this later field, an application considered critical is in the
 establishment of levels of safety concern in order to rapidly and
 efficiently manage toxicologically uncharacterized chemicals identified
 in food. This requires a risk-based approach to benchmark exposure with
-a quantitative value of toxicity relevant for risk assessment (Schilter
-et al., 2014a). Since most of the time chemical food safety deals with
+a quantitative value of toxicity relevant for risk assessment [@Schilter2014].
+Since most of the time chemical food safety deals with
 life-long exposures to relatively low levels of chemicals, and because
 long-term toxicity studies are often the most sensitive in food
 toxicology databases, predicting chronic toxicity is of prime
@@ -128,13 +127,11 @@ The Nestl<U+FFFD><U+FFFD> database can be obtained from the following GitHub lin
 ### Swiss Food Safety and Veterinary Office (FSVO) database
 
 Publicly available data from pesticide evaluations of chronic rat
-toxicity studies from the European Food Safety Authority (EFSA) (EFSA,
-2014), the Joint FAO/WHO Meeting on Pesticide Residues (JMPR) (WHO,
-2011) and the US EPA (US EPA, 2011) were compiled to form the
+toxicity studies from the European Food Safety Authority (EFSA) [@EFSA2014], the Joint FAO/WHO Meeting on Pesticide Residues (JMPR) [@WHO2011] and the US EPA [@EPA2011] were compiled to form the
 FSVO-database. Only studies providing both an experimental NOAEL and an
 experimental LOAEL were included. The LOAELs were taken as they were
 reported in the evaluations. Further details on the database are
-described elsewhere (Zarn et al., 2011; Zarn et al., 2013). The
+described elsewhere [@Zarn2011, @Zarn2013]. The
 FSVO-database consists of 493 rat LOAEL values for 381 unique chemical
 structures. It can be obtained from the following GitHub links:
 
@@ -164,8 +161,8 @@ dataset](https://github.com/opentox/loael-paper/blob/submission/data/test_log10.
 contains data from compounds that occur in both databases. LOAEL values equal
 at five significant digits were considered as duplicates originating from the
 same study/publication and only one instance was kept in the test dataset. The
-test dataset has 375 LOAEL values for `r
-length(unique(t$SMILES))` unique chemical structures and was used for
+test dataset has 375 LOAEL values for 155
+unique chemical structures and was used for
 
 - evaluating experimental variability
 - comparing model predictions with experimental variability.
@@ -401,8 +398,8 @@ same experiments.
 
 
 
-The Nestl<U+FFFD><U+FFFD> database has 567 LOAEL values for `r
-length(levels(m$SMILES))` unique structures, 93 compounds have
+The Nestl<U+FFFD><U+FFFD> database has 567 LOAEL values for
+445 unique structures, 93 compounds have
 multiple measurements with a mean standard deviation (-log10 transformed
 values) of 0.32 (0.56
 mg/kg_bw/day, 0.56 mmol/kg_bw/day)
@@ -439,8 +436,8 @@ datasets. As both datasets contain duplicates medians were used for the
 correlation plot and statistics. It should be kept in mind that the aggregation of duplicated
 measurements into a single median value hides a substantial portion of the
 experimental variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
-correlation between the experimental data in both datasets with r\^2: `r
-round(median.r.square,2)`, RMSE: 0.59
+correlation between the experimental data in both datasets with r\^2:
+0.52, RMSE: 0.59
 
 ![Correlation of median LOAEL values from Nestl<U+FFFD><U+FFFD> and FSVO databases. Data with
   identical values in both databases was removed from
@@ -453,8 +450,8 @@ round(median.r.square,2)`, RMSE: 0.59
 In order to compare the performance of *in silico* read across models with
 experimental variability we are using compounds that occur in both datasets as
 a test set (375 measurements, 155
-compounds). `lazar` read across predictions were obtained for `r
-length(unique(t$SMILES))` compounds, 37
+compounds). `lazar` read across predictions were obtained for
+155 compounds, 37
 predictions failed, because no similar compounds were found in the training
 data (i.e. they were not covered by the applicability domain of the training
 data).
@@ -545,11 +542,11 @@ It is currently acknowledged that there is a strong need for
 toxicological information on the multiple thousands of chemicals to
 which human may be exposed through food. These include for examples many
 chemicals in commerce, which could potentially find their way into food
-(Stanton and Kruszewski, 2016; Fowler et al., 2011), but also substances
-migrating from food contact materials (Grob et al., 2006), chemicals
-generated over food processing (Cottererill et al., 2008), environmental
-contaminants as well as inherent plant toxicants (Schilter et al.,
-2014b). For the vast majority of these chemicals, no toxicological data
+[@Stanton2016, @Fowler2011], but also substances
+migrating from food contact materials [@Grob2006], chemicals
+generated over food processing [@Cotterill2008], environmental
+contaminants as well as inherent plant toxicants [@Schilter2013].
+For the vast majority of these chemicals, no toxicological data
 is available and consequently insight on their potential health risks is
 very difficult to obtain. It is recognized that testing all of them in
 standard animal studies is neither feasible from a resource perspective
@@ -563,7 +560,7 @@ toxicology is thought to play an important role for that.
 In order to establish the level of safety concern of food chemicals
 toxicologically not characterized, a methodology mimicking the process
 of chemical risk assessment, and supported by computational toxicology,
-was proposed (Schilter et al., 2014a). It is based on the calculation of
+was proposed [@Schilter2014]. It is based on the calculation of
 margins of exposure (MoE) between predicted values of toxicity and
 exposure estimates. The level of safety concern of a chemical is then
 determined by the size of the MoE and its suitability to cover the
@@ -578,7 +575,7 @@ carcinogenic potency were developed. In these models, substances in the
 training dataset similar to the query compounds are automatically
 identified and used to derive a quantitative TD50 value. The errors
 observed in these models were within the published estimation of
-experimental variability (Lo Piparo, et al., 2014). In the present
+experimental variability [@LoPiparo2014]. In the present
 study, a similar approach was applied to build models generating
 quantitative predictions of long-term toxicity. Two databases compiling
 chronic oral rat lowest adverse effect levels (LOAEL) as endpoint were
@@ -639,7 +636,7 @@ than chonic studies should be studied. It is likely that more substances
 reflecting a wider chemical domain may be available. To predict such
 shorter duration endpoints would also be valuable for chronic toxicy
 since evidence suggest that exposure duration has little impact on the
-levels of NOAELs/LOAELs (Zarn et al., 2011, 2013).
+levels of NOAELs/LOAELs [@Zarn2011, @Zarn2013].
 
 <!--
 Elena + Benoit
