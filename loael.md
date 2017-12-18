@@ -1,15 +1,27 @@
 ---
-author: |
-    Christoph Helma^1^, David Vorgrimmler^1^, Denis Gebele^1^, Martin G<c3><bc>tlein^2^, Benoit Schilter^3^, Elena Lo Piparo^3^
-title: |
-    Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions
-include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universit<c3><a4>t Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestl<c3><a9> Research Center, Lausanne, Switzerland
-keywords: (Q)SAR, read-across, LOAEL
+title: 'Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions'
+author: 
+    - Christoph Helma^1^
+    - David Vorgrimmler^1^
+    - Denis Gebele^1^
+    - Martin Gütlein^2^
+    - Benoit Schilter^3^
+    - Elena Lo Piparo^3^
+include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
+keywords: (Q)SAR, read-across, LOAEL, experimental variability
 date: \today
-abstract: " "
-documentclass: achemso
+abstract: |
+  This study compares the accuracy of (Q)SAR/read-across predictions with the
+  experimental variability of chronic LOAEL values from *in vivo* experiments.
+  We could demonstrate that predictions of the `lazar` lazar algrorithm within
+  the applicability domain of the training data have the same variability as
+  the experimental training data. Predictions with a lower similarity threshold
+  (i.e. a larger distance from the applicability domain) are also significantly
+  better than random guessing, but the errors to be expected are higher and
+  a manual inspection of prediction results is highly recommended.
+
+documentclass: article
 bibliography: references.bibtex
-bibliographystyle: achemso
 figPrefix: Figure
 eqnPrefix: Equation
 tblPrefix: Table
@@ -18,6 +30,8 @@ output:
   pdf_document:
     fig_caption: yes
 header-includes:
+  - \usepackage{a4wide}
+  - \linespread{2}
   - \usepackage{lineno}
   - \linenumbers
 ...
@@ -81,12 +95,20 @@ were exploited to generate information on the reproducibility of chronic
 animal studies and were used to evaluate prediction performance of the
 models in the context of experimental variability.
 
-An important limitation often raised for computational toxicology is the
-lack of transparency on published models and consequently on the
-difficulty for the scientific community to reproduce and apply them. To
+An important limitation often raised for computational toxicology is the lack
+of transparency on published models and consequently on the difficulty for the
+scientific community to reproduce and apply them. To overcome these issues,
+source code for all programs and libraries and the databases that have been used to generate this
+manuscript are made available under GPL3 licenses. Databases and compiled
+programs with all dependencies for the reproduction of results in this manuscript are available as
+a self-contained docker image. All data, tables and figures in this manuscript
+was generated directly from experimental results using the `R` package `knitR`.
+A single command repeats all experiments (possibly with different settings) and
+updates the manuscript with the new results.
+
+<!--
 overcome these issues, all databases and programs that have been used to
 generate this manuscript are made available under GPL3 licenses.
-
 A self-contained docker image with all programs, libraries and data
 required for the reproduction of these results is available from
 <https://hub.docker.com/r/insilicotox/loael-paper/>.
@@ -101,7 +123,7 @@ A graphical webinterface for `lazar` model predictions and validation results
 is publicly accessible at <https://lazar.in-silico.ch>, models presented in
 this manuscript will be included in future versions. Source code for the GUI
 can be obtained from <https://github.com/opentox/lazar-gui>.
-
+-->
 Materials and Methods
 =====================
 
@@ -112,17 +134,19 @@ and datasets, links to source code and data sources are included in the text.
 Datasets
 --------
 
-### Nestl<U+FFFD><U+FFFD> database
+### Nestlé database
 
-The first database (Nestl<U+FFFD><U+FFFD> database for further reference) originates
+The first database (Nestlé database for further reference) originates
 from the publication of [@mazzatorta08]. It contains chronic (> 180 days) lowest
 observed effect levels (LOAEL) for rats (*Rattus norvegicus*) after oral
-(gavage, diet, drinking water) administration.  The Nestl<U+FFFD><U+FFFD> database consists
+(gavage, diet, drinking water) administration.  The Nestlé database consists
 of 567 LOAEL values for 445 unique
 chemical structures.
-The Nestl<U+FFFD><U+FFFD> database can be obtained from the following GitHub links: [original data](https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv),
-[unique smiles](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv),
-[-log10 transfomed LOAEL](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv).
+The Nestlé database can be obtained from the following GitHub links:
+
+  - original data: [https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv](https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv)
+  - unique smiles: [https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv).
 
 ### Swiss Food Safety and Veterinary Office (FSVO) database
 
@@ -135,9 +159,10 @@ described elsewhere [@Zarn2011, @Zarn2013]. The
 FSVO-database consists of 493 rat LOAEL values for 381 unique chemical
 structures. It can be obtained from the following GitHub links:
 
-[original data](https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv), 
-[unique smiles and mmol/kg_bw/day units](https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv),
-[-log10 transfomed LOAEL](https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv).
+  - original data: [https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv](https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv)
+  - unique smiles and mmol/kg_bw/day units: [https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv](https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv](https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv)
+
 
 ### Preprocessing
 
@@ -169,7 +194,7 @@ unique chemical structures and was used for
 
 The [*training*
 dataset](https://github.com/opentox/loael-paper/blob/submission/data/training_log10.csv)
-is the union of the Nestl<U+FFFD><U+FFFD> and the FSVO databases and it was used to build
+is the union of the Nestlé and the FSVO databases and it was used to build
 predictive models. LOAEL duplicates were removed using the same criteria as for
 the test dataset.  The training dataset has 998 LOAEL values
 for 671 unique chemical structures.
@@ -304,7 +329,7 @@ with independent training/test set splits are provided as additional
 information to the test set results.
 
 The final model for production purposes was trained with all available LOAEL
-data (Nestl<U+FFFD><U+FFFD> and FSVO databases combined).
+data (Nestlé and FSVO databases combined).
 
 ## Availability
 
@@ -359,7 +384,7 @@ as physico-chemical properties and concluded that both datasets are very
 similar, both in terms of chemical structures and physico-chemical properties. 
 
 The only statistically significant difference between both datasets, is that
-the Nestl<U+FFFD><U+FFFD> database contains more small compounds (61 structures with less than
+the Nestlé database contains more small compounds (61 structures with less than
 11 atoms) than the FSVO-database (19 small structures, p-value 3.7E-7).
 
 <!--
@@ -373,10 +398,10 @@ Martin: please explain light colors at bottom of histograms
 In this example, CheS-Mapper applied a principal components analysis to map
 compounds according to their physico-chemical (PC) feature values into 3D
 space. Both datasets have in general very similar PC feature values. As an
-exception, the Nestl<U+FFFD><U+FFFD> database includes most of the tiny compound
+exception, the Nestlé database includes most of the tiny compound
 structures: we have selected the 78 smallest compounds (with 10 atoms and less,
 marked with a blue box in the screen-shot) and found that 61 of these compounds
-occur in the Nestl<U+FFFD><U+FFFD> database, whereas only 19 are contained in the Swiss
+occur in the Nestlé database, whereas only 19 are contained in the Swiss
 dataset (p-value 3.7E-7).
 
 This result was confirmed for structural features (fingerprints) including
@@ -398,7 +423,7 @@ same experiments.
 
 
 
-The Nestl<U+FFFD><U+FFFD> database has 567 LOAEL values for
+The Nestlé database has 567 LOAEL values for
 445 unique structures, 93 compounds have
 multiple measurements with a mean standard deviation (-log10 transformed
 values) of 0.32 (0.56
@@ -439,7 +464,7 @@ experimental variability.  Correlation analysis shows a significant (p-value < 2
 correlation between the experimental data in both datasets with r\^2:
 0.52, RMSE: 0.59
 
-![Correlation of median LOAEL values from Nestl<U+FFFD><U+FFFD> and FSVO databases. Data with
+![Correlation of median LOAEL values from Nestlé and FSVO databases. Data with
   identical values in both databases was removed from
   analysis.](figures/median-correlation.pdf){#fig:datacorr}
 
@@ -483,7 +508,7 @@ multiple measurements into a single median value hides experimental variability.
 
 Comparison    | $r^2$                     | RMSE    |  Nr. predicted
 --------------|---------------------------|---------|---------------
-Nestl<U+FFFD><U+FFFD> vs. FSVO database | 0.52      | 0.59           
+Nestlé vs. FSVO database | 0.52      | 0.59           
 AD close predictions vs. test median             | 0.48 | 0.56 | 34/155
 AD distant predictions vs. test median             | 0.38 | 0.68  | 84/155
 All predictions vs. test median             | 0.4 | 0.65  | 118/155
@@ -581,10 +606,10 @@ quantitative predictions of long-term toxicity. Two databases compiling
 chronic oral rat lowest adverse effect levels (LOAEL) as endpoint were
 available from different sources. <span id="dataset-comparison-1"
 class="anchor"></span>Our investigations clearly indicated that the
-Nestl<U+FFFD><U+FFFD> and FSVO databases are very similar in terms of chemical
+Nestlé and FSVO databases are very similar in terms of chemical
 structures and properties as well as distribution of experimental LOAEL
 values. The only significant difference that we observed was that the
-Nestl<U+FFFD><U+FFFD> one has larger amount of small molecules, than the FSVO database.
+Nestlé one has larger amount of small molecules, than the FSVO database.
 For this reason we pooled both dataset into a single training dataset
 for read across predictions.
 
@@ -643,7 +668,7 @@ Elena + Benoit
 
 ### Dataset comparison
 
-Our investigations clearly indicate that the Mazzatorta and Swiss Federal Office datasets are very similar in terms of chemical structures and properties and the distribution of experimental LOAEL values. The only significant difference that we have observed was that the Nestl<U+FFFD><U+FFFD> database has larger amount of small molecules, than the Swiss Federal Office dataset. For this reason we have pooled both dataset into a single training dataset for read across predictions.
+Our investigations clearly indicate that the Mazzatorta and Swiss Federal Office datasets are very similar in terms of chemical structures and properties and the distribution of experimental LOAEL values. The only significant difference that we have observed was that the Nestlé database has larger amount of small molecules, than the Swiss Federal Office dataset. For this reason we have pooled both dataset into a single training dataset for read across predictions.
 
 [@fig:intra] and [@fig:corr] and [@tbl:common-pred] show however considerable
 variability in the experimental data. High experimental variability has an

@@ -6,12 +6,14 @@ validations = data/training-test-predictions.csv $(crossvalidations) data/miscla
 figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/prediction-test-correlation.pdf figures/dataset-variability.pdf figures/median-correlation.pdf figures/crossvalidation0.pdf figures/crossvalidation1.pdf figures/crossvalidation2.pdf
 
 # Paper
+loael.pdf: loael.tex
+	pdflatex loael.tex; pdflatex loael.tex
 
-loael.pdf: loael.md references.bibtex
-	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.pdf loael.md
+loael.tex: loael.md references.bibtex
+	pandoc -s --bibliography=references.bibtex --filter pandoc-crossref --filter pandoc-citeproc -o loael.tex loael.md
 
 loael.md: loael.Rmd $(figures) $(datasets) $(validations) 
-	Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
+	export LANG=en_US.UTF-8; Rscript --vanilla -e "library(knitr); knit('loael.Rmd');"
 
 loael.docx: loael.md 
 	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.docx loael.md
