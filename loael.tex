@@ -249,13 +249,13 @@ chemical structures. It can be obtained from the following GitHub links:
 \subsubsection{Preprocessing}\label{preprocessing}
 
 Chemical structures (represented as SMILES (Weininger 1988)) in both
-datasets were checked for correctness. When syntactically incorrect or
+databases were checked for correctness. When syntactically incorrect or
 missing SMILES were generated from other identifiers (e.g names, CAS
 numbers). Unique smiles from the OpenBabel library (OBoyle et al. 2011)
 were used for the identification of duplicated structures.
 
 Studies with undefined or empty LOAEL entries were removed from the
-datasets. LOAEL values were converted to mmol/kg\_bw/day units and
+databases LOAEL values were converted to mmol/kg\_bw/day units and
 rounded to five significant digits. For prediction, validation and
 visualisation purposes -log10 transformations are used.
 
@@ -466,10 +466,10 @@ baseline for evaluating prediction performance.
 
 \subparagraph{Structural diversity}\label{structural-diversity}
 
-In order to compare the structural diversity of both datasets we
+In order to compare the structural diversity of both databases we
 evaluated the frequency of functional groups from the OpenBabel FP4
 fingerprint. Figure~\ref{fig:fg} shows the frequency of functional
-groups in both datasets. 139 functional groups with a frequency
+groups in both databases 139 functional groups with a frequency
 \textgreater{} 25 are depicted, the complete table for all functional
 groups can be found in the supplemental material at
 \href{https://github.com/opentox/loael-paper/blob/submission/data/functional-groups.csv}{GitHub}.
@@ -488,10 +488,10 @@ structure of chemical compounds, their physico-chemical properties, and
 biological or toxic effects. It depicts closely related (similar)
 compounds in 3D space and can be used with different kinds of features.
 We have investigated structural as well as physico-chemical properties
-and concluded that both datasets are very similar, both in terms of
+and concluded that both databases are very similar, both in terms of
 chemical structures and physico-chemical properties.
 
-The only statistically significant difference between both datasets, is
+The only statistically significant difference between both databases, is
 that the Nestlé database contains more small compounds (61 structures
 with less than 11 atoms) than the FSVO-database (19 small structures,
 p-value 3.7E-7).
@@ -499,16 +499,22 @@ p-value 3.7E-7).
 \subsubsection{Experimental variability versus prediction
 uncertainty}\label{experimental-variability-versus-prediction-uncertainty}
 
-Duplicated LOAEL values can be found in both datasets and there is a
+Duplicated LOAEL values can be found in both databases and there is a
 substantial number of 155 compounds with more than one LOAEL. These
 chemicals allow us to estimate the variability of experimental results
-within individual datasets and between datasets. Data with
-\emph{identical} values (at five significant digits) in both datasets
+within individual databases and between databases. Data with
+\emph{identical} values (at five significant digits) in both databases
 were excluded from variability analysis, because it it likely that they
 originate from the same experiments.
 
 \subparagraph{Intra database
 variability}\label{intra-database-variability}
+
+Both databases contain substances with multiple measurements, which
+allow the determination of experimental variabilities. For this purpose
+we have calculated the mean standard deviation of compounds with
+multiple measurements, which is roughly a factor of 2 for both
+databases.
 
 The Nestlé database has 567 LOAEL values for 445 unique structures, 93
 compounds have multiple measurements with a mean standard deviation
@@ -520,7 +526,7 @@ compounds have multiple measurements with a mean standard deviation
 (-log10 transformed values) of 0.29 (0.57 mg/kg\_bw/day, 0.59
 mmol/kg\_bw/day) (Figure~\ref{fig:intra}).
 
-Standard deviations of both datasets do not show a statistically
+Standard deviations of both databases do not show a statistically
 significant difference with a p-value (t-test) of 0.21. The combined
 test set has a mean standard deviation (-log10 transformed values) of
 0.33 (0.56 mg/kg\_bw/day, 0.55 mmol/kg\_bw/day)
@@ -529,26 +535,30 @@ test set has a mean standard deviation (-log10 transformed values) of
 \begin{figure}
 \centering
 \includegraphics{figures/dataset-variability.pdf}
-\caption{Distribution and variability of LOAEL values in both datasets.
-Each vertical line represents a compound, dots are individual LOAEL
-values.}\label{fig:intra}
+\caption{Distribution and variability of compounds with multiple LOAEL
+values in both databases Each vertical line represents a compound, dots
+are individual LOAEL values.}\label{fig:intra}
 \end{figure}
 
 \subparagraph{Inter database
 variability}\label{inter-database-variability}
 
+In order to compare the correlation of LOAEL values in both databases
+and to establish a reference for predicted values, we have investigated
+compounds, that occur in both databases.
+
 Figure~\ref{fig:comp} shows the experimental LOAEL variability of
 compounds occurring in both datasets (i.e.~the \emph{test} dataset)
-colored in red (experimental). This is the baseline reference for the
+colored in blue (experimental). This is the baseline reference for the
 comparison with predicted values.
 
 Figure~\ref{fig:datacorr} depicts the correlation between LOAEL values
-from both datasets. As both datasets contain duplicates medians were
+from both databases. As both databases contain duplicates medians were
 used for the correlation plot and statistics. It should be kept in mind
 that the aggregation of duplicated measurements into a single median
 value hides a substantial portion of the experimental variability.
 Correlation analysis shows a significant (p-value \textless{} 2.2e-16)
-correlation between the experimental data in both datasets with r\^{}2:
+correlation between the experimental data in both databases with r\^{}2:
 0.52, RMSE: 0.59
 
 \begin{figure}
@@ -562,8 +572,8 @@ analysis.}\label{fig:datacorr}
 \subsubsection{Local QSAR models}\label{local-qsar-models}
 
 In order to compare the performance of \emph{in silico} read across
-models with experimental variability we are using compounds that occur
-in both datasets as a test set (375 measurements, 155 compounds).
+models with experimental variability we are using compounds with
+multiple measurements as a test set (375 measurements, 155 compounds).
 \texttt{lazar} read across predictions were obtained for 155 compounds,
 37 predictions failed, because no similar compounds were found in the
 training data (i.e.~they were not covered by the applicability domain of
@@ -721,7 +731,7 @@ very similar in terms of chemical structures and properties as well as
 distribution of experimental LOAEL values. The only significant
 difference that we observed was that the Nestlé one has larger amount of
 small molecules, than the FSVO database. For this reason we pooled both
-dataset into a single training dataset for read across predictions.
+databases into a single training dataset for read across predictions.
 
 An early review of the databases revealed that 155 out of the 671
 chemicals available in the training datasets had at least two
@@ -750,16 +760,18 @@ comparable to experimental variability of the training data.
 Predictions with a warning (neighbor similarity \textless{} 0.5 and
 \textgreater{} 0.2 or weighted average predictions) are more uncertain.
 However, they still show a strong correlation with experimental data,
-but the errors are larger than for compounds within the applicability
-domain. Expected errors are displayed as 95\% prediction intervals,
-which covers 100\% of the experimental data. The main advantage of
-lowering the similarity threshold is that it allows to predict a much
-larger number of substances than with more rigorous applicability domain
-criteria. As each of this prediction could be problematic, they are
-flagged with a warning to alert risk assessors that further inspection
-is required. This can be done in the graphical interface
-(\url{https://lazar.in-silico.ch}) which provides intuitive means of
-inspecting the rationales and data used for read across predictions.
+but the errors are \textasciitilde{} 20-40\% larger than for compounds
+within the applicability domain (Figure~\ref{fig:corr} and
+Table~\ref{tbl:cv}). Expected errors are displayed as 95\% prediction
+intervals, which covers 100\% of the experimental data. The main
+advantage of lowering the similarity threshold is that it allows to
+predict a much larger number of substances than with more rigorous
+applicability domain criteria. As each of this prediction could be
+problematic, they are flagged with a warning to alert risk assessors
+that further inspection is required. This can be done in the graphical
+interface (\url{https://lazar.in-silico.ch}) which provides intuitive
+means of inspecting the rationales and data used for read across
+predictions.
 
 Finally there is a substantial number of chemicals (37), where no
 predictions can be made, because no similar compounds in the training

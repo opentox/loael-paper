@@ -167,12 +167,12 @@ structures. It can be obtained from the following GitHub links:
 ### Preprocessing
 
 Chemical structures (represented as SMILES [@doi:10.1021/ci00057a005]) in both
-datasets were checked for correctness. When syntactically incorrect or missing
+databases were checked for correctness. When syntactically incorrect or missing
 SMILES were generated from other identifiers (e.g names, CAS numbers). Unique
 smiles from the OpenBabel library [@OBoyle2011] were used for the
 identification of duplicated structures. 
 
-Studies with undefined or empty LOAEL entries were removed from the datasets.
+Studies with undefined or empty LOAEL entries were removed from the databases
 LOAEL values were converted to mmol/kg_bw/day units and rounded to five
 significant digits. For prediction, validation and visualisation purposes
 -log10 transformations are used.
@@ -363,9 +363,9 @@ baseline for evaluating prediction performance.
 
 
 
-In order to compare the structural diversity of both datasets we evaluated the
+In order to compare the structural diversity of both databases we evaluated the
 frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
-shows the frequency of functional groups in both datasets. 139
+shows the frequency of functional groups in both databases 139
 functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the supplemental
 material at [GitHub](https://github.com/opentox/loael-paper/blob/submission/data/functional-groups.csv).
@@ -380,10 +380,10 @@ CheS-Mapper can be used to analyze the relationship between the structure of
 chemical compounds, their physico-chemical properties, and biological or toxic
 effects. It depicts closely related (similar) compounds in 3D space and can be
 used with different kinds of features. We have investigated structural as well
-as physico-chemical properties and concluded that both datasets are very
+as physico-chemical properties and concluded that both databases are very
 similar, both in terms of chemical structures and physico-chemical properties. 
 
-The only statistically significant difference between both datasets, is that
+The only statistically significant difference between both databases, is that
 the Nestlé database contains more small compounds (61 structures with less than
 11 atoms) than the FSVO-database (19 small structures, p-value 3.7E-7).
 
@@ -411,17 +411,20 @@ MolPrint2D features that are utilized for model building in this work.
 
 ### Experimental variability versus prediction uncertainty 
 
-Duplicated LOAEL values can be found in both datasets and there is
+Duplicated LOAEL values can be found in both databases and there is
 a substantial number of 155 compounds with more than
 one LOAEL. These chemicals allow us to estimate the variability of
-experimental results within individual datasets and between datasets. Data with
-*identical* values (at five significant digits) in both datasets were excluded
+experimental results within individual databases and between databases. Data with
+*identical* values (at five significant digits) in both databases were excluded
 from variability analysis, because it it likely that they originate from the
 same experiments.
 
 ##### Intra database variability
 
 
+
+Both databases contain substances with multiple measurements, which allow the determination of experimental variabilities. 
+For this purpose we have calculated the mean standard deviation of compounds with multiple measurements, which is roughly a factor of 2 for both databases. 
 
 The Nestlé database has 567 LOAEL values for
 445 unique structures, 93 compounds have
@@ -438,7 +441,7 @@ multiple measurements with a mean standard deviation (-log10 transformed values)
 0.59 mmol/kg_bw/day)
 ([@fig:intra]). 
 
-Standard deviations of both datasets do not show
+Standard deviations of both databases do not show
 a statistically significant difference with a p-value (t-test) of 0.21.
 The combined test set has a mean standard deviation (-log10 transformed values) of
 0.33
@@ -446,22 +449,24 @@ The combined test set has a mean standard deviation (-log10 transformed values) 
 0.55 mmol/kg_bw/day)
 ([@fig:intra]). 
 
-![Distribution and variability of LOAEL values in both datasets. Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
+![Distribution and variability of compounds with multiple LOAEL values in both databases Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
 
 ##### Inter database variability
 
+In order to compare the correlation of LOAEL values in both databases and to establish a reference for predicted values, we have investigated compounds, that occur in both databases.
+
 [@fig:comp] shows the experimental LOAEL variability of compounds occurring in
-both datasets (i.e. the *test* dataset) colored in red (experimental). This is
+both datasets (i.e. the *test* dataset) colored in blue (experimental). This is
 the baseline reference for the comparison with predicted values.
 
 
 
 [@fig:datacorr] depicts the correlation between LOAEL values from both
-datasets. As both datasets contain duplicates medians were used for the
+databases. As both databases contain duplicates medians were used for the
 correlation plot and statistics. It should be kept in mind that the aggregation of duplicated
 measurements into a single median value hides a substantial portion of the
 experimental variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
-correlation between the experimental data in both datasets with r\^2:
+correlation between the experimental data in both databases with r\^2:
 0.52, RMSE: 0.59
 
 ![Correlation of median LOAEL values from Nestlé and FSVO databases. Data with
@@ -473,7 +478,7 @@ correlation between the experimental data in both datasets with r\^2:
 
 
 In order to compare the performance of *in silico* read across models with
-experimental variability we are using compounds that occur in both datasets as
+experimental variability we are using compounds with multiple measurements as
 a test set (375 measurements, 155
 compounds). `lazar` read across predictions were obtained for
 155 compounds, 37
@@ -610,7 +615,7 @@ Nestlé and FSVO databases are very similar in terms of chemical
 structures and properties as well as distribution of experimental LOAEL
 values. The only significant difference that we observed was that the
 Nestlé one has larger amount of small molecules, than the FSVO database.
-For this reason we pooled both dataset into a single training dataset
+For this reason we pooled both databases into a single training dataset
 for read across predictions.
 
 An early review of the databases revealed that 155 out of the 671
@@ -639,8 +644,8 @@ data.
 
 Predictions with a warning (neighbor similarity &lt; 0.5 and &gt; 0.2 or
 weighted average predictions) are more uncertain. However, they still
-show a strong correlation with experimental data, but the errors are
-larger than for compounds within the applicability domain. Expected
+show a strong correlation with experimental data, but the errors are ~ 20-40\%
+larger than for compounds within the applicability domain ([@fig:corr] and [@tbl:cv]). Expected
 errors are displayed as 95% prediction intervals, which covers 100% of
 the experimental data. The main advantage of lowering the similarity
 threshold is that it allows to predict a much larger number of
