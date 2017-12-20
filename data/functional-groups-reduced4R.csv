@@ -1,74 +1,74 @@
-Alkene, 39, Mazzatorta
-Alkene, 30, Swiss Federal Office
-Alkylchloride, 71, Mazzatorta
-Alkylchloride, 41, Swiss Federal Office
-Alkylfluoride, 52, Mazzatorta
-Alkylfluoride, 74, Swiss Federal Office
-Alcohol, 44, Mazzatorta
-Alcohol, 27, Swiss Federal Office
-Dialkylether, 35, Mazzatorta
-Dialkylether, 32, Swiss Federal Office
-Alkylarylether, 62, Mazzatorta
-Alkylarylether, 90, Swiss Federal Office
-Diarylether, 35, Mazzatorta
-Diarylether, 47, Swiss Federal Office
-Amine, 66, Mazzatorta
-Amine, 41, Swiss Federal Office
-Primary arom amine, 26, Mazzatorta
-Primary arom amine, 15, Swiss Federal Office
-Ketone, 21, Mazzatorta
-Ketone, 25, Swiss Federal Office
-Chloroalkene, 39, Mazzatorta
-Chloroalkene, 21, Swiss Federal Office
-Carboxylic acid, 33, Mazzatorta
-Carboxylic acid, 38, Swiss Federal Office
-Carboxylic acid derivative, 215, Mazzatorta
-Carboxylic acid derivative, 227, Swiss Federal Office
-Amide, 38, Mazzatorta
-Amide, 60, Swiss Federal Office
-Secondary amide, 22, Mazzatorta
-Secondary amide, 36, Swiss Federal Office
-Imidolactone, 13, Mazzatorta
-Imidolactone, 32, Swiss Federal Office
-Nitrile, 35, Mazzatorta
-Nitrile, 39, Swiss Federal Office
-Vinylogous ester, 113, Mazzatorta
-Vinylogous ester, 120, Swiss Federal Office
-Vinylogous halide, 11, Mazzatorta
-Vinylogous halide, 27, Swiss Federal Office
-Carbonic acid derivatives, 109, Mazzatorta
-Carbonic acid derivatives, 131, Swiss Federal Office
-Urethan, 34, Mazzatorta
-Urethan, 35, Swiss Federal Office
-Phenol, 27, Mazzatorta
-Phenol, 9, Swiss Federal Office
-Arylchloride, 142, Mazzatorta
-Arylchloride, 163, Swiss Federal Office
-Arylfluoride, 22, Mazzatorta
-Arylfluoride, 41, Swiss Federal Office
-Oxoarene, 32, Mazzatorta
-Oxoarene, 29, Swiss Federal Office
-Heteroaromatic, 147, Mazzatorta
-Heteroaromatic, 205, Swiss Federal Office
-Nitro, 42, Mazzatorta
-Nitro, 31, Swiss Federal Office
-Sulfonic derivative, 24, Mazzatorta
-Sulfonic derivative, 29, Swiss Federal Office
-Sulfenic derivative, 48, Mazzatorta
-Sulfenic derivative, 34, Swiss Federal Office
-Phosphoric acid derivative, 70, Mazzatorta
-Phosphoric acid derivative, 44, Swiss Federal Office
-Aromatic, 402, Mazzatorta
-Aromatic, 396, Swiss Federal Office
-Heterocyclic, 228, Mazzatorta
-Heterocyclic, 272, Swiss Federal Office
-Trifluoromethyl, 44, Mazzatorta
-Trifluoromethyl, 63, Swiss Federal Office
-1-3-Tautomerizable, 265, Mazzatorta
-1-3-Tautomerizable, 296, Swiss Federal Office
-1-5-Tautomerizable, 124, Mazzatorta
-1-5-Tautomerizable, 148, Swiss Federal Office
-Michael acceptor, 33, Mazzatorta
-Michael acceptor, 33, Swiss Federal Office
-CH-acidic, 60, Mazzatorta
-CH-acidic, 73, Swiss Federal Office
+Alkene, 39, Nestle
+Alkene, 30, FSVO
+Alkylchloride, 71, Nestle
+Alkylchloride, 41, FSVO
+Alkylfluoride, 52, Nestle
+Alkylfluoride, 74, FSVO
+Alcohol, 44, Nestle
+Alcohol, 27, FSVO
+Dialkylether, 35, Nestle
+Dialkylether, 32, FSVO
+Alkylarylether, 62, Nestle
+Alkylarylether, 90, FSVO
+Diarylether, 35, Nestle
+Diarylether, 47, FSVO
+Amine, 66, Nestle
+Amine, 41, FSVO
+Primary arom amine, 26, Nestle
+Primary arom amine, 15, FSVO
+Ketone, 21, Nestle
+Ketone, 25, FSVO
+Chloroalkene, 39, Nestle
+Chloroalkene, 21, FSVO
+Carboxylic acid, 33, Nestle
+Carboxylic acid, 38, FSVO
+Carboxylic acid derivative, 215, Nestle
+Carboxylic acid derivative, 227, FSVO
+Amide, 38, Nestle
+Amide, 60, FSVO
+Secondary amide, 22, Nestle
+Secondary amide, 36, FSVO
+Imidolactone, 13, Nestle
+Imidolactone, 32, FSVO
+Nitrile, 35, Nestle
+Nitrile, 39, FSVO
+Vinylogous ester, 113, Nestle
+Vinylogous ester, 120, FSVO
+Vinylogous halide, 11, Nestle
+Vinylogous halide, 27, FSVO
+Carbonic acid derivatives, 109, Nestle
+Carbonic acid derivatives, 131, FSVO
+Urethan, 34, Nestle
+Urethan, 35, FSVO
+Phenol, 27, Nestle
+Phenol, 9, FSVO
+Arylchloride, 142, Nestle
+Arylchloride, 163, FSVO
+Arylfluoride, 22, Nestle
+Arylfluoride, 41, FSVO
+Oxoarene, 32, Nestle
+Oxoarene, 29, FSVO
+Heteroaromatic, 147, Nestle
+Heteroaromatic, 205, FSVO
+Nitro, 42, Nestle
+Nitro, 31, FSVO
+Sulfonic derivative, 24, Nestle
+Sulfonic derivative, 29, FSVO
+Sulfenic derivative, 48, Nestle
+Sulfenic derivative, 34, FSVO
+Phosphoric acid derivative, 70, Nestle
+Phosphoric acid derivative, 44, FSVO
+Aromatic, 402, Nestle
+Aromatic, 396, FSVO
+Heterocyclic, 228, Nestle
+Heterocyclic, 272, FSVO
+Trifluoromethyl, 44, Nestle
+Trifluoromethyl, 63, FSVO
+1-3-Tautomerizable, 265, Nestle
+1-3-Tautomerizable, 296, FSVO
+1-5-Tautomerizable, 124, Nestle
+1-5-Tautomerizable, 148, FSVO
+Michael acceptor, 33, Nestle
+Michael acceptor, 33, FSVO
+CH-acidic, 60, Nestle
+CH-acidic, 73, FSVO

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'csv'
 csv = []
 exclude = [
@@ -20,8 +21,8 @@ CSV.foreach("data/functional-groups.csv") do |row|
     keep = false if row[0].match(patt)
   end
   if keep and [row[1].to_i,row[2].to_i].max >= 25
-    csv << [row[0].gsub('_',' '),row[1].to_i,"Mazzatorta"]
-    csv << [row[0].gsub('_',' '),row[2].to_i,"Swiss Federal Office"]
+    csv << [row[0].gsub('_',' '),row[1].to_i,"Nestle"]
+    csv << [row[0].gsub('_',' '),row[2].to_i,"FSVO"]
   else
     p row
   end

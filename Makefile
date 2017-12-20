@@ -23,7 +23,7 @@ loael.docx: loael.md
 figures/functional-groups.pdf: data/functional-groups-reduced4R.csv
 	scripts/functional-groups.R
 
-figures/dataset-variability.pdf: data/mazzatorta_log10.csv data/swiss_log10.csv
+figures/dataset-variability.pdf: data/test_log10_database_fix.csv
 	scripts/dataset-variability.R
 
 figures/crossvalidation0.pdf: data/training_log10-cv-0.csv
@@ -89,6 +89,9 @@ data/median-correlation.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
 # Test set
 data/test_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv
 	scripts/create-testset.rb 
+
+data/test_log10_database_fix.csv: data/test_log10.csv
+	sed 's/mazzatorta/Nestle/' data/test_log10.csv | sed 's/mazzatorta and swiss/Both/' | sed 's/swiss/FSVO/' > data/test_log10_database_fix.csv
 
 # Training set
 data/training_log10.csv: data/mazzatorta_log10.csv data/swiss_log10.csv

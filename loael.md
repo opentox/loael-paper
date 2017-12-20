@@ -20,7 +20,7 @@ abstract: |
   better than random guessing, but the errors to be expected are higher and
   a manual inspection of prediction results is highly recommended.
 
-documentclass: article
+documentclass: achemso
 bibliography: references.bibtex
 figPrefix: Figure
 eqnPrefix: Equation
@@ -287,7 +287,7 @@ optimizing the number of RF components by bootstrap resampling.
 Finally the local RF model is applied to [predict the
 activity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L194-L272)
 of the query compound. The RMSE of bootstrapped local model predictions is used
-to construct 95\% prediction intervals at 1.96*RMSE.
+to construct 95\% prediction intervals at 1.96*RMSE. The width of the prediction interval indicates the expected prediction accuracy. The "true" value of a prediction should be with 95\% probability within the prediction interval.
 
 If RF modelling or prediction fails, the program resorts to using the [weighted
 mean](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/regression.rb#L6-L16)
@@ -609,8 +609,7 @@ experimental variability [@LoPiparo2014]. In the present
 study, a similar approach was applied to build models generating
 quantitative predictions of long-term toxicity. Two databases compiling
 chronic oral rat lowest adverse effect levels (LOAEL) as endpoint were
-available from different sources. <span id="dataset-comparison-1"
-class="anchor"></span>Our investigations clearly indicated that the
+available from different sources. Our investigations clearly indicated that the
 Nestlé and FSVO databases are very similar in terms of chemical
 structures and properties as well as distribution of experimental LOAEL
 values. The only significant difference that we observed was that the
@@ -623,7 +622,7 @@ chemicals available in the training datasets had at least two
 independent studies/LOAELs. These studies were exploited to generate
 information on the reproducibility of chronic animal studies and were
 used to evaluate prediction performance of the models in the context of
-experimental variability.Considerable variability in the experimental
+experimental variability. Considerable variability in the experimental
 data was observed. Study design differences, including dose selection,
 dose spacing and route of administration are likely explanation of
 experimental variability. High experimental variability has an impact on
@@ -632,8 +631,7 @@ quality by introducing noise into the training data, secondly it
 influences accuracy estimates because predictions have to be compared
 against noisy data where "true" experimental values are unknown. This
 will become obvious in the next section, where comparison of predictions
-with experimental data is discussed.<span id="lazar-predictions"
-class="anchor"></span>The data obtained in the present study indicate
+with experimental data is discussed. The data obtained in the present study indicate
 that `lazar` generates reliable predictions for compounds within the
 applicability domain of the training data (i.e. predictions without
 warnings, which indicates a sufficient number of neighbors with
@@ -713,7 +711,7 @@ where no predictions can be made, because there are no similar compounds in the 
  and in such cases it is preferable to avoid predictions instead of random guessing.
 -->
 
-Elena: Should we add a GUI screenshot?
+TODO: GUI screenshot
 
 <!--
 is covered in
