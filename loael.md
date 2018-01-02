@@ -1,5 +1,5 @@
 ---
-title: 'Modeling Chronic Toxicity: A comparison of experimental variability with read across predictions'
+title: 'Modeling Chronic Toxicity: A comparison of experimental variability with (Q)SAR/read-across predictions'
 author: 
     - Christoph Helma^1^
     - David Vorgrimmler^1^
@@ -13,7 +13,7 @@ date: \today
 abstract: |
   This study compares the accuracy of (Q)SAR/read-across predictions with the
   experimental variability of chronic LOAEL values from *in vivo* experiments.
-  We could demonstrate that predictions of the `lazar` lazar algrorithm within
+  We could demonstrate that predictions of the `lazar` algrorithm within
   the applicability domain of the training data have the same variability as
   the experimental training data. Predictions with a lower similarity threshold
   (i.e. a larger distance from the applicability domain) are also significantly
@@ -71,8 +71,8 @@ Since most of the time chemical food safety deals with
 life-long exposures to relatively low levels of chemicals, and because
 long-term toxicity studies are often the most sensitive in food
 toxicology databases, predicting chronic toxicity is of prime
-importance. Up to now, read across and quantitative structure-activity
-relationship (QSAR) have been the most used *in silico* approaches to
+importance. Up to now, read-across and Quantitative Structure Activity
+Relationships (QSAR) have been the most used *in silico* approaches to
 obtain quantitative predictions of chronic toxicity.
 
 The quality and reproducibility of (Q)SAR and read-across predictions
@@ -88,7 +88,7 @@ overfitted models with little practical relevance.
 
 In the present study, automatic read-across like models were built to
 generate quantitative predictions of long-term toxicity. Two databases
-compiling chronic oral rat lowest adverse effect levels (LOAEL) as
+compiling chronic oral rat Lowest Adverse Effect Levels (LOAEL) as
 endpoint were used. An early review of the databases revealed that many
 chemicals had at least two independent studies/LOAELs. These studies
 were exploited to generate information on the reproducibility of chronic
@@ -172,8 +172,8 @@ SMILES were generated from other identifiers (e.g names, CAS numbers). Unique
 smiles from the OpenBabel library [@OBoyle2011] were used for the
 identification of duplicated structures. 
 
-Studies with undefined or empty LOAEL entries were removed from the databases
-LOAEL values were converted to mmol/kg_bw/day units and rounded to five
+Studies with undefined or empty LOAEL entries were removed from the databases.
+LOAEL values were converted to mmol/kg bw/day units and rounded to five
 significant digits. For prediction, validation and visualisation purposes
 -log10 transformations are used.
 
@@ -221,7 +221,7 @@ a *k-nearest-neighbor* algorithm.
 
 Apart from this basic workflow lazar is completely modular and allows the
 researcher to use any algorithm for similarity searches and local QSAR
-modelling. Within this study we are using the following algorithms:
+modelling. Algorithms used within this study are described in the following sections.
 
 ### Neighbor identification
 
@@ -237,7 +237,7 @@ of connected atoms.
 MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
 MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
-advantage the they may capture substructures of toxicological relevance that
+advantage that they may capture substructures of toxicological relevance that
 are not included in other fingerprints.  Unpublished experiments have shown
 that predictions with MolPrint2D fingerprints are indeed more accurate than
 other OpenBabel fingerprints.
@@ -259,11 +259,11 @@ threshold) and the number of predictable compounds (low threshold). As it is in
 many practical cases desirable to make predictions even in the absence of
 closely related neighbors, we follow a tiered approach: 
 
-First a similarity threshold of 0.5 is used to collect neighbors, to create
-a local QSAR model and to make a prediction for the query compound. If any of
-this steps fail, the procedure is repeated with a similarity threshold of 0.2
-and the prediction is flagged with a warning that it might be out of the
-applicability domain of the training data.
+- First a similarity threshold of 0.5 is used to collect neighbors, to create
+  a local QSAR model and to make a prediction for the query compound.
+- If any of these steps fails, the procedure is repeated with a similarity
+  threshold of 0.2 and the prediction is flagged with a warning that it might
+  be out of the applicability domain of the training data.
 
 Compounds with the same structure as the query structure are automatically
 [eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257)
@@ -308,7 +308,7 @@ distant from the applicability domain. Quantitative applicability domain
 information can be obtained from the similarities of individual neighbors.
 
 Local regression models consider neighbor similarities to the query compound,
-by weighting the contribution of each neighbor is by its similarity. The
+by weighting the contribution of each neighbor is by similarity. The
 variability of local model predictions is reflected in the 95\% prediction
 interval associated with each prediction.
 
@@ -365,7 +365,7 @@ baseline for evaluating prediction performance.
 
 In order to compare the structural diversity of both databases we evaluated the
 frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
-shows the frequency of functional groups in both databases 139
+shows the frequency of functional groups in both databases. 139
 functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the supplemental
 material at [GitHub](https://github.com/opentox/loael-paper/blob/submission/data/functional-groups.csv).
@@ -478,7 +478,7 @@ correlation between the experimental data in both databases with r\^2:
 
 
 In order to compare the performance of *in silico* read across models with
-experimental variability we are using compounds with multiple measurements as
+experimental variability we used compounds with multiple measurements as
 a test set (375 measurements, 155
 compounds). `lazar` read across predictions were obtained for
 155 compounds, 37
@@ -486,8 +486,8 @@ predictions failed, because no similar compounds were found in the training
 data (i.e. they were not covered by the applicability domain of the training
 data).
 
-Experimental data and 95\% prediction intervals overlapped in
-100\% of the test examples.
+In 100\% of the test examples
+experimental LOAEL values were located within the 95\% prediction intervals. 
 
 <!--
 Experimental data and 95\% prediction intervals did not overlap in 0 cases
@@ -678,8 +678,12 @@ variability in the experimental data. High experimental variability has an
 impact on model building and on model validation. First it influences model
 quality by introducing noise into the training data, secondly it influences
 accuracy estimates because predictions have to be compared against noisy data
-where "true" experimental values are unknown. This will become obvious in the
+where "true" experimental values are unknown.
+
+<!--
+This will become obvious in the
 next section, where we compare predictions with experimental data.
+-->
 
 ### `lazar` predictions
 
