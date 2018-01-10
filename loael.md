@@ -98,13 +98,13 @@ models in the context of experimental variability.
 An important limitation often raised for computational toxicology is the lack
 of transparency on published models and consequently on the difficulty for the
 scientific community to reproduce and apply them. To overcome these issues,
-source code for all programs and libraries and the databases that have been used to generate this
-manuscript are made available under GPL3 licenses. Databases and compiled
+source code for all programs and libraries and the data that have been used to generate this
+manuscript are made available under GPL3 licenses. Data and compiled
 programs with all dependencies for the reproduction of results in this manuscript are available as
 a self-contained docker image. All data, tables and figures in this manuscript
 was generated directly from experimental results using the `R` package `knitR`.
-A single command repeats all experiments (possibly with different settings) and
-updates the manuscript with the new results.
+<!-- A single command repeats all experiments (possibly with different settings) and
+updates the manuscript with the new results. -->
 
 <!--
 overcome these issues, all databases and programs that have been used to
@@ -424,7 +424,7 @@ same experiments.
 
 
 Both databases contain substances with multiple measurements, which allow the determination of experimental variabilities. 
-For this purpose we have calculated the mean standard deviation of compounds with multiple measurements, which is roughly a factor of 2 for both databases. 
+For this purpose we have calculated the mean standard deviation of compounds with multiple measurements. Mean standard deviations and thus experimental variabilities are similar for both databases. 
 
 The Nestlé database has 567 LOAEL values for
 445 unique structures, 93 compounds have
@@ -455,10 +455,6 @@ The combined test set has a mean standard deviation (-log10 transformed values) 
 
 In order to compare the correlation of LOAEL values in both databases and to establish a reference for predicted values, we have investigated compounds, that occur in both databases.
 
-[@fig:comp] shows the experimental LOAEL variability of compounds occurring in
-both datasets (i.e. the *test* dataset) colored in blue (experimental). This is
-the baseline reference for the comparison with predicted values.
-
 
 
 [@fig:datacorr] depicts the correlation between LOAEL values from both
@@ -468,6 +464,10 @@ measurements into a single median value hides a substantial portion of the
 experimental variability.  Correlation analysis shows a significant (p-value < 2.2e-16)
 correlation between the experimental data in both databases with r\^2:
 0.52, RMSE: 0.59
+
+[@fig:comp] shows the experimental LOAEL variability of compounds occurring in
+both datasets (i.e. the *test* dataset) colored in blue (experimental). This is
+the baseline reference for the comparison with predicted values.
 
 ![Correlation of median LOAEL values from Nestlé and FSVO databases. Data with
   identical values in both databases was removed from
