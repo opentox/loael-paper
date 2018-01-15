@@ -5,9 +5,11 @@ author:
     - David Vorgrimmler^1^
     - Denis Gebele^1^
     - Martin Gütlein^2^
-    - Benoit Schilter^3^
-    - Elena Lo Piparo^3^
-include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
+    - Barbara Engeli^3^
+    - Jürg Zarn^3^
+    - Benoit Schilter^4^
+    - Elena Lo Piparo^4^
+include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Federal Food Safety and Veterinary Office (FSVO) , Risk Assessment Division , Bern , Switzerland\newline^4^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
 keywords: (Q)SAR, read-across, LOAEL, experimental variability
 date: \today
 abstract: |
@@ -487,7 +489,7 @@ The combined test set has a mean standard deviation (-log10 transformed values) 
 `r round(mean(10^(-1*c.dup$sd)),2)` mmol/kg_bw/day)
 ([@fig:intra]). 
 
-![Distribution and variability of compounds with multiple LOAEL values in both databases Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
+![LOAEL distribution and variability of compounds with multiple measurements in both databases. Compounds were sorted according to LOAEL values. Each vertical line represents a compound, and each dot an individual LOAEL value. Experimental variability can be inferred from dots (LOAELs) lying on the same line (compound).](figures/dataset-variability.pdf){#fig:intra}
 
 ##### Inter database variability
 
