@@ -5,9 +5,11 @@ author:
     - David Vorgrimmler^1^
     - Denis Gebele^1^
     - Martin Gütlein^2^
-    - Benoit Schilter^3^
-    - Elena Lo Piparo^3^
-include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
+    - Barbara Engeli^3^
+    - Jürg Zarn^3^
+    - Benoit Schilter^4^
+    - Elena Lo Piparo^4^
+include-before: ^1^ in silico toxicology gmbh,  Basel, Switzerland\newline^2^ Inst. f. Computer Science, Johannes Gutenberg Universität Mainz, Germany\newline^3^ Federal Food Safety and Veterinary Office (FSVO) , Risk Assessment Division , Bern , Switzerland\newline^4^ Chemical Food Safety Group, Nestlé Research Center, Lausanne, Switzerland
 keywords: (Q)SAR, read-across, LOAEL, experimental variability
 date: \today
 abstract: |
@@ -52,8 +54,8 @@ prioritization in research and development (safety by design) is a big
 challenge mainly because of the time and cost constraints associated with the
 generation of relevant animal data. In this context, alternative approaches to
 obtain timely and fit-for-purpose toxicological information are being
-developed. Amongst others, non-testing, structure-activity based *in silico*
-toxicology methods (also called computational toxicology) are considered highly
+developed. Amongst others *in silico*
+toxicology methods are considered highly
 promising. Importantly, they are raising more and more interests
 and getting increased acceptance in various regulatory (e.g.
 [@ECHA2008, @EFSA2016, @EFSA2014, @HealthCanada2016, @OECD2015]) and industrial (e.g.
@@ -62,13 +64,12 @@ and getting increased acceptance in various regulatory (e.g.
 For a long time already, computational methods have been an integral
 part of pharmaceutical discovery pipelines, while in chemical food
 safety their actual potentials emerged only recently [@LoPiparo2011].
-In this later field, an application considered critical is in the
+In this field, an application considered critical is in the
 establishment of levels of safety concern in order to rapidly and
 efficiently manage toxicologically uncharacterized chemicals identified
 in food. This requires a risk-based approach to benchmark exposure with
 a quantitative value of toxicity relevant for risk assessment [@Schilter2014].
-Since most of the time chemical food safety deals with
-life-long exposures to relatively low levels of chemicals, and because
+Since chronic studies have the highest power (more animals per group and more endpoints than other studies) and because
 long-term toxicity studies are often the most sensitive in food
 toxicology databases, predicting chronic toxicity is of prime
 importance. Up to now, read-across and Quantitative Structure Activity
@@ -334,7 +335,7 @@ data (Nestlé and FSVO databases combined).
 ## Availability
 
 Public webinterface
-  ~ <https://lazar.in-silico.ch>
+  ~ <https://lazar.in-silico.ch> (see [@fig:screenshot])
 
 `lazar` framework
   ~ <https://github.com/opentox/lazar> (source code)
@@ -348,6 +349,7 @@ Manuscript
 Docker image
   ~ <https://hub.docker.com/r/insilicotox/loael-paper/> (container with manuscript, validation experiments, `lazar` libraries and third party dependencies)
 
+![Screenshot of a lazar prediction from the public webinterface.](figures/lazar-screenshot.pdf){#fig:screenshot}
 
 Results
 =======
@@ -383,9 +385,9 @@ used with different kinds of features. We have investigated structural as well
 as physico-chemical properties and concluded that both databases are very
 similar, both in terms of chemical structures and physico-chemical properties. 
 
-The only statistically significant difference between both databases, is that
+The only statistically significant difference between both databases is that
 the Nestlé database contains more small compounds (61 structures with less than
-11 atoms) than the FSVO-database (19 small structures, p-value 3.7E-7).
+11 non-hydrogen atoms) than the FSVO-database (19 small structures, chi-square test: p-value 3.7E-7).
 
 <!--
 [@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
@@ -424,7 +426,7 @@ same experiments.
 
 
 Both databases contain substances with multiple measurements, which allow the determination of experimental variabilities. 
-For this purpose we have calculated the mean standard deviation of compounds with multiple measurements. Mean standard deviations and thus experimental variabilities are similar for both databases. 
+For this purpose we have calculated the mean LOAEL standard deviation of compounds with multiple measurements. Mean standard deviations and thus experimental variabilities are similar for both databases. 
 
 The Nestlé database has 567 LOAEL values for
 445 unique structures, 93 compounds have
@@ -449,7 +451,7 @@ The combined test set has a mean standard deviation (-log10 transformed values) 
 0.55 mmol/kg_bw/day)
 ([@fig:intra]). 
 
-![Distribution and variability of compounds with multiple LOAEL values in both databases Each vertical line represents a compound, dots are individual LOAEL values.](figures/dataset-variability.pdf){#fig:intra}
+![LOAEL distribution and variability of compounds with multiple measurements in both databases. Compounds were sorted according to LOAEL values. Each vertical line represents a compound, and each dot an individual LOAEL value. Experimental variability can be inferred from dots (LOAELs) on the same line (compound).](figures/dataset-variability.pdf){#fig:intra}
 
 ##### Inter database variability
 
@@ -570,7 +572,7 @@ Discussion
 
 It is currently acknowledged that there is a strong need for
 toxicological information on the multiple thousands of chemicals to
-which human may be exposed through food. These include for examples many
+which human may be exposed through food. These include for example many
 chemicals in commerce, which could potentially find their way into food
 [@Stanton2016, @Fowler2011], but also substances
 migrating from food contact materials [@Grob2006], chemicals
@@ -596,8 +598,8 @@ exposure estimates. The level of safety concern of a chemical is then
 determined by the size of the MoE and its suitability to cover the
 uncertainties of the assessment. To be applicable, such an approach
 requires quantitative predictions of toxicological endpoints relevant
-for risk assessment. The present work focuses on prediction of chronic
-toxicity, a major and often pivotal endpoints of toxicological databases
+for risk assessment. The present work focuses on the prediction of chronic
+toxicity, a major and often pivotal endpoint of toxicological databases
 used for hazard identification and characterization of food chemicals.
 
 In a previous study, automated read-across like models for predicting
@@ -608,7 +610,7 @@ observed in these models were within the published estimation of
 experimental variability [@LoPiparo2014]. In the present
 study, a similar approach was applied to build models generating
 quantitative predictions of long-term toxicity. Two databases compiling
-chronic oral rat lowest adverse effect levels (LOAEL) as endpoint were
+chronic oral rat lowest adverse effect levels (LOAEL) as reference value were
 available from different sources. Our investigations clearly indicated that the
 Nestlé and FSVO databases are very similar in terms of chemical
 structures and properties as well as distribution of experimental LOAEL
@@ -713,11 +715,9 @@ Finally there is a substantial number of compounds
 (37),
 where no predictions can be made, because there are no similar compounds in the training data. These compounds clearly fall beyond the applicability domain of the training dataset 
  and in such cases it is preferable to avoid predictions instead of random guessing.
--->
-
-TODO: GUI screenshot
 
 <!--
+TODO: GUI screenshot
 is covered in
 prediction interval shows that `lazar` read across predictions fit well into
 the experimental variability of LOAEL values.
@@ -753,14 +753,6 @@ data. In such cases experimental investigations can be substituted with
 *in silico* predictions. Predictions with a lower similarity threshold can
 still give usable results, but the errors to be expected are higher and
 a manual inspection of prediction results is highly recommended.
-
-<!--
-We could demonstrate that `lazar` predictions within the applicability domain of the training data have the same variability as the experimental training data. In such cases experimental investigations can be substituted with in silico predictions.
-Predictions with a lower similarity threshold can still give usable results, but the errors to be expected are higher and a manual inspection of prediction results is highly recommended.
-
-- beware of over-optimisations and the race for "better" validation results
-- reproducible research
--->
 
 References
 ==========

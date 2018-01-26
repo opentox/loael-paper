@@ -25,7 +25,7 @@
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 \hypersetup{
             pdftitle={Modeling Chronic Toxicity: A comparison of experimental variability with (Q)SAR/read-across predictions},
-            pdfauthor={Christoph Helma1; David Vorgrimmler1; Denis Gebele1; Martin Gütlein2; Benoit Schilter3; Elena Lo Piparo3},
+            pdfauthor={Christoph Helma1; David Vorgrimmler1; Denis Gebele1; Martin Gütlein2; Barbara Engeli3; Jürg Zarn3; Benoit Schilter4; Elena Lo Piparo4},
             pdfkeywords={(Q)SAR, read-across, LOAEL, experimental variability},
             colorlinks=true,
             linkcolor=Maroon,
@@ -93,7 +93,7 @@
 
 \title{Modeling Chronic Toxicity: A comparison of experimental variability with
 (Q)SAR/read-across predictions}
-\author{Christoph Helma\textsuperscript{1} \and David Vorgrimmler\textsuperscript{1} \and Denis Gebele\textsuperscript{1} \and Martin Gütlein\textsuperscript{2} \and Benoit Schilter\textsuperscript{3} \and Elena Lo Piparo\textsuperscript{3}}
+\author{Christoph Helma\textsuperscript{1} \and David Vorgrimmler\textsuperscript{1} \and Denis Gebele\textsuperscript{1} \and Martin Gütlein\textsuperscript{2} \and Barbara Engeli\textsuperscript{3} \and Jürg Zarn\textsuperscript{3} \and Benoit Schilter\textsuperscript{4} \and Elena Lo Piparo\textsuperscript{4}}
 \date{\today}
 
 \begin{document}
@@ -113,8 +113,9 @@ inspection of prediction results is highly recommended.
 \textsuperscript{1} in silico toxicology gmbh, Basel,
 Switzerland\newline\textsuperscript{2} Inst. f. Computer Science,
 Johannes Gutenberg Universität Mainz, Germany\newline\textsuperscript{3}
-Chemical Food Safety Group, Nestlé Research Center, Lausanne,
-Switzerland
+Federal Food Safety and Veterinary Office (FSVO) , Risk Assessment
+Division , Bern , Switzerland\newline\textsuperscript{4} Chemical Food
+Safety Group, Nestlé Research Center, Lausanne, Switzerland
 
 \section{Introduction}\label{introduction}
 
@@ -130,29 +131,28 @@ research and development (safety by design) is a big challenge mainly
 because of the time and cost constraints associated with the generation
 of relevant animal data. In this context, alternative approaches to
 obtain timely and fit-for-purpose toxicological information are being
-developed. Amongst others, non-testing, structure-activity based
-\emph{in silico} toxicology methods (also called computational
-toxicology) are considered highly promising. Importantly, they are
-raising more and more interests and getting increased acceptance in
-various regulatory (e.g. (ECHA 2008, EFSA (2016), EFSA (2014), Health
-Canada (2016), OECD (2015))) and industrial (e.g. (Stanton and
-Krusezewski 2016, Lo Piparo et al. (2011))) frameworks.
+developed. Amongst others \emph{in silico} toxicology methods are
+considered highly promising. Importantly, they are raising more and more
+interests and getting increased acceptance in various regulatory (e.g.
+(ECHA 2008, EFSA (2016), EFSA (2014), Health Canada (2016), OECD
+(2015))) and industrial (e.g. (Stanton and Krusezewski 2016, Lo Piparo
+et al. (2011))) frameworks.
 
 For a long time already, computational methods have been an integral
 part of pharmaceutical discovery pipelines, while in chemical food
 safety their actual potentials emerged only recently (Lo Piparo et al.
-2011). In this later field, an application considered critical is in the
+2011). In this field, an application considered critical is in the
 establishment of levels of safety concern in order to rapidly and
 efficiently manage toxicologically uncharacterized chemicals identified
 in food. This requires a risk-based approach to benchmark exposure with
 a quantitative value of toxicity relevant for risk assessment (Schilter
-et al. 2014). Since most of the time chemical food safety deals with
-life-long exposures to relatively low levels of chemicals, and because
-long-term toxicity studies are often the most sensitive in food
-toxicology databases, predicting chronic toxicity is of prime
-importance. Up to now, read-across and Quantitative Structure Activity
-Relationships (QSAR) have been the most used \emph{in silico} approaches
-to obtain quantitative predictions of chronic toxicity.
+et al. 2014). Since chronic studies have the highest power (more animals
+per group and more endpoints than other studies) and because long-term
+toxicity studies are often the most sensitive in food toxicology
+databases, predicting chronic toxicity is of prime importance. Up to
+now, read-across and Quantitative Structure Activity Relationships
+(QSAR) have been the most used \emph{in silico} approaches to obtain
+quantitative predictions of chronic toxicity.
 
 The quality and reproducibility of (Q)SAR and read-across predictions
 has been a continuous and controversial topic in the toxicological
@@ -449,7 +449,7 @@ LOAEL data (Nestlé and FSVO databases combined).
 \begin{description}
 \tightlist
 \item[Public webinterface]
-\url{https://lazar.in-silico.ch}
+\url{https://lazar.in-silico.ch} (see Figure~\ref{fig:screenshot})
 \item[\texttt{lazar} framework]
 \url{https://github.com/opentox/lazar} (source code)
 \item[\texttt{lazar} GUI]
@@ -462,6 +462,13 @@ manuscript and validation experiments)
 manuscript, validation experiments, \texttt{lazar} libraries and third
 party dependencies)
 \end{description}
+
+\begin{figure}
+\centering
+\includegraphics{figures/lazar-screenshot.pdf}
+\caption{Screenshot of a lazar prediction from the public
+webinterface.}\label{fig:screenshot}
+\end{figure}
 
 \section{Results}\label{results}
 
@@ -499,10 +506,10 @@ We have investigated structural as well as physico-chemical properties
 and concluded that both databases are very similar, both in terms of
 chemical structures and physico-chemical properties.
 
-The only statistically significant difference between both databases, is
+The only statistically significant difference between both databases is
 that the Nestlé database contains more small compounds (61 structures
-with less than 11 atoms) than the FSVO-database (19 small structures,
-p-value 3.7E-7).
+with less than 11 non-hydrogen atoms) than the FSVO-database (19 small
+structures, chi-square test: p-value 3.7E-7).
 
 \subsubsection{Experimental variability versus prediction
 uncertainty}\label{experimental-variability-versus-prediction-uncertainty}
@@ -520,7 +527,7 @@ variability}\label{intra-database-variability}
 
 Both databases contain substances with multiple measurements, which
 allow the determination of experimental variabilities. For this purpose
-we have calculated the mean standard deviation of compounds with
+we have calculated the mean LOAEL standard deviation of compounds with
 multiple measurements. Mean standard deviations and thus experimental
 variabilities are similar for both databases.
 
@@ -543,9 +550,11 @@ test set has a mean standard deviation (-log10 transformed values) of
 \begin{figure}
 \centering
 \includegraphics{figures/dataset-variability.pdf}
-\caption{Distribution and variability of compounds with multiple LOAEL
-values in both databases Each vertical line represents a compound, dots
-are individual LOAEL values.}\label{fig:intra}
+\caption{LOAEL distribution and variability of compounds with multiple
+measurements in both databases. Compounds were sorted according to LOAEL
+values. Each vertical line represents a compound, and each dot an
+individual LOAEL value. Experimental variability can be inferred from
+dots (LOAELs) on the same line (compound).}\label{fig:intra}
 \end{figure}
 
 \subparagraph{Inter database
@@ -693,7 +702,7 @@ random forest models.}
 
 It is currently acknowledged that there is a strong need for
 toxicological information on the multiple thousands of chemicals to
-which human may be exposed through food. These include for examples many
+which human may be exposed through food. These include for example many
 chemicals in commerce, which could potentially find their way into food
 (Stanton and Krusezewski 2016, Fowler, Savage, and Mendez (2011)), but
 also substances migrating from food contact materials (Grob et al.
@@ -720,9 +729,10 @@ exposure estimates. The level of safety concern of a chemical is then
 determined by the size of the MoE and its suitability to cover the
 uncertainties of the assessment. To be applicable, such an approach
 requires quantitative predictions of toxicological endpoints relevant
-for risk assessment. The present work focuses on prediction of chronic
-toxicity, a major and often pivotal endpoints of toxicological databases
-used for hazard identification and characterization of food chemicals.
+for risk assessment. The present work focuses on the prediction of
+chronic toxicity, a major and often pivotal endpoint of toxicological
+databases used for hazard identification and characterization of food
+chemicals.
 
 In a previous study, automated read-across like models for predicting
 carcinogenic potency were developed. In these models, substances in the
@@ -732,14 +742,14 @@ observed in these models were within the published estimation of
 experimental variability (Lo Piparo et al. 2014). In the present study,
 a similar approach was applied to build models generating quantitative
 predictions of long-term toxicity. Two databases compiling chronic oral
-rat lowest adverse effect levels (LOAEL) as endpoint were available from
-different sources. Our investigations clearly indicated that the Nestlé
-and FSVO databases are very similar in terms of chemical structures and
-properties as well as distribution of experimental LOAEL values. The
-only significant difference that we observed was that the Nestlé one has
-larger amount of small molecules, than the FSVO database. For this
-reason we pooled both databases into a single training dataset for read
-across predictions.
+rat lowest adverse effect levels (LOAEL) as reference value were
+available from different sources. Our investigations clearly indicated
+that the Nestlé and FSVO databases are very similar in terms of chemical
+structures and properties as well as distribution of experimental LOAEL
+values. The only significant difference that we observed was that the
+Nestlé one has larger amount of small molecules, than the FSVO database.
+For this reason we pooled both databases into a single training dataset
+for read across predictions.
 
 An early review of the databases revealed that 155 out of the 671
 chemicals available in the training datasets had at least two
@@ -825,9 +835,7 @@ Finally there is a substantial number of compounds (37), where no
 predictions can be made, because there are no similar compounds in the
 training data. These compounds clearly fall beyond the applicability
 domain of the training dataset and in such cases it is preferable to
-avoid predictions instead of random guessing. --\textgreater{}
-
-TODO: GUI screenshot
+avoid predictions instead of random guessing.
 
 \section{Summary}\label{summary}
 
