@@ -14,10 +14,11 @@ keywords: (Q)SAR, read-across, LOAEL, experimental variability
 date: \today
 abstract: |
   This study compares the accuracy of (Q)SAR/read-across predictions with the
-  experimental variability of chronic LOAEL values from *in vivo* experiments.
-  We could demonstrate that predictions of the `lazar` algrorithm within
-  the applicability domain of the training data have the same variability as
-  the experimental training data. Predictions with a lower similarity threshold
+  experimental variability of chronic lowest-observed-adverse-effect levels
+  (LOAELs) from *in vivo* experiments. We could demonstrate that predictions of
+  the lazy structure-activity relationships (`lazar`) algorithm within the
+  applicability domain of the training data have the same variability as the
+  experimental training data. Predictions with a lower similarity threshold
   (i.e. a larger distance from the applicability domain) are also significantly
   better than random guessing, but the errors to be expected are higher and
   a manual inspection of prediction results is highly recommended.
@@ -96,10 +97,12 @@ methods that lead to impressive validation results, but also to
 overfitted models with little practical relevance.
 
 In the present study, automatic read-across like models were built to generate
-quantitative predictions of long-term toxicity. Two databases compiling chronic
-oral rat Lowest Adverse Effect Levels (LOAEL) as endpoint were used. An early
-review of the databases revealed that many chemicals had at least two
-independent studies/LOAELs. These studies were exploited to generate
+quantitative predictions of long-term toxicity. The aim of the work was not to
+predict the nature of the toxicological effects of chemicals, but to obtain
+quantitative values which could be compared to exposure. Two databases
+compiling chronic oral rat Lowest Adverse Effect Levels (LOAEL) as endpoint
+were used. An early review of the databases revealed that many chemicals had at
+least two independent studies/LOAELs. These studies were exploited to generate
 information on the reproducibility of chronic animal studies and were used to
 evaluate prediction performance of the models in the context of experimental
 variability.
@@ -228,9 +231,7 @@ MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
 MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
 advantage that they may capture substructures of toxicological relevance that
-are not included in other fingerprints.  Unpublished experiments have shown
-that predictions with MolPrint2D fingerprints are indeed more accurate than
-other OpenBabel fingerprints.
+are not included in other fingerprints. 
 
 From MolPrint2D fingerprints we can construct a feature vector with all atom
 environments of a compound, which can be used to calculate chemical
@@ -254,6 +255,7 @@ closely related neighbors, we follow a tiered approach:
 - If any of these steps fails, the procedure is repeated with a similarity
   threshold of 0.2 and the prediction is flagged with a warning that it might
   be out of the applicability domain of the training data.
+- Similarity thresholds of 0.5 and 0.2 are the default values chosen by the software developers and remained unchanged during the course of these experiments.
 
 Compounds with the same structure as the query structure are automatically
 [eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257)
@@ -276,7 +278,7 @@ optimizing the number of RF components by bootstrap resampling.
 
 Finally the local RF model is applied to [predict the
 activity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L194-L272)
-of the query compound. The RMSE of bootstrapped local model predictions is used
+of the query compound. The root-mean-square error (RMSE) of bootstrapped local model predictions is used
 to construct 95\% prediction intervals at 1.96*RMSE. The width of the prediction interval indicates the expected prediction accuracy. The "true" value of a prediction should be with 95\% probability within the prediction interval.
 
 If RF modelling or prediction fails, the program resorts to using the [weighted
@@ -624,17 +626,17 @@ limited resource available should focused is essential and computational
 toxicology is thought to play an important role for that.
 
 In order to establish the level of safety concern of food chemicals
-toxicologically not characterized, a methodology mimicking the process
-of chemical risk assessment, and supported by computational toxicology,
-was proposed [@Schilter2014]. It is based on the calculation of
-margins of exposure (MoE) between predicted values of toxicity and
-exposure estimates. The level of safety concern of a chemical is then
+toxicologically not characterized, a methodology mimicking the process of
+chemical risk assessment, and supported by computational toxicology, was
+proposed [@Schilter2014]. It is based on the calculation of margins of exposure
+(MoE) that is the ratio between the predicted chronic toxicity value (LOAEL)
+and exposure estimate. The level of safety concern of a chemical is then
 determined by the size of the MoE and its suitability to cover the
-uncertainties of the assessment. To be applicable, such an approach
-requires quantitative predictions of toxicological endpoints relevant
-for risk assessment. The present work focuses on the prediction of chronic
-toxicity, a major and often pivotal endpoint of toxicological databases
-used for hazard identification and characterization of food chemicals.
+uncertainties of the assessment. To be applicable, such an approach requires
+quantitative predictions of toxicological endpoints relevant for risk
+assessment. The present work focuses on the prediction of chronic toxicity,
+a major and often pivotal endpoint of toxicological databases used for hazard
+identification and characterization of food chemicals.
 
 In a previous study, automated read-across like models for predicting
 carcinogenic potency were developed. In these models, substances in the
@@ -734,13 +736,18 @@ where no predictions can be made, because there are no similar compounds in the 
 Summary
 =======
 
-In conclusion, we could
-demonstrate that `lazar` predictions within the applicability domain of
-the training data have the same variability as the experimental training
-data. In such cases experimental investigations can be substituted with
-*in silico* predictions. Predictions with a lower similarity threshold can
-still give usable results, but the errors to be expected are higher and
-a manual inspection of prediction results is highly recommended.
+In conclusion, we could demonstrate that `lazar` predictions within the
+applicability domain of the training data have the same variability as the
+experimental training data. In such cases experimental investigations can be
+substituted with *in silico* predictions. Predictions with a lower similarity
+threshold can still give usable results, but the errors to be expected are
+higher and a manual inspection of prediction results is highly recommended.
+Anyway, our suggested workflow includes always the visual inspection of the
+chemical structures of the neighbors selected by the model. Indeed it will
+strength the prediction confidence (if the input structure looks very similar
+to the neighbors selected to build the model) or it can drive to the conclusion
+to use read-across with the most similar compound of the database (in case not
+enough similar compounds to build the model are present in the database).
 
 References
 ==========

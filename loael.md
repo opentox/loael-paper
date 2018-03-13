@@ -14,10 +14,11 @@ keywords: (Q)SAR, read-across, LOAEL, experimental variability
 date: \today
 abstract: |
   This study compares the accuracy of (Q)SAR/read-across predictions with the
-  experimental variability of chronic LOAEL values from *in vivo* experiments.
-  We could demonstrate that predictions of the `lazar` algrorithm within
-  the applicability domain of the training data have the same variability as
-  the experimental training data. Predictions with a lower similarity threshold
+  experimental variability of chronic lowest-observed-adverse-effect levels
+  (LOAELs) from *in vivo* experiments. We could demonstrate that predictions of
+  the lazy structure-activity relationships (`lazar`) algorithm within the
+  applicability domain of the training data have the same variability as the
+  experimental training data. Predictions with a lower similarity threshold
   (i.e. a larger distance from the applicability domain) are also significantly
   better than random guessing, but the errors to be expected are higher and
   a manual inspection of prediction results is highly recommended.
@@ -87,44 +88,27 @@ tempting for model developers to use aggressive model optimisation
 methods that lead to impressive validation results, but also to
 overfitted models with little practical relevance.
 
-In the present study, automatic read-across like models were built to
-generate quantitative predictions of long-term toxicity. Two databases
-compiling chronic oral rat Lowest Adverse Effect Levels (LOAEL) as
-endpoint were used. An early review of the databases revealed that many
-chemicals had at least two independent studies/LOAELs. These studies
-were exploited to generate information on the reproducibility of chronic
-animal studies and were used to evaluate prediction performance of the
-models in the context of experimental variability.
+In the present study, automatic read-across like models were built to generate
+quantitative predictions of long-term toxicity. The aim of the work was not to
+predict the nature of the toxicological effects of chemicals, but to obtain
+quantitative values which could be compared to exposure. Two databases
+compiling chronic oral rat Lowest Adverse Effect Levels (LOAEL) as endpoint
+were used. An early review of the databases revealed that many chemicals had at
+least two independent studies/LOAELs. These studies were exploited to generate
+information on the reproducibility of chronic animal studies and were used to
+evaluate prediction performance of the models in the context of experimental
+variability.
 
 An important limitation often raised for computational toxicology is the lack
 of transparency on published models and consequently on the difficulty for the
 scientific community to reproduce and apply them. To overcome these issues,
-source code for all programs and libraries and the data that have been used to generate this
-manuscript are made available under GPL3 licenses. Data and compiled
-programs with all dependencies for the reproduction of results in this manuscript are available as
-a self-contained docker image. All data, tables and figures in this manuscript
-was generated directly from experimental results using the `R` package `knitR`.
-<!-- A single command repeats all experiments (possibly with different settings) and
-updates the manuscript with the new results. -->
+source code for all programs and libraries and the data that have been used to
+generate this manuscript are made available under GPL3 licenses. Data and
+compiled programs with all dependencies for the reproduction of results in this
+manuscript are available as a self-contained docker image. All data, tables and
+figures in this manuscript was generated directly from experimental results
+using the `R` package `knitR`.
 
-<!--
-overcome these issues, all databases and programs that have been used to
-generate this manuscript are made available under GPL3 licenses.
-A self-contained docker image with all programs, libraries and data
-required for the reproduction of these results is available from
-<https://hub.docker.com/r/insilicotox/loael-paper/>.
-
-Source code and datasets for the reproduction of this manuscript can be
-downloaded from the GitHub repository
-<https://github.com/opentox/loael-paper>. The lazar framework [@Maunz2013]
-is also available under a GPL3 License from
-<https://github.com/opentox/lazar>.
-
-A graphical webinterface for `lazar` model predictions and validation results
-is publicly accessible at <https://lazar.in-silico.ch>, models presented in
-this manuscript will be included in future versions. Source code for the GUI
-can be obtained from <https://github.com/opentox/lazar-gui>.
--->
 Materials and Methods
 =====================
 
@@ -239,9 +223,7 @@ MolPrint2D fingerprints are generated dynamically from chemical structures and
 do not rely on predefined lists of fragments (such as OpenBabel FP3, FP4 or
 MACCs fingerprints or lists of toxocophores/toxicophobes). This has the
 advantage that they may capture substructures of toxicological relevance that
-are not included in other fingerprints.  Unpublished experiments have shown
-that predictions with MolPrint2D fingerprints are indeed more accurate than
-other OpenBabel fingerprints.
+are not included in other fingerprints. 
 
 From MolPrint2D fingerprints we can construct a feature vector with all atom
 environments of a compound, which can be used to calculate chemical
@@ -265,6 +247,7 @@ closely related neighbors, we follow a tiered approach:
 - If any of these steps fails, the procedure is repeated with a similarity
   threshold of 0.2 and the prediction is flagged with a warning that it might
   be out of the applicability domain of the training data.
+- Similarity thresholds of 0.5 and 0.2 are the default values chosen by the software developers and remained unchanged during the course of these experiments.
 
 Compounds with the same structure as the query structure are automatically
 [eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257)
@@ -287,7 +270,7 @@ optimizing the number of RF components by bootstrap resampling.
 
 Finally the local RF model is applied to [predict the
 activity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L194-L272)
-of the query compound. The RMSE of bootstrapped local model predictions is used
+of the query compound. The root-mean-square error (RMSE) of bootstrapped local model predictions is used
 to construct 95\% prediction intervals at 1.96*RMSE. The width of the prediction interval indicates the expected prediction accuracy. The "true" value of a prediction should be with 95\% probability within the prediction interval.
 
 If RF modelling or prediction fails, the program resorts to using the [weighted
@@ -389,28 +372,6 @@ The only statistically significant difference between both databases is that
 the Nestlé database contains more small compounds (61 structures with less than
 11 non-hydrogen atoms) than the FSVO-database (19 small structures, chi-square test: p-value 3.7E-7).
 
-<!--
-[@fig:ches-mapper-pc] shows an embedding that is based on physico-chemical (PC)
-descriptors.
-
-![Compounds from the Mazzatorta and the Swiss Federal Office dataset are highlighted in red and green. Compounds that occur in both datasets are highlighted in magenta.](figures/pc-small-compounds-highlighted.png){#fig:ches-mapper-pc}
-
-Martin: please explain light colors at bottom of histograms
-
-In this example, CheS-Mapper applied a principal components analysis to map
-compounds according to their physico-chemical (PC) feature values into 3D
-space. Both datasets have in general very similar PC feature values. As an
-exception, the Nestlé database includes most of the tiny compound
-structures: we have selected the 78 smallest compounds (with 10 atoms and less,
-marked with a blue box in the screen-shot) and found that 61 of these compounds
-occur in the Nestlé database, whereas only 19 are contained in the Swiss
-dataset (p-value 3.7E-7).
-
-This result was confirmed for structural features (fingerprints) including
-MolPrint2D features that are utilized for model building in this work.
--->
-
-
 ### Experimental variability versus prediction uncertainty 
 
 Duplicated LOAEL values can be found in both databases and there is
@@ -491,16 +452,8 @@ data).
 In 100\% of the test examples
 experimental LOAEL values were located within the 95\% prediction intervals. 
 
-<!--
-Experimental data and 95\% prediction intervals did not overlap in 0 cases
-(0\%),
-0 predictions were too high and
-0 predictions too low (after -log10 transformation).
--->
-
 [@fig:comp] shows a comparison of predicted with experimental values. Most
 predicted values were located within the experimental variability.
-
 
 ![Comparison of experimental with predicted LOAEL values. Each vertical line
 represents a compound, dots are individual measurements (blue), predictions
@@ -551,10 +504,6 @@ All | 0.45  | 0.77 | 477/671
 
 : Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
-<!--
-![Correlation of experimental with predicted LOAEL values (10-fold crossvalidation)](figures/crossvalidation.pdf){#fig:cv}
--->
-
 <div id="fig:cv">
 ![](figures/crossvalidation0.pdf){#fig:cv0 height=30%}
 
@@ -590,17 +539,17 @@ limited resource available should focused is essential and computational
 toxicology is thought to play an important role for that.
 
 In order to establish the level of safety concern of food chemicals
-toxicologically not characterized, a methodology mimicking the process
-of chemical risk assessment, and supported by computational toxicology,
-was proposed [@Schilter2014]. It is based on the calculation of
-margins of exposure (MoE) between predicted values of toxicity and
-exposure estimates. The level of safety concern of a chemical is then
+toxicologically not characterized, a methodology mimicking the process of
+chemical risk assessment, and supported by computational toxicology, was
+proposed [@Schilter2014]. It is based on the calculation of margins of exposure
+(MoE) that is the ratio between the predicted chronic toxicity value (LOAEL)
+and exposure estimate. The level of safety concern of a chemical is then
 determined by the size of the MoE and its suitability to cover the
-uncertainties of the assessment. To be applicable, such an approach
-requires quantitative predictions of toxicological endpoints relevant
-for risk assessment. The present work focuses on the prediction of chronic
-toxicity, a major and often pivotal endpoint of toxicological databases
-used for hazard identification and characterization of food chemicals.
+uncertainties of the assessment. To be applicable, such an approach requires
+quantitative predictions of toxicological endpoints relevant for risk
+assessment. The present work focuses on the prediction of chronic toxicity,
+a major and often pivotal endpoint of toxicological databases used for hazard
+identification and characterization of food chemicals.
 
 In a previous study, automated read-across like models for predicting
 carcinogenic potency were developed. In these models, substances in the
@@ -668,25 +617,6 @@ shorter duration endpoints would also be valuable for chronic toxicy
 since evidence suggest that exposure duration has little impact on the
 levels of NOAELs/LOAELs [@Zarn2011, @Zarn2013].
 
-<!--
-Elena + Benoit
-
-### Dataset comparison
-
-Our investigations clearly indicate that the Mazzatorta and Swiss Federal Office datasets are very similar in terms of chemical structures and properties and the distribution of experimental LOAEL values. The only significant difference that we have observed was that the Nestlé database has larger amount of small molecules, than the Swiss Federal Office dataset. For this reason we have pooled both dataset into a single training dataset for read across predictions.
-
-[@fig:intra] and [@fig:corr] and [@tbl:common-pred] show however considerable
-variability in the experimental data. High experimental variability has an
-impact on model building and on model validation. First it influences model
-quality by introducing noise into the training data, secondly it influences
-accuracy estimates because predictions have to be compared against noisy data
-where "true" experimental values are unknown.
-
-<!--
-This will become obvious in the
-next section, where we compare predictions with experimental data.
--->
-
 ### `lazar` predictions
 
 [@tbl:common-pred], [@tbl:cv], [@fig:comp], [@fig:corr] and [@fig:cv] clearly
@@ -716,43 +646,21 @@ Finally there is a substantial number of compounds
 where no predictions can be made, because there are no similar compounds in the training data. These compounds clearly fall beyond the applicability domain of the training dataset 
  and in such cases it is preferable to avoid predictions instead of random guessing.
 
-<!--
-TODO: GUI screenshot
-is covered in
-prediction interval shows that `lazar` read across predictions fit well into
-the experimental variability of LOAEL values.
-
-It is tempting to increase the "quality" of predictions by performing parameter
-or algorithm optimisations, but this may lead to overfitted models, because the
-training set is known beforehand. As prediction accuracies correspond well to
-experimental accuracies, and the visual inspection of predictions does not show
-obvious anomalies, we consider our model as a robust method for LOAEL
-estimations. Prediction accuracies that are lower than experimental variability
-would be a clear sign for a model that is overfitted for a particular test set.
-
-we present a brief analysis of the two most severe mispredictions:
-
-
-
-The compound with the largest deviation of prediction intervals is (amino-methylsulfanyl-phosphoryl)oxymethane (SMILES COP(=O)(SC)N) with an experimental median of  and a prediction interval of  +/- . In this case the prediction is based on two neighbors with very low similarity (0.1 and 0.13). Such cases can be eliminated by raising the similarity threshold for neighbors, but that could come at the cost of a larger number of unpredicted compounds. The graphical user interface shows for each prediction neighbors and similarities for a critical examination which should make the detection of similar cases rather straightforward.
-
-
-
-The compound with second largest deviation of prediction intervals is
-Endosulfan (SMILES O=S1OCC2C(CO1)C1(C(C2(Cl)C(=C1Cl)Cl)(Cl)Cl)Cl)
-with an experimental median of 1.91 and a prediction interval of 3.48 +/- 1.57. In this case the prediction is based on 5 neighbors with similarities between 0.33 and 0.4. All of them are polychlorinated compound, but none of them contains sulfur or is a sulfurous acid ester. Again such problems are easily identified from a visual inspection of neighbors, and we want to stress the importance of inspecting rationales for predictions in the graphical interface before accepting a prediction.
--->
-
 Summary
 =======
 
-In conclusion, we could
-demonstrate that `lazar` predictions within the applicability domain of
-the training data have the same variability as the experimental training
-data. In such cases experimental investigations can be substituted with
-*in silico* predictions. Predictions with a lower similarity threshold can
-still give usable results, but the errors to be expected are higher and
-a manual inspection of prediction results is highly recommended.
+In conclusion, we could demonstrate that `lazar` predictions within the
+applicability domain of the training data have the same variability as the
+experimental training data. In such cases experimental investigations can be
+substituted with *in silico* predictions. Predictions with a lower similarity
+threshold can still give usable results, but the errors to be expected are
+higher and a manual inspection of prediction results is highly recommended.
+Anyway, our suggested workflow includes always the visual inspection of the
+chemical structures of the neighbors selected by the model. Indeed it will
+strength the prediction confidence (if the input structure looks very similar
+to the neighbors selected to build the model) or it can drive to the conclusion
+to use read-across with the most similar compound of the database (in case not
+enough similar compounds to build the model are present in the database).
 
 References
 ==========

@@ -18,6 +18,9 @@ loael.md: loael.Rmd $(figures) $(datasets) $(validations)
 loael.docx: loael.md 
 	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.docx loael.md
 
+loael.txt: loael.md 
+	pandoc -s --bibliography=references.bibtex --latex-engine=pdflatex --filter pandoc-crossref --filter pandoc-citeproc -o loael.txt loael.md
+
 # Figures
 
 figures/functional-groups.pdf: data/functional-groups-reduced4R.csv
