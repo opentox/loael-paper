@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 require_relative '../../lazar/lib/lazar'
 include OpenTox
-require 'yaml'
-csv_file = ARGV[0].sub(/id$/,"csv")
-cv = Validation::RegressionCrossValidation.find File.read(ARGV[0]).chomp
+
+id = File.open(ARGV[0]).readlines.sample.chomp # random cv
+csv_file = "data/training_log10-cv.csv"
+cv = Validation::RegressionCrossValidation.find id
 data = []
 cv.predictions.each do |cid,p|
   smi = Compound.find(cid).smiles

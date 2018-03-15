@@ -129,9 +129,9 @@ of 567 LOAEL values for 445 unique
 chemical structures.
 The Nestlé database can be obtained from the following GitHub links:
 
-  - original data: [https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv](https://github.com/opentox/loael-paper/blob/submission/data/LOAEL_mg_corrected_smiles_mmol.csv)
-  - unique smiles: [https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta.csv)
-  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv](https://github.com/opentox/loael-paper/blob/submission/data/mazzatorta_log10.csv).
+  - original data: [https://github.com/opentox/loael-paper/blob/revision/data/LOAEL_mg_corrected_smiles_mmol.csv](https://github.com/opentox/loael-paper/blob/revision/data/LOAEL_mg_corrected_smiles_mmol.csv)
+  - unique smiles: [https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta.csv](https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta_log10.csv](https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta_log10.csv).
 
 ### Swiss Food Safety and Veterinary Office (FSVO) database
 
@@ -144,9 +144,9 @@ described elsewhere [@Zarn2011, @Zarn2013]. The
 FSVO-database consists of 493 rat LOAEL values for 381 unique chemical
 structures. It can be obtained from the following GitHub links:
 
-  - original data: [https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv](https://github.com/opentox/loael-paper/blob/submission/data/NOAEL-LOAEL_SMILES_rat_chron.csv)
-  - unique smiles and mmol/kg_bw/day units: [https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv](https://github.com/opentox/loael-paper/blob/submission/data/swiss.csv)
-  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv](https://github.com/opentox/loael-paper/blob/submission/data/swiss_log10.csv)
+  - original data: [https://github.com/opentox/loael-paper/blob/revision/data/NOAEL-LOAEL_SMILES_rat_chron.csv](https://github.com/opentox/loael-paper/blob/revision/data/NOAEL-LOAEL_SMILES_rat_chron.csv)
+  - unique smiles and mmol/kg_bw/day units: [https://github.com/opentox/loael-paper/blob/revision/data/swiss.csv](https://github.com/opentox/loael-paper/blob/revision/data/swiss.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/revision/data/swiss_log10.csv](https://github.com/opentox/loael-paper/blob/revision/data/swiss_log10.csv)
 
 
 ### Preprocessing
@@ -167,7 +167,7 @@ significant digits. For prediction, validation and visualisation purposes
 Two derived datasets were obtained from the original databases:
 
 The [*test*
-dataset](https://github.com/opentox/loael-paper/blob/submission/data/test_log10.csv)
+dataset](https://github.com/opentox/loael-paper/blob/revision/data/test_log10.csv)
 contains data from compounds that occur in both databases. LOAEL values equal
 at five significant digits were considered as duplicates originating from the
 same study/publication and only one instance was kept in the test dataset. The
@@ -178,7 +178,7 @@ unique chemical structures and was used for
 - comparing model predictions with experimental variability.
 
 The [*training*
-dataset](https://github.com/opentox/loael-paper/blob/submission/data/training_log10.csv)
+dataset](https://github.com/opentox/loael-paper/blob/revision/data/training_log10.csv)
 is the union of the Nestlé and the FSVO databases and it was used to build
 predictive models. LOAEL duplicates were removed using the same criteria as for
 the test dataset.  The training dataset has 998 LOAEL values
@@ -191,7 +191,7 @@ In this study we are using the modular lazar (*la*zy *s*tructure *a*ctivity
 *r*elationships) framework [@Maunz2013] for model development and validation.
 The complete `lazar` source code can be found on [GitHub](https://github.com/opentox/lazar).
 
-lazar follows the following basic [workflow](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257):
+lazar follows the following basic [workflow](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L180-L257):
 
 For a given chemical structure lazar 
 
@@ -210,7 +210,7 @@ modelling. Algorithms used within this study are described in the following sect
 
 ### Neighbor identification
 
-Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/nanoparticle.rb#L17-L21)
+Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/nanoparticle.rb#L17-L21)
 [@doi:10.1021/ci034207y] from the OpenBabel chemoinformatics library
 [@OBoyle2011].
 
@@ -231,7 +231,7 @@ similarities.
 
 [//]: # https://openbabel.org/docs/dev/FileFormats/MolPrint2D_format.html#molprint2d-format
 
-The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/similarity.rb#L18-L20) between two compounds A and B is expressed as the
+The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/similarity.rb#L18-L20) between two compounds A and B is expressed as the
 proportion between atom environments common in both structures $A \cap B$ and the
 total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jaccard]).
 
@@ -250,7 +250,7 @@ closely related neighbors, we follow a tiered approach:
 - Similarity thresholds of 0.5 and 0.2 are the default values chosen by the software developers and remained unchanged during the course of these experiments.
 
 Compounds with the same structure as the query structure are automatically
-[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L180-L257)
+[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L180-L257)
 to obtain unbiased predictions in the presence of
 duplicates.
 
@@ -259,7 +259,7 @@ duplicates.
 Only similar compounds (*neighbors*) above the threshold are used for local
 QSAR models.  In this investigation we are using [weighted random forests
 regression
-(RF)](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/caret.rb#L7-L78)
+(RF)](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/caret.rb#L7-L78)
 for the prediction of quantitative properties.  First all uninformative
 fingerprints (i.e. features with identical values across all neighbors) are
 removed.  The remaining set of features is used as descriptors for creating
@@ -269,12 +269,12 @@ used for this purpose.  Models are trained with the default `caret` settings,
 optimizing the number of RF components by bootstrap resampling.
 
 Finally the local RF model is applied to [predict the
-activity](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L194-L272)
+activity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L194-L272)
 of the query compound. The root-mean-square error (RMSE) of bootstrapped local model predictions is used
 to construct 95\% prediction intervals at 1.96*RMSE. The width of the prediction interval indicates the expected prediction accuracy. The "true" value of a prediction should be with 95\% probability within the prediction interval.
 
 If RF modelling or prediction fails, the program resorts to using the [weighted
-mean](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/regression.rb#L6-L16)
+mean](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/regression.rb#L6-L16)
 of the neighbors LOAEL values, where the contribution of each neighbor is
 weighted by its similarity to the query compound. In this case the prediction
 is also flagged with a warning.
@@ -301,14 +301,14 @@ interval associated with each prediction.
 For the comparison of experimental variability with predictive accuracies we
 are using a test set of compounds that occur in both databases. Unbiased read
 across predictions are obtained from the *training* dataset, by [removing *all*
-information](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/model.rb#L234-L238)
+information](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L234-L238)
 from the test compound from the training set prior to predictions. This
 procedure is hardcoded into the prediction algorithm in order to prevent
 validation errors. As we have only a single test set no model or parameter
 optimisations were performed in order to avoid overfitting a single dataset.
 
 Results from 3 repeated [10-fold
-crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.submission/lib/crossvalidation.rb#L85-L93)
+crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/crossvalidation.rb#L85-L93)
 with independent training/test set splits are provided as additional
 information to the test set results.
 
@@ -353,7 +353,7 @@ frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
 shows the frequency of functional groups in both databases. 139
 functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the supplemental
-material at [GitHub](https://github.com/opentox/loael-paper/blob/submission/data/functional-groups.csv).
+material at [GitHub](https://github.com/opentox/loael-paper/blob/revision/data/functional-groups.csv).
  
 ![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
 
@@ -480,41 +480,25 @@ dots indicate predictions close to the applicability domain (i.e. without
 warnings), red dots indicate predictions far from the applicability domain
 (i.e. with warnings).](figures/prediction-test-correlation.pdf){#fig:corr}
 
-
-
 For a further assessment of model performance three independent 10-fold
 cross-validations were performed. Results are summarised in [@tbl:cv] and
 [@fig:cv]. All correlations of predicted with experimental values are
-statistically highly significant with a p-value < 2.2e-16. This is observed for
+statistically highly significant with a p-value < 2.2e-16. This was observed for
 compounds close and more distant to the applicability domain.
 
-Predictions  | $r^2$ | RMSE | Nr. predicted
---|-------|------|----------------
-AD close | 0.61  | 0.58 | 102/671
-AD distant | 0.45  | 0.78 | 374/671
-All | 0.47  | 0.74 | 476/671
-  |  |  |
-AD close | 0.59  | 0.6 | 101/671
-AD distant | 0.45  | 0.77 | 376/671
-All | 0.47  | 0.74 | 477/671
-  |  |  |
-AD close | 0.59  | 0.57 | 93/671
-AD distant | 0.43  | 0.81 | 384/671
-All | 0.45  | 0.77 | 477/671
 
-: Results from 3 independent 10-fold crossvalidations {#tbl:cv}
 
-<div id="fig:cv">
-![](figures/crossvalidation0.pdf){#fig:cv0 height=30%}
+Predictions  | $r^2$    | RMSE     |Nr. predicted 
+-------------|----------|----------|----------------
+AD close     | 0.6 $\pm$  0.04 | 0.58 $\pm$  0.02 | 97 $\pm$  4 
+AD distant   | 0.43  $\pm$ 0.01 | 0.8 $\pm$  0.01 | 380 $\pm$  5 
+All          | 0.46 $\pm$  0.01 | 0.76 $\pm$  0.01 | 477 $\pm$  4 
 
-![](figures/crossvalidation1.pdf){#fig:cv1 height=30%}
+: Results (mean and standard deviation) from 50 independent 10-fold crossvalidations {#tbl:cv}
 
-![](figures/crossvalidation2.pdf){#fig:cv2 height=30%}
-
-Correlation of predicted vs. measured values for three independent
-crossvalidations with MP2D fingerprint descriptors and local random forest
+![ Correlation of predicted vs. measured values from a randomly selected crossvalidation with MP2D fingerprint descriptors and local random forest
 models.
-</div>
+](figures/crossvalidation.pdf){#fig:cv}
 
 Discussion
 ==========

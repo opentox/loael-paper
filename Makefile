@@ -1,9 +1,8 @@
 # Variables
 
 datasets = data/median-correlation.csv data/test_log10.csv data/training_log10.csv data/mazzatorta_log10.csv data/swiss_log10.csv data/swiss_mg_dup.csv data/mazzatorta_mg_dup.csv data/all_mg_dup.csv
-crossvalidations = data/training_log10-cv-0.csv data/training_log10-cv-1.csv data/training_log10-cv-2.csv
-validations = data/training-test-predictions.csv $(crossvalidations) data/misclassifications.csv
-figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/prediction-test-correlation.pdf figures/dataset-variability.pdf figures/median-correlation.pdf figures/crossvalidation0.pdf figures/crossvalidation1.pdf figures/crossvalidation2.pdf
+validations = data/training-test-predictions.csv data/50cv.csv data/misclassifications.csv
+figures = figures/functional-groups.pdf  figures/test-prediction.pdf figures/prediction-test-correlation.pdf figures/dataset-variability.pdf figures/median-correlation.pdf figures/crossvalidation.pdf
 
 # Paper
 loael.pdf: loael.tex
@@ -29,15 +28,6 @@ figures/functional-groups.pdf: data/functional-groups-reduced4R.csv
 figures/dataset-variability.pdf: data/test_log10_database_fix.csv
 	scripts/dataset-variability.R
 
-figures/crossvalidation0.pdf: data/training_log10-cv-0.csv
-	scripts/crossvalidation-plots.R 0
-
-figures/crossvalidation1.pdf: data/training_log10-cv-1.csv
-	scripts/crossvalidation-plots.R 1
-
-figures/crossvalidation2.pdf: data/training_log10-cv-2.csv
-	scripts/crossvalidation-plots.R 2
-
 figures/test-prediction.pdf: data/predictions-measurements.csv
 	scripts/test-prediction-plot.R
 
@@ -46,6 +36,9 @@ figures/prediction-test-correlation.pdf: data/training-test-predictions.csv
 
 figures/median-correlation.pdf: data/median-correlation.csv
 	scripts/median-correlation-plot.R
+
+figures/crossvalidation.pdf: data/training_log10-cv.csv
+	scripts/crossvalidation-plots.R 
 
 # Validations
 
@@ -61,23 +54,14 @@ data/training-test-predictions.csv: data/training-test-predictions.id
 data/training-test-predictions.id: data/test_log10.csv data/training_log10.csv
 	scripts/testset-validation.rb
 
-data/training_log10-cv-0.csv: data/training_log10-cv-0.id
-	scripts/crossvalidation-table.rb data/training_log10-cv-0.id
+data/training_log10-cv.csv: data/50cv.ids
+	scripts/crossvalidation-table.rb data/50cv.ids
 
-data/training_log10-cv-1.csv: data/training_log10-cv-1.id
-	scripts/crossvalidation-table.rb data/training_log10-cv-1.id
+data/50cv.csv: data/50cv.ids
+	scripts/50cv-table.rb data/50cv.ids
 
-data/training_log10-cv-2.csv: data/training_log10-cv-2.id
-	scripts/crossvalidation-table.rb data/training_log10-cv-2.id
-
-data/training_log10-cv-0.id: data/training_log10.csv
-	scripts/crossvalidation.rb training_log10.csv 0
-
-data/training_log10-cv-1.id: data/training_log10.csv
-	scripts/crossvalidation.rb training_log10.csv 1
-
-data/training_log10-cv-2.id: data/training_log10.csv
-	scripts/crossvalidation.rb training_log10.csv 2
+data/50cv.ids: data/training_log10.csv
+	scripts/50-crossvalidations.rb data/training_log10.csv
 
 # Datasets
 
