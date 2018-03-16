@@ -258,7 +258,7 @@ closely related neighbors, we follow a tiered approach:
 - Similarity thresholds of 0.5 and 0.2 are the default values chosen by the software developers and remained unchanged during the course of these experiments.
 
 Compounds with the same structure as the query structure are automatically
-[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L180-L257)
+[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper/lib/model.rb#L231-L236)
 to obtain unbiased predictions in the presence of
 duplicates.
 
