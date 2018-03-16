@@ -218,7 +218,7 @@ modelling. Algorithms used within this study are described in the following sect
 
 ### Neighbor identification
 
-Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/nanoparticle.rb#L17-L21)
+Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper/lib/compound.rb#L38-L42)
 [@doi:10.1021/ci034207y] from the OpenBabel chemoinformatics library
 [@OBoyle2011].
 
