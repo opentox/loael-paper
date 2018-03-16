@@ -239,7 +239,7 @@ similarities.
 
 [//]: # https://openbabel.org/docs/dev/FileFormats/MolPrint2D_format.html#molprint2d-format
 
-The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/similarity.rb#L18-L20) between two compounds A and B is expressed as the
+The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/similarity.rb#L20-L27) between two compounds A and B is expressed as the
 proportion between atom environments common in both structures $A \cap B$ and the
 total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jaccard]).
 
