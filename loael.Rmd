@@ -137,9 +137,9 @@ of `r length(m$SMILES)` LOAEL values for `r length(unique(m$SMILES))` unique
 chemical structures.
 The Nestlé database can be obtained from the following GitHub links:
 
-  - original data: [https://github.com/opentox/loael-paper/blob/revision/data/LOAEL_mg_corrected_smiles_mmol.csv](https://github.com/opentox/loael-paper/blob/revision/data/LOAEL_mg_corrected_smiles_mmol.csv)
-  - unique smiles: [https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta.csv](https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta.csv)
-  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta_log10.csv](https://github.com/opentox/loael-paper/blob/revision/data/mazzatorta_log10.csv).
+  - original data: [https://github.com/opentox/loael-paper/tree/master/data/LOAEL_mg_corrected_smiles_mmol.csv](https://github.com/opentox/loael-paper/tree/master/data/LOAEL_mg_corrected_smiles_mmol.csv)
+  - unique smiles: [https://github.com/opentox/loael-paper/tree/master/data/mazzatorta.csv](https://github.com/opentox/loael-paper/tree/master/data/mazzatorta.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/tree/master/data/mazzatorta_log10.csv](https://github.com/opentox/loael-paper/tree/master/data/mazzatorta_log10.csv).
 
 ### Swiss Food Safety and Veterinary Office (FSVO) database
 
@@ -152,9 +152,9 @@ described elsewhere [@Zarn2011, @Zarn2013]. The
 FSVO-database consists of `r length(s$SMILES)` rat LOAEL values for `r length(unique(s$SMILES))` unique chemical
 structures. It can be obtained from the following GitHub links:
 
-  - original data: [https://github.com/opentox/loael-paper/blob/revision/data/NOAEL-LOAEL_SMILES_rat_chron.csv](https://github.com/opentox/loael-paper/blob/revision/data/NOAEL-LOAEL_SMILES_rat_chron.csv)
-  - unique smiles and mmol/kg_bw/day units: [https://github.com/opentox/loael-paper/blob/revision/data/swiss.csv](https://github.com/opentox/loael-paper/blob/revision/data/swiss.csv)
-  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/blob/revision/data/swiss_log10.csv](https://github.com/opentox/loael-paper/blob/revision/data/swiss_log10.csv)
+  - original data: [https://github.com/opentox/loael-paper/tree/master/data/NOAEL-LOAEL_SMILES_rat_chron.csv](https://github.com/opentox/loael-paper/tree/master/data/NOAEL-LOAEL_SMILES_rat_chron.csv)
+  - unique smiles and mmol/kg_bw/day units: [https://github.com/opentox/loael-paper/tree/master/data/swiss.csv](https://github.com/opentox/loael-paper/tree/master/data/swiss.csv)
+  - -log10 transfomed LOAEL: [https://github.com/opentox/loael-paper/tree/master/data/swiss_log10.csv](https://github.com/opentox/loael-paper/tree/master/data/swiss_log10.csv)
 
 
 ### Preprocessing
@@ -175,7 +175,7 @@ significant digits. For prediction, validation and visualisation purposes
 Two derived datasets were obtained from the original databases:
 
 The [*test*
-dataset](https://github.com/opentox/loael-paper/blob/revision/data/test_log10.csv)
+dataset](https://github.com/opentox/loael-paper/tree/master/data/test_log10.csv)
 contains data from compounds that occur in both databases. LOAEL values equal
 at five significant digits were considered as duplicates originating from the
 same study/publication and only one instance was kept in the test dataset. The
@@ -186,7 +186,7 @@ unique chemical structures and was used for
 - comparing model predictions with experimental variability.
 
 The [*training*
-dataset](https://github.com/opentox/loael-paper/blob/revision/data/training_log10.csv)
+dataset](https://github.com/opentox/loael-paper/tree/master/data/training_log10.csv)
 is the union of the Nestlé and the FSVO databases and it was used to build
 predictive models. LOAEL duplicates were removed using the same criteria as for
 the test dataset.  The training dataset has `r length(c$SMILES)` LOAEL values
@@ -363,7 +363,7 @@ frequency of functional groups from the OpenBabel FP4 fingerprint. [@fig:fg]
 shows the frequency of functional groups in both databases. `r length(fg$V1)`
 functional groups with a frequency > 25 are depicted, the complete table for
 all functional groups can be found in the supplemental
-material at [GitHub](https://github.com/opentox/loael-paper/blob/revision/data/functional-groups.csv).
+material at [GitHub](https://github.com/opentox/loael-paper/tree/master/data/functional-groups.csv).
  
 ![Frequency of functional groups.](figures/functional-groups.pdf){#fig:fg}
 
