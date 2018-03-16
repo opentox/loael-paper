@@ -316,7 +316,7 @@ validation errors. As we have only a single test set no model or parameter
 optimisations were performed in order to avoid overfitting a single dataset.
 
 Results from 3 repeated [10-fold
-crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/crossvalidation.rb#L85-L93)
+crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/crossvalidation.rb#L95-L113)
 with independent training/test set splits are provided as additional
 information to the test set results.
 
