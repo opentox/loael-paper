@@ -189,9 +189,9 @@ Algorithms
 
 In this study we are using the modular lazar (*la*zy *s*tructure *a*ctivity
 *r*elationships) framework [@Maunz2013] for model development and validation.
-The complete `lazar` source code can be found on [GitHub](https://github.com/opentox/lazar).
+The complete `lazar` source code can be found on [GitHub](https://github.com/opentox/lazar/tree/loael-paper.revision).
 
-lazar follows the following basic [workflow](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L180-L257):
+lazar follows the following basic [workflow](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L191-L281):
 
 For a given chemical structure lazar 
 
@@ -210,7 +210,7 @@ modelling. Algorithms used within this study are described in the following sect
 
 ### Neighbor identification
 
-Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/nanoparticle.rb#L17-L21)
+Similarity calculations are based on [MolPrint2D fingerprints](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/compound.rb#L38-L42)
 [@doi:10.1021/ci034207y] from the OpenBabel chemoinformatics library
 [@OBoyle2011].
 
@@ -231,7 +231,7 @@ similarities.
 
 [//]: # https://openbabel.org/docs/dev/FileFormats/MolPrint2D_format.html#molprint2d-format
 
-The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/similarity.rb#L18-L20) between two compounds A and B is expressed as the
+The [chemical similarity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/similarity.rb#L22-L27) between two compounds A and B is expressed as the
 proportion between atom environments common in both structures $A \cap B$ and the
 total number of atom environments $A \cup B$ (Jaccard/Tanimoto index, [@eq:jaccard]).
 
@@ -250,7 +250,7 @@ closely related neighbors, we follow a tiered approach:
 - Similarity thresholds of 0.5 and 0.2 are the default values chosen by the software developers and remained unchanged during the course of these experiments.
 
 Compounds with the same structure as the query structure are automatically
-[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L180-L257)
+[eliminated from neighbors](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L233-L236)
 to obtain unbiased predictions in the presence of
 duplicates.
 
@@ -259,7 +259,7 @@ duplicates.
 Only similar compounds (*neighbors*) above the threshold are used for local
 QSAR models.  In this investigation we are using [weighted random forests
 regression
-(RF)](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/caret.rb#L7-L78)
+(RF)](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L82-L85)
 for the prediction of quantitative properties.  First all uninformative
 fingerprints (i.e. features with identical values across all neighbors) are
 removed.  The remaining set of features is used as descriptors for creating
@@ -269,12 +269,12 @@ used for this purpose.  Models are trained with the default `caret` settings,
 optimizing the number of RF components by bootstrap resampling.
 
 Finally the local RF model is applied to [predict the
-activity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L194-L272)
+activity](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L191-L281)
 of the query compound. The root-mean-square error (RMSE) of bootstrapped local model predictions is used
 to construct 95\% prediction intervals at 1.96*RMSE. The width of the prediction interval indicates the expected prediction accuracy. The "true" value of a prediction should be with 95\% probability within the prediction interval.
 
 If RF modelling or prediction fails, the program resorts to using the [weighted
-mean](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/regression.rb#L6-L16)
+mean](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/regression.rb#L7-L21)
 of the neighbors LOAEL values, where the contribution of each neighbor is
 weighted by its similarity to the query compound. In this case the prediction
 is also flagged with a warning.
@@ -301,14 +301,14 @@ interval associated with each prediction.
 For the comparison of experimental variability with predictive accuracies we
 are using a test set of compounds that occur in both databases. Unbiased read
 across predictions are obtained from the *training* dataset, by [removing *all*
-information](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L234-L238)
+information](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/model.rb#L233-L237)
 from the test compound from the training set prior to predictions. This
 procedure is hardcoded into the prediction algorithm in order to prevent
 validation errors. As we have only a single test set no model or parameter
 optimisations were performed in order to avoid overfitting a single dataset.
 
-Results from 3 repeated [10-fold
-crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/crossvalidation.rb#L85-L93)
+Results from 50 repeated [10-fold
+crossvalidations](https://github.com/opentox/lazar/blob/loael-paper.revision/lib/crossvalidation.rb#L10-L48)
 with independent training/test set splits are provided as additional
 information to the test set results.
 
@@ -327,7 +327,7 @@ Public webinterface
   ~ <https://github.com/opentox/lazar-gui> (source code)
 
 Manuscript
-  ~ <https://github.com/opentox/loael-paper> (source code for the manuscript and validation experiments)
+  ~ <https://github.com/opentox/loael-paper/tree/revision> (source code for the manuscript and validation experiments)
 
 Docker image
   ~ <https://hub.docker.com/r/insilicotox/loael-paper/> (container with manuscript, validation experiments, `lazar` libraries and third party dependencies)
